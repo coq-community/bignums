@@ -382,26 +382,6 @@ Theorem Zmod_le_first: forall a b, 0 <= a -> 0 < b -> 0 <= a mod b <= a.
  rewrite H; auto.
  Qed.
 
-Theorem Zbounded_induction :
-  (forall Q : Z -> Prop, forall b : Z,
-    Q 0 ->
-    (forall n, 0 <= n -> n < b - 1 -> Q n -> Q (n + 1)) ->
-      forall n, 0 <= n -> n < b -> Q n)%Z.
-Proof.
-intros Q b Q0 QS.
-set (Q' := fun n => (n < b /\ Q n) \/ (b <= n)).
-assert (H : forall n, 0 <= n -> Q' n).
-apply natlike_rec2; unfold Q'.
-destruct (Z.le_gt_cases b 0) as [H | H]. now right. left; now split.
-intros n H IH. destruct IH as [[IH1 IH2] | IH].
-destruct (Z.le_gt_cases (b - 1) n) as [H1 | H1].
-right; auto with zarith.
-left. split; [auto with zarith | now apply (QS n)].
-right; auto with zarith.
-unfold Q' in *; intros n H1 H2. destruct (H n H1) as [[H3 H4] | H3].
-assumption. now apply Z.le_ngt in H3.
-Qed.
-
 Lemma Zsquare_le x : x <= x*x.
 Proof.
 destruct (Z.lt_ge_cases 0 x).
