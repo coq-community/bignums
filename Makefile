@@ -199,7 +199,7 @@ GHTMLFILES:=$(VFILES:.v=.g.html)
 OBJFILES=$(call vo_to_obj,$(VOFILES))
 ALLNATIVEFILES=$(OBJFILES:.o=.cmi) $(OBJFILES:.o=.cmo) $(OBJFILES:.o=.cmx) $(OBJFILES:.o=.cmxs)
 NATIVEFILES=$(foreach f, $(ALLNATIVEFILES), $(wildcard $f))
-MLFILES:=numbers_syntax.ml
+MLFILES:=./numbers_syntax.ml
 
 ifneq ($(filter-out archclean clean cleanall printenv,$(MAKECMDGOALS)),)
 -include $(addsuffix .d,$(MLFILES))
