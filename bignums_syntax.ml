@@ -7,7 +7,7 @@
 (************************************************************************)
 
 (* Poor's man DECLARE PLUGIN *)
-let __coq_plugin_name = "numbers_syntax_plugin"
+let __coq_plugin_name = "bignums_syntax_plugin"
 let () = Mltop.add_known_module __coq_plugin_name
 
 (* digit-based syntax for int31, bigN bigZ and bigQ *)

@@ -199,7 +199,7 @@ GHTMLFILES:=$(VFILES:.v=.g.html)
 OBJFILES=$(call vo_to_obj,$(VOFILES))
 ALLNATIVEFILES=$(OBJFILES:.o=.cmi) $(OBJFILES:.o=.cmo) $(OBJFILES:.o=.cmx) $(OBJFILES:.o=.cmxs)
 NATIVEFILES=$(foreach f, $(ALLNATIVEFILES), $(wildcard $f))
-MLFILES:=./numbers_syntax.ml
+MLFILES:=./bignums_syntax.ml
 
 ifneq ($(filter-out archclean clean cleanall printenv,$(MAKECMDGOALS)),)
 -include $(addsuffix .d,$(MLFILES))
@@ -211,7 +211,7 @@ endif
 
 .SECONDARY: $(addsuffix .d,$(MLFILES))
 
-MLPACKFILES:=numbers_syntax_plugin.mlpack
+MLPACKFILES:=bignums_syntax_plugin.mlpack
 
 ifneq ($(filter-out archclean clean cleanall printenv,$(MAKECMDGOALS)),)
 -include $(addsuffix .d,$(MLPACKFILES))
@@ -296,13 +296,13 @@ BigN/NMake_gen.v: BigN/NMake_gen.ml
 #                                   #
 #####################################
 
-$(addsuffix .cmx,$(filter $(basename $(MLFILES)),$(numbers_syntax_plugin_MLPACK_DEPENDENCIES))): %.cmx: %.ml
-	$(SHOW)'CAMLOPT -c -for-pack Numbers_syntax_plugin $<'
-	$(HIDE)$(CAMLOPTC) $(ZDEBUG) $(ZFLAGS) -for-pack Numbers_syntax_plugin $<
+$(addsuffix .cmx,$(filter $(basename $(MLFILES)),$(bignums_syntax_plugin_MLPACK_DEPENDENCIES))): %.cmx: %.ml
+	$(SHOW)'CAMLOPT -c -for-pack Bignums_syntax_plugin $<'
+	$(HIDE)$(CAMLOPTC) $(ZDEBUG) $(ZFLAGS) -for-pack Bignums_syntax_plugin $<
 
-$(addsuffix .cmx,$(filter $(basename $(ML4FILES)),$(numbers_syntax_plugin_MLPACK_DEPENDENCIES))): %.cmx: %.ml4
-	$(SHOW)'CAMLOPT -c -pp -for-pack Numbers_syntax_plugin $<'
-	$(HIDE)$(CAMLOPTC) $(ZDEBUG) $(ZFLAGS) -for-pack Numbers_syntax_plugin $(PP) -impl $<
+$(addsuffix .cmx,$(filter $(basename $(ML4FILES)),$(bignums_syntax_plugin_MLPACK_DEPENDENCIES))): %.cmx: %.ml4
+	$(SHOW)'CAMLOPT -c -pp -for-pack Bignums_syntax_plugin $<'
+	$(HIDE)$(CAMLOPTC) $(ZDEBUG) $(ZFLAGS) -for-pack Bignums_syntax_plugin $(PP) -impl $<
 
 ####################
 #                  #
