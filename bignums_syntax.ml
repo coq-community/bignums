@@ -42,12 +42,12 @@ let int31_1 = ConstructRef ((int31_id "digits",0),2)
 
 
 (* bigN stuff*)
-let zn2z_module = ["Coq";"Numbers";"Cyclic";"Abstract";"DoubleType"]
-let zn2z_path = make_path zn2z_module "zn2z"
-let zn2z_id = make_mind_mpfile zn2z_module
 
-let zn2z_W0 = ConstructRef ((zn2z_id "zn2z",0),1)
-let zn2z_WW = ConstructRef ((zn2z_id "zn2z",0),2)
+(* During Bignums migration, DoubleType.v moved.
+   We hence use a more tolerant approach here. *)
+
+let zn2z_W0 = lazy (Nametab.locate (Libnames.qualid_of_string "DoubleType.W0"))
+let zn2z_WW = lazy (Nametab.locate (Libnames.qualid_of_string "DoubleType.WW"))
 
 let bigN_module = ["Bignums"; "BigN"; "BigN" ]
 let bigN_path = make_path (bigN_module@["BigN"]) "t"
@@ -163,8 +163,8 @@ let height bi =
 
 (* n must be a non-negative integer (from bigint.ml) *)
 let word_of_pos_bigint dloc hght n =
-  let ref_W0 = GRef (dloc, zn2z_W0, None) in
-  let ref_WW = GRef (dloc, zn2z_WW, None) in
+  let ref_W0 = GRef (dloc, Lazy.force zn2z_W0, None) in
+  let ref_WW = GRef (dloc, Lazy.force zn2z_WW, None) in
   let rec decomp hgt n =
     if hgt <= 0 then
       int31_of_pos_bigint dloc n
@@ -213,14 +213,14 @@ let interp_bigN dloc n =
 let bigint_of_word =
   let rec get_height rc =
     match rc with
-    | GApp (_,GRef(_,c,_), [_;lft;rght]) when eq_gr c zn2z_WW ->
+    | GApp (_,GRef(_,c,_), [_;lft;rght]) when eq_gr c (Lazy.force zn2z_WW) ->
       1+max (get_height lft) (get_height rght)
     | _ -> 0
   in
   let rec transform hght rc =
     match rc with
-    | GApp (_,GRef(_,c,_),_) when eq_gr c zn2z_W0-> zero
-    | GApp (_,GRef(_,c,_), [_;lft;rght]) when eq_gr c zn2z_WW->
+    | GApp (_,GRef(_,c,_),_) when eq_gr c (Lazy.force zn2z_W0) -> zero
+    | GApp (_,GRef(_,c,_), [_;lft;rght]) when eq_gr c (Lazy.force zn2z_WW) ->
       let new_hght = hght-1 in
       add (mult (rank new_hght)
              (transform new_hght lft))
