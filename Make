@@ -1,0 +1,31 @@
+-I .
+-R . Bignums
+
+BigN/Nbasic.v
+BigN/NMake.v
+BigN/NMake_gen.v
+BigN/BigN.v
+SpecViaZ/NSig.v
+SpecViaZ/ZSig.v
+SpecViaZ/NSigNAxioms.v
+SpecViaZ/ZSigZAxioms.v
+SpecViaQ/QSig.v
+BigQ/QMake.v
+BigQ/BigQ.v
+CyclicDouble/DoubleBase.v
+CyclicDouble/DoubleAdd.v
+CyclicDouble/DoubleDiv.v
+CyclicDouble/DoubleMul.v
+CyclicDouble/DoubleSub.v
+CyclicDouble/DoubleDivn1.v
+CyclicDouble/DoubleSqrt.v
+CyclicDouble/DoubleCyclic.v
+CyclicDouble/DoubleLift.v
+BigNumPrelude.v
+BigZ/ZMake.v
+BigZ/BigZ.v
+
+numbers_syntax.ml
+numbers_syntax_plugin.mlpack
+
+-extra "BigN/NMake_gen.v" "BigN/NMake_gen.ml" "ocaml $< > $@ || (RV=$$?; rm -f $@; exit $${RV})"
