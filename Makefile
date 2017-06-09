@@ -98,6 +98,7 @@ COQSRCLIBS?=-I "$(COQLIB)kernel" \
 -I "$(COQLIB)grammar" \
 -I "$(COQLIB)config" \
 -I "$(COQLIB)engine" \
+-I "$(COQLIB)API" \
  \
   -I "$(COQLIB)/plugins/btauto" \
   -I "$(COQLIB)/plugins/cc" \
