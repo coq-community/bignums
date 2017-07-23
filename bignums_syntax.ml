@@ -112,19 +112,23 @@ let interp_int31 ?loc n =
 
 (* Pretty prints an int31 *)
 
+let is_gr c r = match CAst.get c with
+| GRef (ref, _) -> eq_gr ref r
+| _ -> false
+
 let bigint_of_int31 =
   let rec args_parsing args cur =
     match args with
       | [] -> cur
-      | { CAst.v = GRef (b,_) }::l when eq_gr b int31_0 -> args_parsing l (mult_2 cur)
-      | { CAst.v = GRef (b,_) }::l when eq_gr b int31_1 -> args_parsing l (add_1 (mult_2 cur))
+      | b::l when is_gr b int31_0 -> args_parsing l (mult_2 cur)
+      | b::l when is_gr b int31_1 -> args_parsing l (add_1 (mult_2 cur))
       | _ -> raise Non_closed
   in
-  function
-  | { CAst.v = GApp ({ CAst.v = GRef (c, _)}, args) } when eq_gr c int31_construct -> args_parsing args zero
+  fun c -> match CAst.get c with
+  | GApp (c, args) when is_gr c int31_construct -> args_parsing args zero
   | _ -> raise Non_closed
 
-let uninterp_int31 i =
+let uninterp_int31 (AnyGlobConstr i) =
   try
     Some (bigint_of_int31 i)
   with Non_closed ->
@@ -214,18 +218,18 @@ let interp_bigN ?loc n =
 
 let bigint_of_word =
   let rec get_height rc =
-    match rc with
-    | { CAst.v = GApp ({ CAst.v = GRef(c,_)}, [_;lft;rght]) }
-         when eq_gr c (Lazy.force zn2z_WW) ->
+    match CAst.get rc with
+    | GApp (c, [_;lft;rght])
+         when is_gr c (Lazy.force zn2z_WW) ->
       1+max (get_height lft) (get_height rght)
     | _ -> 0
   in
   let rec transform hght rc =
-    match rc with
-    | { CAst.v = GApp ({ CAst.v = GRef(c,_)},_)}
-         when eq_gr c (Lazy.force zn2z_W0) -> zero
-    | { CAst.v = GApp ({ CAst.v = GRef(c,_)}, [_;lft;rght]) }
-         when eq_gr c (Lazy.force zn2z_WW) ->
+    match CAst.get rc with
+    | GApp (c,_)
+         when is_gr c (Lazy.force zn2z_W0) -> zero
+    | GApp (c, [_;lft;rght])
+         when is_gr c (Lazy.force zn2z_WW) ->
       let new_hght = hght-1 in
       add (mult (rank new_hght)
              (transform new_hght lft))
@@ -237,12 +241,12 @@ let bigint_of_word =
     transform hght rc
 
 let bigint_of_bigN rc =
-  match rc with
-  | { CAst.v = GApp (_,[one_arg]) } -> bigint_of_word one_arg
-  | { CAst.v = GApp (_,[_;second_arg]) } -> bigint_of_word second_arg
+  match CAst.get rc with
+  | GApp (_,[one_arg]) -> bigint_of_word one_arg
+  | GApp (_,[_;second_arg]) -> bigint_of_word second_arg
   | _ -> raise Non_closed
 
-let uninterp_bigN rc =
+let uninterp_bigN (AnyGlobConstr rc) =
   try
     Some (bigint_of_bigN rc)
   with Non_closed ->
@@ -280,9 +284,9 @@ let interp_bigZ ?loc n =
     CAst.make ?loc @@ GApp (ref_neg, [bigN_of_pos_bigint ?loc (neg n)])
 
 (* pretty printing functions for bigZ *)
-let bigint_of_bigZ = function
-  | { CAst.v = GApp ({ CAst.v = GRef(c,_) }, [one_arg])} when eq_gr c bigZ_pos -> bigint_of_bigN one_arg
-  | { CAst.v = GApp ({ CAst.v = GRef(c,_) }, [one_arg])} when eq_gr c bigZ_neg ->
+let bigint_of_bigZ c = match CAst.get c with
+  | GApp (c, [one_arg]) when is_gr c bigZ_pos -> bigint_of_bigN one_arg
+  | GApp (c, [one_arg]) when is_gr c bigZ_neg ->
       let opp_val = bigint_of_bigN one_arg in
       if equal opp_val zero then
 	raise Non_closed
@@ -291,7 +295,7 @@ let bigint_of_bigZ = function
   | _ -> raise Non_closed
 
 
-let uninterp_bigZ rc =
+let uninterp_bigZ (AnyGlobConstr rc) =
   try
     Some (bigint_of_bigZ rc)
   with Non_closed ->
@@ -311,9 +315,9 @@ let interp_bigQ ?loc n =
   let ref_z = CAst.make ?loc @@ GRef (bigQ_z, None) in
   CAst.make ?loc @@ GApp (ref_z, [interp_bigZ ?loc n])
 
-let uninterp_bigQ rc =
-  try match rc with
-    | { CAst.v = GApp ({ CAst.v = GRef(c,_)}, [one_arg]) } when eq_gr c bigQ_z ->
+let uninterp_bigQ (AnyGlobConstr rc) =
+  try match CAst.get rc with
+    | GApp (c, [one_arg]) when is_gr c bigQ_z ->
 	Some (bigint_of_bigZ one_arg)
     | _ -> None (* we don't pretty-print yet fractions *)
   with Non_closed -> None
