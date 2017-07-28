@@ -399,21 +399,21 @@ Section DoubleLift.
    rewrite (Z.add_comm ([|xh|] * 2 ^ u * wB)).
    rewrite Z_mod_plus;zarith. rewrite Z_mod_mult;zarith.
    unfold base;rewrite <- Zmod_shift_r;zarith. fold base;apply Z_mod_lt;zarith.
-   unfold u; split;zarith.
+   try (unfold u; omega).
    split;zarith. unfold u; apply Zdiv_lt_upper_bound;zarith.
    rewrite <- Zpower_exp;zarith.
    fold u.
    ring_simplify (u + (Zpos w_digits - u)); fold
    wB;zarith. unfold ww_digits;rewrite Pos2Z.inj_xO;zarith.
    unfold base;rewrite <- Zmod_shift_r;zarith. fold base;apply Z_mod_lt;zarith.
-   unfold u; split;zarith.
+   try (unfold u; omega).
    unfold u; split;zarith.
    apply Zdiv_lt_upper_bound;zarith.
    rewrite <- Zpower_exp;zarith.
    fold u.
    ring_simplify (u + (Zpos w_digits - u)); fold wB; auto with zarith.
-   unfold u;zarith.
-   unfold u;zarith.
+   try (unfold u;zarith).
+   try (unfold u;zarith).
    set (u := [[p]] - Zpos w_digits).
    ring_simplify (u + (Zpos w_digits - u)); fold wB; auto with zarith.
   Qed.
