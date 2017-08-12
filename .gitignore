@@ -1,1 +1,11 @@
 BigN/NMake_gen.v
+*.d
+*.o
+*.cmi
+*.cmx
+*.cmxs
+*.vo
+*.glob
+*.aux
+Makefile.coq
+Makefile.coq.conf
