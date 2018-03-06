@@ -5,10 +5,10 @@ clean: Makefile.coq
 	+make -f Makefile.coq clean
 	rm -f Makefile.coq Makefile.coq.conf
 
-Make:;
+_CoqProject:;
 
-Makefile.coq: Make
-	$(COQBIN)coq_makefile -f Make -o Makefile.coq
+Makefile.coq: _CoqProject
+	$(COQBIN)coq_makefile -f _CoqProject -o Makefile.coq
 
 %: Makefile.coq
 	+make -f Makefile.coq $@
