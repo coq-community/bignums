@@ -947,7 +947,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  destr_eqb; nzsimpl; intros.
  - apply Qeq_sym; apply Qpower_positive_0.
  - rewrite NN.spec_pow_pos in *.
-   assert (0 < NN.to_Z d ^ ' p)%Z by
+   assert (0 < NN.to_Z d ^ Zpos p)%Z by
     (apply Z.pow_pos_nonneg; auto with zarith).
    romega.
  - exfalso.
@@ -1273,7 +1273,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  unfold Qcmult, Q2Qc.
  apply Qc_decomp; unfold this.
  apply Qred_complete.
- setoid_replace ([x] ^ ' Pos.succ p)%Q with ([x] * [x] ^ ' p)%Q.
+ setoid_replace ([x] ^ Zpos (Pos.succ p))%Q with ([x] * [x] ^ Zpos p)%Q.
  apply Qmult_comp; apply Qeq_sym; apply Qred_correct.
  simpl.
  rewrite <- Pos.add_1_l.
