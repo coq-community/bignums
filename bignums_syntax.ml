@@ -198,7 +198,7 @@ let bigN_of_pos_bigint ?loc n =
   let word = word_of_pos_bigint ?loc h n in
   let args =
     if h < n_inlined then [word]
-    else [Nat_syntax_plugin.Nat_syntax.nat_of_int ?loc (of_int (h-n_inlined));word]
+    else [nat_of_int ?loc (h-n_inlined);word]
   in
   DAst.make ?loc @@ GApp (ref_constructor, args)
 
