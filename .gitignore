@@ -7,5 +7,6 @@ BigN/NMake_gen.v
 *.vo
 *.glob
 *.aux
+*~
 Makefile.coq
 Makefile.coq.conf
