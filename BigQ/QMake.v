@@ -10,7 +10,7 @@
 
 (** Initial authors : Benjamin Gregoire, Laurent Thery, INRIA, 2007 *)
 
-Require Import BigNumPrelude ROmega.
+Require Import BigNumPrelude Lia.
 Require Import QArith Qcanon Qpower Qminmax.
 Require Import NSig ZSig QSig.
 
@@ -64,7 +64,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  Lemma N_to_Z_pos :
   forall x, (NN.to_Z x <> NN.to_Z NN.zero)%Z -> (0 < NN.to_Z x)%Z.
  Proof.
- intros x; rewrite NN.spec_0; generalize (NN.spec_pos x). romega.
+ intros x; rewrite NN.spec_0; generalize (NN.spec_pos x). lia.
  Qed.
 
  Ltac destr_zcompare := case Z.compare_spec; intros ?H.
@@ -199,7 +199,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  destr_zcompare.
  simpl. rewrite <- H; qsimpl. congruence.
  reflexivity.
- qsimpl. exfalso; romega.
+ qsimpl. lia.
  Qed.
 
  (** Normalisation function *)
@@ -224,14 +224,14 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  (* Lt *)
  rewrite strong_spec_check_int.
  qsimpl.
- generalize (Zgcd_div_pos (ZZ.to_Z p) (NN.to_Z q)). romega.
+ generalize (Zgcd_div_pos (ZZ.to_Z p) (NN.to_Z q)). lia.
  replace (NN.to_Z q) with 0%Z in * by assumption.
  rewrite Zdiv_0_l in *; auto with zarith.
- apply Zgcd_div_swap0; romega.
+ apply Zgcd_div_swap0; lia.
  (* Gt *)
  qsimpl.
  assert (H' : Z.gcd (ZZ.to_Z p) (NN.to_Z q) = 0%Z).
-  generalize (Z.gcd_nonneg (ZZ.to_Z p) (NN.to_Z q)); romega.
+  generalize (Z.gcd_nonneg (ZZ.to_Z p) (NN.to_Z q)); lia.
  symmetry; apply (Z.gcd_eq_0_l _ _ H'); auto.
  Qed.
 
@@ -254,8 +254,8 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  destruct (Z_lt_le_dec 0 (NN.to_Z q)).
  apply Zis_gcd_rel_prime; auto with zarith.
  apply Zgcd_is_gcd.
- replace (NN.to_Z q) with 0%Z in * by romega.
- rewrite Zdiv_0_l in *; romega.
+ replace (NN.to_Z q) with 0%Z in * by lia.
+ rewrite Zdiv_0_l in *; lia.
  (* Gt *)
  simpl; auto with zarith.
  Qed.
@@ -462,7 +462,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  exists 1%Z; nzsimpl; auto.
  exists 0%Z; nzsimpl.
  assert (Z.gcd (ZZ.to_Z n) (NN.to_Z d) = 0%Z).
-  generalize (Z.gcd_nonneg (ZZ.to_Z n) (NN.to_Z d)); romega.
+  generalize (Z.gcd_nonneg (ZZ.to_Z n) (NN.to_Z d)); lia.
  clear H.
  split.
  symmetry; apply (Z.gcd_eq_0_l _ _ H0).
@@ -511,13 +511,13 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  destr_zcompare; simpl; auto.
  elim H.
  apply (Z.gcd_eq_0_r (ZZ.to_Z n)).
- generalize (Z.gcd_nonneg (ZZ.to_Z n) (NN.to_Z d)); romega.
+ generalize (Z.gcd_nonneg (ZZ.to_Z n) (NN.to_Z d)); lia.
 
  nzsimpl.
  rewrite Zgcd_1_rel_prime.
  apply Zis_gcd_rel_prime.
- generalize (NN.spec_pos d); romega.
- generalize (Z.gcd_nonneg (ZZ.to_Z n) (NN.to_Z d)); romega.
+ generalize (NN.spec_pos d); lia.
+ generalize (Z.gcd_nonneg (ZZ.to_Z n) (NN.to_Z d)); lia.
  apply Zgcd_is_gcd; auto.
  Qed.
 
@@ -557,8 +557,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  rewrite Zdiv_gcd_zero in GT; auto with zarith.
  nsubst. rewrite Zdiv_0_l in *; discriminate.
  rewrite <- Z.mul_assoc, (Z.mul_comm (ZZ.to_Z n)), Z.mul_assoc.
- rewrite Zgcd_div_swap0; try romega.
- ring.
+ rewrite Zgcd_div_swap0; lia.
  Qed.
 
  Instance strong_spec_mul_norm_Qz_Qq z n d :
@@ -590,7 +589,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  rewrite Z2Pos.id; auto.
  apply Zgcd_mult_rel_prime; auto.
   generalize (Z.gcd_eq_0_l (ZZ.to_Z z) (NN.to_Z d))
-    (Z.gcd_nonneg (ZZ.to_Z z) (NN.to_Z d)); romega.
+    (Z.gcd_nonneg (ZZ.to_Z z) (NN.to_Z d)); lia.
  destr_eqb; simpl; nzsimpl; auto.
  unfold norm_denum.
  destr_eqb; nzsimpl; simpl; destr_eqb; simpl; auto.
@@ -599,8 +598,8 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  apply Zgcd_mult_rel_prime.
  rewrite Zgcd_1_rel_prime.
  apply Zis_gcd_rel_prime.
- generalize (NN.spec_pos d); romega.
- generalize (Z.gcd_nonneg (ZZ.to_Z z) (NN.to_Z d)); romega.
+ generalize (NN.spec_pos d); lia.
+ generalize (Z.gcd_nonneg (ZZ.to_Z z) (NN.to_Z d)); lia.
  apply Zgcd_is_gcd.
  destruct (Zgcd_is_gcd (ZZ.to_Z z) (NN.to_Z d)) as [ (z0,Hz0) (d0,Hd0) Hzd].
  replace (NN.to_Z d / Z.gcd (ZZ.to_Z z) (NN.to_Z d))%Z with d0.
@@ -670,16 +669,16 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  unfold norm_denum; qsimpl.
 
  assert (NEQ : NN.to_Z dy <> 0%Z) by
-  (rewrite Hz; intros EQ; rewrite EQ in *; romega).
+  (rewrite Hz; intros EQ; rewrite EQ in *; lia).
  specialize (Hgc NEQ).
 
  assert (NEQ' : NN.to_Z dx <> 0%Z) by
-  (rewrite Hz'; intro EQ; rewrite EQ in *; romega).
+  (rewrite Hz'; intro EQ; rewrite EQ in *; lia).
  specialize (Hgc' NEQ').
 
  revert H H0.
  rewrite 2 strong_spec_red, 2 Qred_iff; simpl.
- destr_eqb; simpl; nzsimpl; try romega; intros.
+ destr_eqb; simpl; nzsimpl; try lia; intros.
  rewrite Z2Pos.id in *; auto.
 
  apply Zgcd_mult_rel_prime; rewrite Z.gcd_comm;
@@ -725,19 +724,19 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  simpl; nzsimpl; compute; auto.
  (* 0 < z *)
  simpl.
- destr_eqb; nzsimpl; [ intros; rewrite Z.abs_eq in *; romega | intros _ ].
+ destr_eqb; nzsimpl; [ intros; rewrite Z.abs_eq in *; lia | intros _ ].
  set (z':=ZZ.to_Z z) in *; clearbody z'.
  red; simpl.
- rewrite Z.abs_eq by romega.
+ rewrite Z.abs_eq by lia.
  rewrite Z2Pos.id by auto.
  unfold Qinv; simpl; destruct z'; simpl; auto; discriminate.
  (* 0 > z *)
  simpl.
- destr_eqb; nzsimpl; [ intros; rewrite Z.abs_neq in *; romega | intros _ ].
+ destr_eqb; nzsimpl; [ intros; rewrite Z.abs_neq in *; lia | intros _ ].
  set (z':=ZZ.to_Z z) in *; clearbody z'.
  red; simpl.
- rewrite Z.abs_neq by romega.
- rewrite Z2Pos.id by romega.
+ rewrite Z.abs_neq by lia.
+ rewrite Z2Pos.id by lia.
  unfold Qinv; simpl; destruct z'; simpl; auto; discriminate.
  (* Qq n d *)
  simpl.
@@ -749,11 +748,11 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  (* 0 < n *)
  simpl.
  destr_eqb; nzsimpl; intros.
- intros; rewrite Z.abs_eq in *; romega.
- intros; rewrite Z.abs_eq in *; romega.
+ intros; rewrite Z.abs_eq in *; lia.
+ intros; rewrite Z.abs_eq in *; lia.
  nsubst; compute; auto.
  set (n':=ZZ.to_Z n) in *; clearbody n'.
- rewrite Z.abs_eq by romega.
+ rewrite Z.abs_eq by lia.
  red; simpl.
  rewrite Z2Pos.id by auto.
  unfold Qinv; simpl; destruct n'; simpl; auto; try discriminate.
@@ -761,13 +760,13 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  (* 0 > n *)
  simpl.
  destr_eqb; nzsimpl; intros.
- intros; rewrite Z.abs_neq in *; romega.
- intros; rewrite Z.abs_neq in *; romega.
+ intros; rewrite Z.abs_neq in *; lia.
+ intros; rewrite Z.abs_neq in *; lia.
  nsubst; compute; auto.
  set (n':=ZZ.to_Z n) in *; clearbody n'.
  red; simpl; nzsimpl.
- rewrite Z.abs_neq by romega.
- rewrite Z2Pos.id by romega.
+ rewrite Z.abs_neq by lia.
+ rewrite Z2Pos.id by lia.
  unfold Qinv; simpl; destruct n'; simpl; auto; try discriminate.
  assert (T : forall x, Zneg x = Z.opp (Zpos x)) by auto.
  rewrite T, Pos2Z.inj_mul, Z2Pos.id; auto; ring.
@@ -816,14 +815,14 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  (* 0 < n *)
  destr_zcompare; auto with qarith.
  destr_zcompare; nzsimpl; simpl; auto with qarith; intros.
- destr_eqb; nzsimpl; [ intros; rewrite Z.abs_eq in *; romega | intros _ ].
+ destr_eqb; nzsimpl; [ intros; rewrite Z.abs_eq in *; lia | intros _ ].
  rewrite H0; auto with qarith.
- romega.
+ lia.
  (* 0 > n *)
  destr_zcompare; nzsimpl; simpl; auto with qarith.
- destr_eqb; nzsimpl; [ intros; rewrite Z.abs_neq in *; romega | intros _ ].
+ destr_eqb; nzsimpl; [ intros; rewrite Z.abs_neq in *; lia | intros _ ].
  rewrite H0; auto with qarith.
- romega.
+ lia.
  Qed.
 
  Instance strong_spec_inv_norm x : Reduced x -> Reduced (inv_norm x).
@@ -845,11 +844,11 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  (* 0 < n *)
  destr_zcompare; simpl; nzsimpl; auto.
  destr_eqb; nzsimpl; simpl; auto.
- rewrite Z.abs_eq; romega.
+ rewrite Z.abs_eq; lia.
  intros _.
  rewrite strong_spec_norm; simpl; nzsimpl.
  destr_eqb; nzsimpl.
- rewrite Z.abs_eq; romega.
+ rewrite Z.abs_eq; lia.
  intros _.
  rewrite Qred_iff.
  simpl.
@@ -860,11 +859,11 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  destr_eqb; nzsimpl; simpl; auto; intros.
  destr_zcompare; simpl; nzsimpl; auto.
  destr_eqb; nzsimpl.
- rewrite Z.abs_neq; romega.
+ rewrite Z.abs_neq; lia.
  intros _.
  rewrite strong_spec_norm; simpl; nzsimpl.
  destr_eqb; nzsimpl.
- rewrite Z.abs_neq; romega.
+ rewrite Z.abs_neq; lia.
  intros _.
  rewrite Qred_iff.
  simpl.
@@ -874,7 +873,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  apply Zis_gcd_gcd; auto with zarith.
  apply Zis_gcd_minus.
  rewrite Z.opp_involutive, <- H1; apply Zgcd_is_gcd.
- rewrite Z.abs_neq; romega.
+ rewrite Z.abs_neq; lia.
  Qed.
 
  Definition div x y := mul x (inv y).
@@ -919,8 +918,8 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  destr_eqb; nzsimpl; intros.
  apply Qeq_refl.
  rewrite NN.spec_square in *; nzsimpl.
- rewrite Z.mul_eq_0 in *; romega.
- rewrite NN.spec_square in *; nzsimpl; nsubst; romega.
+ rewrite Z.mul_eq_0 in *; lia.
+ rewrite NN.spec_square in *; nzsimpl; nsubst; lia.
  rewrite ZZ.spec_square, NN.spec_square.
  red; simpl.
  rewrite Pos2Z.inj_mul; rewrite !Z2Pos.id; auto.
@@ -949,14 +948,14 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  - rewrite NN.spec_pow_pos in *.
    assert (0 < NN.to_Z d ^ Zpos p)%Z by
     (apply Z.pow_pos_nonneg; auto with zarith).
-   romega.
+   lia.
  - exfalso.
    rewrite NN.spec_pow_pos in *. nsubst.
-   rewrite Z.pow_0_l' in *; [romega|discriminate].
+   rewrite Z.pow_0_l' in *; [lia|discriminate].
  - rewrite Qpower_decomp.
    red; simpl; do 3 f_equal.
    apply Pos2Z.inj. rewrite Pos2Z.inj_pow.
-   rewrite 2 Z2Pos.id by (generalize (NN.spec_pos d); romega).
+   rewrite 2 Z2Pos.id by (generalize (NN.spec_pos d); lia).
    now rewrite NN.spec_pow_pos.
  Qed.
 
@@ -974,7 +973,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  destr_eqb; nzsimpl; simpl; intros.
  exfalso.
  rewrite NN.spec_pow_pos in *. nsubst.
- rewrite Z.pow_0_l' in *; [romega|discriminate].
+ rewrite Z.pow_0_l' in *; [lia|discriminate].
  rewrite Z2Pos.id in *; auto.
  rewrite NN.spec_pow_pos, ZZ.spec_pow_pos; auto.
  rewrite Zgcd_1_rel_prime in *.
