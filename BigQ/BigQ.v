@@ -49,7 +49,9 @@ End BigQ.
 Local Open Scope bigQ_scope.
 
 Notation bigQ := BigQ.t.
-Bind Scope bigQ_scope with bigQ BigQ.t BigQ.t_.
+Bind Scope bigQ_scope with bigQ.
+Bind Scope bigQ_scope with BigQ.t.
+Bind Scope bigQ_scope with BigQ.t_.
 (** As in QArith, we use [#] to denote fractions *)
 Notation "p # q" := (BigQ.Qq p q) (at level 55, no associativity) : bigQ_scope.
 Local Notation "0" := BigQ.zero : bigQ_scope.

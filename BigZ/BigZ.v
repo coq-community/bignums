@@ -41,7 +41,9 @@ Module BigZ <: ZType <: OrderedTypeFull <: TotalOrder :=
 Local Open Scope bigZ_scope.
 
 Notation bigZ := BigZ.t.
-Bind Scope bigZ_scope with bigZ BigZ.t BigZ.t_.
+Bind Scope bigZ_scope with bigZ.
+Bind Scope bigZ_scope with BigZ.t.
+Bind Scope bigZ_scope with BigZ.t_.
 Arguments BigZ.Pos _%bigN.
 Arguments BigZ.Neg _%bigN.
 Local Notation "0" := BigZ.zero : bigZ_scope.
