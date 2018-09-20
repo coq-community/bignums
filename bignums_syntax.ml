@@ -111,7 +111,7 @@ let interp_int31 ?loc n =
 (* Pretty prints an int31 *)
 
 let is_gr c r = match DAst.get c with
-| GRef (ref, _) -> eq_gr ref r
+| GRef (ref, _) -> GlobRef.equal ref r
 | _ -> false
 
 let bigint_of_int31 =
@@ -173,10 +173,10 @@ let word_of_pos_bigint ?loc hght n =
     if hgt <= 0 then
       int31_of_pos_bigint ?loc n
     else if equal n zero then
-      DAst.make ?loc @@ GApp (ref_W0, [DAst.make ?loc @@ GHole (Evar_kinds.InternalHole, Misctypes.IntroAnonymous, None)])
+      DAst.make ?loc @@ GApp (ref_W0, [DAst.make ?loc @@ GHole (Evar_kinds.InternalHole, Namegen.IntroAnonymous, None)])
     else
       let (h,l) = split_at hgt n in
-      DAst.make ?loc @@ GApp (ref_WW, [DAst.make ?loc @@ GHole (Evar_kinds.InternalHole, Misctypes.IntroAnonymous, None);
+      DAst.make ?loc @@ GApp (ref_WW, [DAst.make ?loc @@ GHole (Evar_kinds.InternalHole, Namegen.IntroAnonymous, None);
 			   decomp (hgt-1) h;
 			   decomp (hgt-1) l])
   in
