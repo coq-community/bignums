@@ -41,7 +41,9 @@ Module BigN <: NType <: OrderedTypeFull <: TotalOrder :=
 Local Open Scope bigN_scope.
 
 Notation bigN := BigN.t.
-Bind Scope bigN_scope with bigN BigN.t BigN.t'.
+Bind Scope bigN_scope with bigN.
+Bind Scope bigN_scope with BigN.t.
+Bind Scope bigN_scope with BigN.t'.
 Arguments BigN.N0 _%int31.
 Local Notation "0" := BigN.zero : bigN_scope. (* temporary notation *)
 Local Notation "1" := BigN.one : bigN_scope. (* temporary notation *)
