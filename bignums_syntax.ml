@@ -12,7 +12,6 @@ let () = Mltop.add_known_module __coq_plugin_name
 
 (* digit-based syntax for int31, bigN bigZ and bigQ *)
 
-open Bigint
 open Names
 open Globnames
 open Glob_term
@@ -94,8 +93,8 @@ let int31_of_pos_bigint ?loc n =
     if counter <= 0 then
       []
     else
-      let (q,r) = div2_with_rest n in
-	(if r then ref_1 else ref_0)::(args (counter-1) q)
+      let (q,r) = Z.(div_rem n (of_int 2)) in
+	(if Z.(equal r one) then ref_1 else ref_0)::(args (counter-1) q)
   in
   DAst.make ?loc @@ GApp (ref_construct, List.rev (args 31 n))
 
@@ -103,7 +102,7 @@ let error_negative ?loc =
   CErrors.user_err ?loc ~hdr:"interp_int31" (Pp.str "int31 are only non-negative numbers.")
 
 let interp_int31 ?loc n =
-  if is_pos_or_zero n then
+  if Z.(leq zero n) then
     int31_of_pos_bigint ?loc n
   else
     error_negative ?loc
@@ -118,12 +117,12 @@ let bigint_of_int31 =
   let rec args_parsing args cur =
     match args with
       | [] -> cur
-      | b::l when is_gr b int31_0 -> args_parsing l (mult_2 cur)
-      | b::l when is_gr b int31_1 -> args_parsing l (add_1 (mult_2 cur))
+      | b::l when is_gr b int31_0 -> args_parsing l Z.(mul (of_int 2) cur)
+      | b::l when is_gr b int31_1 -> args_parsing l Z.(add one (mul (of_int 2) cur))
       | _ -> raise Non_closed
   in
   fun c -> match DAst.get c with
-  | GApp (c, args) when is_gr c int31_construct -> args_parsing args zero
+  | GApp (c, args) when is_gr c int31_construct -> args_parsing args Z.zero
   | _ -> raise Non_closed
 
 let uninterp_int31 (AnyGlobConstr i) =
@@ -143,26 +142,26 @@ let _ = Notation.declare_numeral_interpreter int31_scope
 
 (*** Parsing for bigN in digital notation ***)
 (* the base for bigN (in Coq) that is 2^31 in our case *)
-let base = pow two 31
+let base = Z.(pow (of_int 2) 31)
 
 (* base of the bigN of height N : (2^31)^(2^n) *)
 let rank n =
   let rec rk n pow2 =
     if n <= 0 then pow2
-    else rk (n-1) (mult pow2 pow2)
+    else rk (n-1) Z.(mul pow2 pow2)
   in rk n base
 
 (* splits a number bi at height n, that is the rest needs 2^n int31 to be stored
    it is expected to be used only when the quotient would also need 2^n int31 to be
    stored *)
 let split_at n bi =
-  euclid bi (rank (n-1))
+  Z.ediv_rem bi (rank (n-1))
 
 (* search the height of the Coq bigint needed to represent the integer bi *)
 let height bi =
   let rec hght n pow2 =
-    if less_than bi pow2 then n
-    else hght (n+1) (mult pow2 pow2)
+    if Z.lt bi pow2 then n
+    else hght (n+1) Z.(mul pow2 pow2)
   in hght 0 base
 
 (* n must be a non-negative integer (from bigint.ml) *)
@@ -172,7 +171,7 @@ let word_of_pos_bigint ?loc hght n =
   let rec decomp hgt n =
     if hgt <= 0 then
       int31_of_pos_bigint ?loc n
-    else if equal n zero then
+    else if Z.(equal n zero) then
       DAst.make ?loc @@ GApp (ref_W0, [DAst.make ?loc @@ GHole (Evar_kinds.InternalHole, Namegen.IntroAnonymous, None)])
     else
       let (h,l) = split_at hgt n in
@@ -206,7 +205,7 @@ let bigN_error_negative ?loc =
   CErrors.user_err ?loc ~hdr:"interp_bigN" (Pp.str "bigN are only non-negative numbers.")
 
 let interp_bigN ?loc n =
-  if is_pos_or_zero n then
+  if Z.(leq zero n) then
     bigN_of_pos_bigint ?loc n
   else
     bigN_error_negative ?loc
@@ -225,12 +224,12 @@ let bigint_of_word =
   let rec transform hght rc =
     match DAst.get rc with
     | GApp (c,_)
-         when is_gr c (Lazy.force zn2z_W0) -> zero
+         when is_gr c (Lazy.force zn2z_W0) -> Z.zero
     | GApp (c, [_;lft;rght])
          when is_gr c (Lazy.force zn2z_WW) ->
       let new_hght = hght-1 in
-      add (mult (rank new_hght)
-             (transform new_hght lft))
+      Z.(add (mul (rank new_hght)
+             (transform new_hght lft)))
 	(transform new_hght rght)
     | _ -> bigint_of_int31 rc
   in
@@ -276,20 +275,20 @@ let _ = Notation.declare_numeral_interpreter bigN_scope
 let interp_bigZ ?loc n =
   let ref_pos = DAst.make ?loc @@ GRef (bigZ_pos, None) in
   let ref_neg = DAst.make ?loc @@ GRef (bigZ_neg, None) in
-  if is_pos_or_zero n then
+  if Z.(leq zero n) then
     DAst.make ?loc @@ GApp (ref_pos, [bigN_of_pos_bigint ?loc n])
   else
-    DAst.make ?loc @@ GApp (ref_neg, [bigN_of_pos_bigint ?loc (neg n)])
+    DAst.make ?loc @@ GApp (ref_neg, [bigN_of_pos_bigint ?loc Z.(neg n)])
 
 (* pretty printing functions for bigZ *)
 let bigint_of_bigZ c = match DAst.get c with
   | GApp (c, [one_arg]) when is_gr c bigZ_pos -> bigint_of_bigN one_arg
   | GApp (c, [one_arg]) when is_gr c bigZ_neg ->
       let opp_val = bigint_of_bigN one_arg in
-      if equal opp_val zero then
+      if Z.(equal opp_val zero) then
 	raise Non_closed
       else
-	neg opp_val
+	Z.neg opp_val
   | _ -> raise Non_closed
 
 
