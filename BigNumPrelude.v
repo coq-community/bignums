@@ -19,6 +19,10 @@ Require Export ZArith.
 Require Export Znumtheory.
 Require Export Zpow_facts.
 
+Declare Scope bigN_scope.
+Declare Scope bigZ_scope.
+Declare Scope bigQ_scope.
+
 Declare ML Module "bignums_syntax_plugin".
 
 (* *** Nota Bene ***
