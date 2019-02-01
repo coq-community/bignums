@@ -1,7 +1,9 @@
 BigN/NMake_gen.v
 *.d
 *.o
+*.annot
 *.cmi
+*.cmt
 *.cmx
 *.cmxs
 *.vo
