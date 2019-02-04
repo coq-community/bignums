@@ -10,36 +10,22 @@
 let __coq_plugin_name = "bignums_syntax_plugin"
 let () = Mltop.add_known_module __coq_plugin_name
 
-(* digit-based syntax for int31, bigN bigZ and bigQ *)
+(* digit-based syntax for int63, bigN bigZ and bigQ *)
 
 open Bigint
 open Names
 open Globnames
 open Glob_term
 
-(*** Constants for locating int31 / bigN / bigZ / bigQ constructors ***)
+(*** Constants for locating bigN / bigZ / bigQ constructors ***)
 
 let make_dir l = DirPath.make (List.rev_map Id.of_string l)
 let make_path dir id = Libnames.make_path (make_dir dir) (Id.of_string id)
 
 let make_mind mp id = Names.MutInd.make2 mp (Label.make id)
-let make_mind_mpfile dir id = make_mind (MPfile (make_dir dir)) id
 let make_mind_mpdot dir modname id =
   let mp = MPdot (MPfile (make_dir dir), Label.make modname)
   in make_mind mp id
-
-
-(* int31 stuff *)
-let int31_module = ["Coq";"Numbers";"Cyclic"; "Int31"; "Int31"]
-let int31_path = make_path int31_module "int31"
-let int31_id = make_mind_mpfile int31_module
-let int31_scope = "int31_scope"
-
-let int31_construct = ConstructRef ((int31_id "int31",0),1)
-
-let int31_0 = ConstructRef ((int31_id "digits",0),1)
-let int31_1 = ConstructRef ((int31_id "digits",0),2)
-
 
 (* bigN stuff*)
 
@@ -79,81 +65,23 @@ let bigQ_scope = "bigQ_scope"
 let bigQ_z =  ConstructRef ((bigQ_t,0),1)
 
 
-(*** Definition of the Non_closed exception, used in the pretty printing ***)
-exception Non_closed
-
-(*** Parsing for int31 in digital notation ***)
-
-(* parses a *non-negative* integer (from bigint.ml) into an int31
-   wraps modulo 2^31 *)
-let int31_of_pos_bigint ?loc n =
-  let ref_construct = DAst.make ?loc @@ GRef (int31_construct, None) in
-  let ref_0 = DAst.make ?loc @@ GRef (int31_0, None) in
-  let ref_1 = DAst.make ?loc @@ GRef (int31_1, None) in
-  let rec args counter n =
-    if counter <= 0 then
-      []
-    else
-      let (q,r) = div2_with_rest n in
-	(if r then ref_1 else ref_0)::(args (counter-1) q)
-  in
-  DAst.make ?loc @@ GApp (ref_construct, List.rev (args 31 n))
-
-let error_negative ?loc =
-  CErrors.user_err ?loc ~hdr:"interp_int31" (Pp.str "int31 are only non-negative numbers.")
-
-let interp_int31 ?loc n =
-  if is_pos_or_zero n then
-    int31_of_pos_bigint ?loc n
-  else
-    error_negative ?loc
-
-(* Pretty prints an int31 *)
-
 let is_gr c r = match DAst.get c with
 | GRef (ref, _) -> GlobRef.equal ref r
 | _ -> false
 
-let bigint_of_int31 =
-  let rec args_parsing args cur =
-    match args with
-      | [] -> cur
-      | b::l when is_gr b int31_0 -> args_parsing l (mult_2 cur)
-      | b::l when is_gr b int31_1 -> args_parsing l (add_1 (mult_2 cur))
-      | _ -> raise Non_closed
-  in
-  fun c -> match DAst.get c with
-  | GApp (c, args) when is_gr c int31_construct -> args_parsing args zero
-  | _ -> raise Non_closed
-
-let uninterp_int31 (AnyGlobConstr i) =
-  try
-    Some (bigint_of_int31 i)
-  with Non_closed ->
-    None
-
-(* Actually declares the interpreter for int31 *)
-let _ = Notation.declare_numeral_interpreter int31_scope
-  (int31_path, int31_module)
-  interp_int31
-  ([DAst.make @@ GRef (int31_construct, None)],
-   uninterp_int31,
-   true)
-
-
 (*** Parsing for bigN in digital notation ***)
-(* the base for bigN (in Coq) that is 2^31 in our case *)
-let base = pow two 31
+(* the base for bigN (in Coq) that is 2^63 in our case *)
+let base = pow two 63
 
-(* base of the bigN of height N : (2^31)^(2^n) *)
+(* base of the bigN of height N : (2^63)^(2^n) *)
 let rank n =
   let rec rk n pow2 =
     if n <= 0 then pow2
     else rk (n-1) (mult pow2 pow2)
   in rk n base
 
-(* splits a number bi at height n, that is the rest needs 2^n int31 to be stored
-   it is expected to be used only when the quotient would also need 2^n int31 to be
+(* splits a number bi at height n, that is the rest needs 2^n int63 to be stored
+   it is expected to be used only when the quotient would also need 2^n int63 to be
    stored *)
 let split_at n bi =
   euclid bi (rank (n-1))
@@ -171,7 +99,7 @@ let word_of_pos_bigint ?loc hght n =
   let ref_WW = DAst.make ?loc @@ GRef (Lazy.force zn2z_WW, None) in
   let rec decomp hgt n =
     if hgt <= 0 then
-      int31_of_pos_bigint ?loc n
+      DAst.make ?loc (GInt (Notation.int63_of_pos_bigint n))
     else if equal n zero then
       DAst.make ?loc @@ GApp (ref_W0, [DAst.make ?loc @@ GHole (Evar_kinds.InternalHole, Namegen.IntroAnonymous, None)])
     else
@@ -183,8 +111,8 @@ let word_of_pos_bigint ?loc hght n =
   decomp hght n
 
 let nat_of_int ?loc n =
-  let ref_O = DAst.make ?loc (GRef (Coqlib.glob_O, None)) in
-  let ref_S = DAst.make ?loc (GRef (Coqlib.glob_S, None)) in
+  let ref_O = DAst.make ?loc (GRef (Coqlib.lib_ref "num.nat.O", None)) in
+  let ref_S = DAst.make ?loc (GRef (Coqlib.lib_ref "num.nat.S", None)) in
   let rec mk_nat acc n =
     if Int.equal n 0 then acc
     else
@@ -214,6 +142,13 @@ let interp_bigN ?loc n =
 
 (* Pretty prints a bigN *)
 
+exception Non_closed
+
+let bigint_of_int63 c =
+  match DAst.get c with
+  | GInt i -> Bigint.of_string (Uint63.to_string i)
+  | _ -> raise Non_closed
+
 let bigint_of_word =
   let rec get_height rc =
     match DAst.get rc with
@@ -232,7 +167,7 @@ let bigint_of_word =
       add (mult (rank new_hght)
              (transform new_hght lft))
 	(transform new_hght rght)
-    | _ -> bigint_of_int31 rc
+    | _ -> bigint_of_int63 rc
   in
   fun rc ->
     let hght = get_height rc in
