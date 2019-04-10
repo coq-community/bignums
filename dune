@@ -1,0 +1,7 @@
+(include_subdirs qualified)
+
+(coq.theory
+ (name Bignums)
+ (public_name coq-bignums)
+ (libraries coq-bignums.plugin))
+
