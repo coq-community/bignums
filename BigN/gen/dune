@@ -1,0 +1,4 @@
+(executable
+ (name NMake_gen))
+
+(include_subdirs no)

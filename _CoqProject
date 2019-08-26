@@ -1,4 +1,4 @@
--I .
+-I plugin
 -R . Bignums
 
 BigN/Nbasic.v
@@ -25,7 +25,7 @@ BigNumPrelude.v
 BigZ/ZMake.v
 BigZ/BigZ.v
 
-bignums_syntax.ml
-bignums_syntax_plugin.mlpack
+plugin/bignums_syntax.ml
+plugin/bignums_syntax_plugin.mlpack
 
--extra "BigN/NMake_gen.v" "BigN/NMake_gen.ml" "ocaml $< > $@ || (RV=$$?; rm -f $@; exit $${RV})"
+-extra "BigN/NMake_gen.v" "BigN/gen/NMake_gen.ml" "ocaml $< > $@ || (RV=$$?; rm -f $@; exit $${RV})"

@@ -1,25 +1,50 @@
+# Bignums
 
-The BigNums Library
-===================
+[![Travis][travis-shield]][travis-link]
 
-Coq library of arbitrary large numbers.
-Provides BigN, BigZ, BigQ that used to be part of Coq standard library.
+[travis-shield]: https://travis-ci.com/coq/bignums.svg?branch=master
+[travis-link]: https://travis-ci.com/coq/bignums/builds
 
-TODO
-----
 
-  - Documentation
-  - Add a Makefile in the tests/ directory
 
-Authors
--------
+Provides BigN, BigZ, BigQ that used to be part of Coq standard library
 
-Copyright INRIA 2007-2017.
 
-Initial Code by Laurent Théry, Benjamin Grégoire, Arnaud Spiwack.
-Many revisions by Evgeny Makarov and Pierre Letouzey.
 
-License
--------
+## Meta
 
-LGPL 2.1
+- Author(s):
+  - Laurent Théry
+  - Benjamin Grégoire
+  - Arnaud Spiwack
+  - Evgeny Makarov
+  - Pierre Letouzey
+- License: [GNU Lesser General Public License v2.1](LICENSE)
+- Compatible Coq versions: master (use the corresponding branch or release for other Coq versions)
+- Compatible OCaml versions: all versions supported by Coq
+- Additional Coq dependencies: none
+
+## Building and installation instructions
+
+The easiest way to install the latest released version of Bignums
+is via [OPAM](https://opam.ocaml.org/doc/Install.html):
+
+```shell
+opam repo add coq-released https://coq.inria.fr/opam/released
+opam install coq-bignums
+```
+
+To instead build and install manually, do:
+
+``` shell
+git clone https://github.com/coq/bignums
+cd bignums
+make   # or make -j <number-of-cores-on-your-machine>
+make install
+```
+
+After installation, the included modules are available under
+the `Bignums` namespace.
+
+
+
