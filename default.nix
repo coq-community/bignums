@@ -1,9 +1,21 @@
-{ pkgs ? import <nixpkgs> {},
-  coq ? import (fetchTarball "https://github.com/coq/coq/tarball/master") {} }:
+{ pkgs ? import <nixpkgs> {}
+, coq ? import (fetchTarball "https://github.com/coq/coq/tarball/master") {}
+, shell ? false }:
 
-pkgs.stdenv.mkDerivation rec {
+with coq.coqPackages;
+
+pkgs.stdenv.mkDerivation {
+
   name = "bignums";
-  src = ./.;
-  buildInputs = with coq.ocamlPackages; [ coq ocaml findlib camlp5_strict ];
-  installFlags = "COQLIB=$(out)/lib/coq/";
+
+  buildInputs = with coq.ocamlPackages; [ ocaml findlib ]
+    ++ pkgs.lib.optionals shell [ merlin ocp-indent ocp-index ];
+
+  propagatedBuildInputs = [
+    coq
+  ];
+
+  src = if shell then null else ./.;
+
+  installFlags = "COQLIB=$(out)/lib/coq/${coq.coq-version}/";
 }

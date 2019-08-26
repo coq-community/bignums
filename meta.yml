@@ -1,0 +1,49 @@
+---
+fullname: Bignums
+shortname: bignums
+organization: coq
+community: false
+
+synopsis: >-
+  Bignums, the Coq library of arbitrary large numbers
+description: |
+  Provides BigN, BigZ, BigQ that used to be part of Coq standard library
+
+authors:
+- name: Laurent Théry
+- name: Benjamin Grégoire
+- name: Arnaud Spiwack
+- name: Evgeny Makarov
+- name: Pierre Letouzey
+
+opam-file-maintainer: Laurent.Thery@inria.fr
+
+license:
+  fullname: GNU Lesser General Public License v2.1
+  identifier: LGPL-2.1
+
+plugin: true
+
+supported_coq_versions:
+  text: master (use the corresponding branch or release for other Coq versions)
+  opam: '{= "dev"}'
+
+tested_coq_nix_versions:
+- version_or_url: https://github.com/coq/coq-on-cachix/tarball/master
+
+tested_coq_opam_versions:
+- version: dev
+
+namespace: Bignums
+
+keywords:
+- name: integer numbers
+- name: rational numbers
+- name: arithmetic
+- name: arbitrary-precision
+
+categories:
+- name: Miscellaneous/Coq Extensions
+- name: Mathematics/Arithmetic and Number Theory/Number theory
+- name: Mathematics/Arithmetic and Number Theory/Rational numbers
+---
