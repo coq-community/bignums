@@ -4,6 +4,6 @@
 pkgs.stdenv.mkDerivation rec {
   name = "bignums";
   src = ./.;
-  buildInputs = with coq.ocamlPackages; [ coq ocaml findlib camlp5_strict ];
+  buildInputs = with coq.ocamlPackages; [ coq ocaml findlib dune ];
   installFlags = "COQLIB=$(out)/lib/coq/";
 }

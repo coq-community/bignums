@@ -1,0 +1,3 @@
+(rule
+ (targets NMake_gen.v)
+ (action (with-outputs-to NMake_gen.v (run ../../util/NMake_gen.exe))))

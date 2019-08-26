@@ -1,0 +1,5 @@
+(library
+ (name bignums_syntax_plugin)
+ (public_name coq-bignums.plugin)
+ (flags :standard -rectypes -warn-error -3-9-27-32-33-50)
+ (libraries coq.vernac))

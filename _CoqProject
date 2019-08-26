@@ -1,31 +1,31 @@
--I .
--R . Bignums
+-I src/plugin/
+-R src/theories/ Bignums
 
-BigN/Nbasic.v
-BigN/NMake.v
-BigN/NMake_gen.v
-BigN/BigN.v
-SpecViaZ/NSig.v
-SpecViaZ/ZSig.v
-SpecViaZ/NSigNAxioms.v
-SpecViaZ/ZSigZAxioms.v
-SpecViaQ/QSig.v
-BigQ/QMake.v
-BigQ/BigQ.v
-CyclicDouble/DoubleBase.v
-CyclicDouble/DoubleAdd.v
-CyclicDouble/DoubleDiv.v
-CyclicDouble/DoubleMul.v
-CyclicDouble/DoubleSub.v
-CyclicDouble/DoubleDivn1.v
-CyclicDouble/DoubleSqrt.v
-CyclicDouble/DoubleCyclic.v
-CyclicDouble/DoubleLift.v
-BigNumPrelude.v
-BigZ/ZMake.v
-BigZ/BigZ.v
+src/theories/BigN/Nbasic.v
+src/theories/BigN/NMake.v
+src/theories/BigN/NMake_gen.v
+src/theories/BigN/BigN.v
+src/theories/SpecViaZ/NSig.v
+src/theories/SpecViaZ/ZSig.v
+src/theories/SpecViaZ/NSigNAxioms.v
+src/theories/SpecViaZ/ZSigZAxioms.v
+src/theories/SpecViaQ/QSig.v
+src/theories/BigQ/QMake.v
+src/theories/BigQ/BigQ.v
+src/theories/CyclicDouble/DoubleBase.v
+src/theories/CyclicDouble/DoubleAdd.v
+src/theories/CyclicDouble/DoubleDiv.v
+src/theories/CyclicDouble/DoubleMul.v
+src/theories/CyclicDouble/DoubleSub.v
+src/theories/CyclicDouble/DoubleDivn1.v
+src/theories/CyclicDouble/DoubleSqrt.v
+src/theories/CyclicDouble/DoubleCyclic.v
+src/theories/CyclicDouble/DoubleLift.v
+src/theories/BigNumPrelude.v
+src/theories/BigZ/ZMake.v
+src/theories/BigZ/BigZ.v
 
-bignums_syntax.ml
-bignums_syntax_plugin.mlpack
+src/plugin/bignums_syntax.ml
+src/plugin/bignums_syntax_plugin.mlpack
 
--extra "BigN/NMake_gen.v" "BigN/NMake_gen.ml" "ocaml $< > $@ || (RV=$$?; rm -f $@; exit $${RV})"
+-extra "src/theories/BigN/NMake_gen.v" "src/util/BigN/NMake_gen.ml" "ocaml $< > $@ || (RV=$$?; rm -f $@; exit $${RV})"

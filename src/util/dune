@@ -1,0 +1,3 @@
+(executable
+ (name NMake_gen)
+ (modules NMake_gen))

@@ -1,0 +1,8 @@
+(coq.theory
+ (name Bignums) ; -R flag
+ (public_name coq-bignums.Bignums)
+ (synopsis "Bignums Plugin")
+ (libraries coq-bignums.plugin)
+ (modules :standard \ "tests/*")) ; exclude some modules that don't build
+
+(include_subdirs qualified)

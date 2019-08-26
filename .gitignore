@@ -12,3 +12,4 @@ BigN/NMake_gen.v
 *~
 Makefile.coq
 Makefile.coq.conf
+_build/
