@@ -75,6 +75,19 @@ Notation "x <= y < z" := (x<=y /\ y<z) : bigQ_scope.
 Notation "x <= y <= z" := (x<=y /\ y<=z) : bigQ_scope.
 Notation "[ q ]" := (BigQ.to_Q q) : bigQ_scope.
 
+(** [BigQ] is a ring *)
+
+Lemma BigQringth :
+ ring_theory 0 1 BigQ.add BigQ.mul BigQ.sub BigQ.opp
+  BigQ.eq.
+Proof.
+constructor.
+exact BigQ.add_0_l. exact BigQ.add_comm. exact BigQ.add_assoc.
+exact BigQ.mul_1_l. exact BigQ.mul_comm. exact BigQ.mul_assoc.
+exact BigQ.mul_add_distr_r. exact BigQ.sub_add_opp.
+exact BigQ.add_opp_diag_r.
+Qed.
+
 (** [BigQ] is a field *)
 
 Lemma BigQfieldth :
@@ -119,6 +132,11 @@ Ltac BigQcst t :=
  | true => constr:(t)
  | false => constr:(NotConstant)
  end.
+
+Add Ring BigQring : BigQringth
+ (decidable BigQ.eqb_correct,
+  constants [BigQcst],
+  power_tac BigQpowerth [Qpow_tac]).
 
 Add Field BigQfield : BigQfieldth
  (decidable BigQ.eqb_correct,
