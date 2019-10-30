@@ -635,7 +635,7 @@ Section Z_2nZ.
  Proof.
  refine (spec_ww_head00 w_0 w_0W
                 w_compare w_head0 w_add2 w_zdigits _ww_zdigits
-                w_to_Z _ _ _ (eq_refl _ww_digits) _ _ _ _); wwauto.
+                w_to_Z _ _ _ _ _ _ _ _ ); wwauto.
  exact ZnZ.spec_head00.
  exact ZnZ.spec_zdigits.
  Qed.
@@ -653,7 +653,7 @@ Section Z_2nZ.
  Proof.
  refine (spec_ww_tail00 w_0 w_0W
                 w_compare w_tail0 w_add2 w_zdigits _ww_zdigits
-                w_to_Z _ _ _ (eq_refl _ww_digits) _ _ _ _); wwauto.
+                w_to_Z _ _ _ _ _ _ _ _); wwauto.
  exact ZnZ.spec_tail00.
  exact ZnZ.spec_zdigits.
  Qed.
