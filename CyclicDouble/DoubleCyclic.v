@@ -277,11 +277,11 @@ Section Z_2nZ.
 
  Let gcd_gt :=
   Eval lazy beta delta [ww_gcd_gt] in
-  ww_gcd_gt w_0 w_eq0 w_gcd_gt _ww_digits gcd_gt_fix gcd_cont.
+  ww_gcd_gt w_0 w_eq0 w_gcd_gt gcd_gt_fix gcd_cont _ww_digits.
 
  Let gcd :=
   Eval lazy beta delta [ww_gcd] in
-  ww_gcd compare w_0 w_eq0 w_gcd_gt _ww_digits gcd_gt_fix gcd_cont.
+  ww_gcd compare w_0 w_eq0 w_gcd_gt gcd_gt_fix gcd_cont _ww_digits.
 
  Definition lor (x y : zn2z t) :=
   match x, y with
@@ -745,8 +745,8 @@ refine
       Zis_gcd [|a|] [|b|] [|gcd_gt a b|].
  Proof.
   refine (@spec_ww_gcd_gt t w_digits w_to_Z _
-    w_0 w_eq0 w_gcd_gt _ww_digits
-  _ gcd_gt_fix _ _ _ _ gcd_cont _);wwauto.
+    w_0 w_eq0 w_gcd_gt
+  gcd_gt_fix _ _ _ _ gcd_cont _ _ww_digits _);wwauto.
   refine (@spec_ww_gcd_gt_aux t w_digits w_0 w_WW w_0W w_compare w_opp_c w_opp
    w_opp_carry w_sub_c w_sub w_sub_carry w_gcd_gt w_add_mul_div w_head0
    w_div21 div32 _ww_zdigits ww_1 add_mul_div w_zdigits w_to_Z
@@ -761,7 +761,7 @@ refine
  Let spec_ww_gcd : forall a b, Zis_gcd [|a|] [|b|] [|gcd a b|].
  Proof.
   refine (@spec_ww_gcd t w_digits compare w_to_Z _ _ w_0 w_eq0 w_gcd_gt
-  _ww_digits _ gcd_gt_fix _ _ _ _ gcd_cont _);wwauto.
+  gcd_gt_fix _ _ _ _ gcd_cont _ _ww_digits _);wwauto.
   refine (@spec_ww_gcd_gt_aux t w_digits w_0 w_WW w_0W w_compare w_opp_c w_opp
    w_opp_carry w_sub_c w_sub w_sub_carry w_gcd_gt w_add_mul_div w_head0
    w_div21 div32 _ww_zdigits ww_1 add_mul_div w_zdigits w_to_Z

@@ -1383,8 +1383,6 @@ Section DoubleDiv.
  Variable w_compare : w -> w -> comparison.
  Variable w_eq0 : w -> bool.
  Variable w_gcd_gt : w -> w -> w.
- Variable _ww_digits : positive.
- Variable spec_ww_digits_ : _ww_digits = xO w_digits.
  Variable ww_gcd_gt_fix :
    positive -> (w -> w -> w -> w -> zn2z w) ->
              w -> w -> w -> w -> zn2z w.
@@ -1441,6 +1439,9 @@ Section DoubleDiv.
      [[WW xh xl]] > [[WW yh yl]] ->
      [[WW yh yl]] <= 1 ->
       Zis_gcd [[WW xh xl]] [[WW yh yl]] [[cont xh xl yh yl]].
+
+ Variable _ww_digits : positive.
+ Variable spec_ww_digits_ : _ww_digits = xO w_digits.
 
   Definition ww_gcd_gt a b :=
    match a, b with
