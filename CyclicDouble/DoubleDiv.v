@@ -1418,6 +1418,7 @@ Section DoubleDiv.
      [[WW yh yl]] <= 1 ->
       Zis_gcd [[WW xh xl]] [[WW yh yl]] [[gcd_cont xh xl yh yl]].
   Proof.
+   clear w_0 spec_w_0.
    intros xh xl yh yl Hgt' Hle. simpl in Hle.
    assert ([|yh|] = 0).
     change 1 with (0*wB+1) in Hle.
@@ -1461,6 +1462,7 @@ Section DoubleDiv.
   Lemma spec_ww_gcd_gt : forall a b, [[a]] > [[b]] ->
       Zis_gcd [[a]] [[b]] [[ww_gcd_gt a b]].
   Proof.
+   clear ww_1 spec_ww_1 w_1 spec_w_1.
    intros a b Hgt;unfold ww_gcd_gt.
    destruct a as [ |ah al]. simpl;apply Zis_gcd_sym;apply Zis_gcd_0.
    destruct b as [ |bh bl]. simpl;apply Zis_gcd_0.
@@ -1477,6 +1479,7 @@ Section DoubleDiv.
 
   Lemma spec_ww_gcd : forall a b, Zis_gcd [[a]] [[b]] [[ww_gcd a b]].
   Proof.
+   clear ww_1 spec_ww_1 w_1 spec_w_1.
    intros a b.
    change (ww_gcd a b) with
     (match ww_compare a b with

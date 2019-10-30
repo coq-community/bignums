@@ -744,8 +744,8 @@ refine
  Let spec_ww_gcd_gt : forall a b, [|a|] > [|b|] ->
       Zis_gcd [|a|] [|b|] [|gcd_gt a b|].
  Proof.
-  refine (@spec_ww_gcd_gt t w_digits W0 w_to_Z _
-    w_0 w_0 w_eq0 w_gcd_gt _ww_digits
+  refine (@spec_ww_gcd_gt t w_digits w_to_Z _
+    w_0 w_eq0 w_gcd_gt _ww_digits
   _ gcd_gt_fix _ _ _ _ gcd_cont _);wwauto.
   refine (@spec_ww_gcd_gt_aux t w_digits w_0 w_WW w_0W w_compare w_opp_c w_opp
    w_opp_carry w_sub_c w_sub w_sub_carry w_gcd_gt w_add_mul_div w_head0
@@ -754,13 +754,13 @@ refine
   exact ZnZ.spec_div21.
   exact ZnZ.spec_zdigits.
   exact spec_ww_add_mul_div.
-  refine (@spec_gcd_cont t w_digits ww_1 w_to_Z _ _ w_0 w_1 w_compare
+  refine (@spec_gcd_cont t w_digits ww_1 w_to_Z _ _ w_1 w_compare
    _ _);wwauto.
  Qed.
 
  Let spec_ww_gcd : forall a b, Zis_gcd [|a|] [|b|] [|gcd a b|].
  Proof.
-  refine (@spec_ww_gcd t w_digits W0 compare w_to_Z _ _ w_0 w_0 w_eq0 w_gcd_gt
+  refine (@spec_ww_gcd t w_digits compare w_to_Z _ _ w_0 w_eq0 w_gcd_gt
   _ww_digits _ gcd_gt_fix _ _ _ _ gcd_cont _);wwauto.
   refine (@spec_ww_gcd_gt_aux t w_digits w_0 w_WW w_0W w_compare w_opp_c w_opp
    w_opp_carry w_sub_c w_sub w_sub_carry w_gcd_gt w_add_mul_div w_head0
@@ -769,7 +769,7 @@ refine
   exact ZnZ.spec_div21.
   exact ZnZ.spec_zdigits.
   exact spec_ww_add_mul_div.
-  refine (@spec_gcd_cont t w_digits ww_1 w_to_Z _ _ w_0 w_1 w_compare
+  refine (@spec_gcd_cont t w_digits ww_1 w_to_Z _ _ w_1 w_compare
    _ _);wwauto.
  Qed.
 
