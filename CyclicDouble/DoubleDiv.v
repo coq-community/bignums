@@ -1369,6 +1369,7 @@ Section DoubleDiv.
   Lemma  spec_ww_mod :  forall a b, 0 < [[b]] ->
       [[ww_mod a b]] = [[a]] mod [[b]].
   Proof.
+   clear ww_1 spec_ww_1.
    intros a b Hpos;unfold ww_mod.
    rewrite spec_ww_compare; case Z.compare_spec; intros.
    simpl;apply Zmod_unique with 1;try rewrite H;zarith.

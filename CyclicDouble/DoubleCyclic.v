@@ -738,7 +738,7 @@ refine
 
  Let spec_ww_mod :  forall a b, 0 < [|b|] -> [|mod_ a b|] = [|a|] mod [|b|].
  Proof.
-  refine (spec_ww_mod w_digits W0 compare mod_gt w_to_Z _ _ _);wwauto.
+  refine (spec_ww_mod w_digits compare mod_gt w_to_Z _ _ _);wwauto.
  Qed.
 
  Let spec_ww_gcd_gt : forall a b, [|a|] > [|b|] ->
