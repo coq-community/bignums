@@ -246,7 +246,7 @@ Section DoubleLift.
      unfold base; auto with zarith.
    intros z (Hz1, Hz2); exists z; split; auto.
    rewrite spec_w_add; rewrite (fun x => Z.add_comm [|x|]).
-   rewrite spec_zdigits; rewrite Zpower_exp; auto with zarith.
+   rewrite spec_zdigits; rewrite Zpower_exp by auto with zarith.
    rewrite Z.mul_assoc; rewrite <- Hz2; auto.
 
    case (spec_to_Z (w_tail0 xh)); intros HH1 HH2.

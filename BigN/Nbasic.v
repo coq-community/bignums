@@ -338,7 +338,7 @@ Section CompareRec.
   symmetry. apply Z.gt_lt, Z.lt_gt. (* ;-) *)
   assert (0 < wB).
    unfold wB, DoubleBase.double_wB, base; auto with zarith.
-  change 0 with (0 + 0); apply Z.add_lt_le_mono; auto with zarith.
+  change 0 with (0 + 0); apply Z.add_lt_le_mono. 2: auto with zarith.
   apply Z.mul_pos_pos; auto with zarith.
   case (double_to_Z_pos n xl); auto with zarith.
   case (double_to_Z_pos n xh); intros; exfalso; omega.

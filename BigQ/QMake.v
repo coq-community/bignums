@@ -310,11 +310,10 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
 
  Theorem spec_add : forall x y, [add x y] == [x] + [y].
  Proof.
- intros [x | nx dx] [y | ny dy]; unfold Qplus; qsimpl;
-  auto with zarith.
+ intros [x | nx dx] [y | ny dy]; unfold Qplus; qsimpl.
+ 1-2, 4, 6: lia.
  rewrite Pos.mul_1_r, Z2Pos.id; auto.
  rewrite Pos.mul_1_r, Z2Pos.id; auto.
- rewrite Z.mul_eq_0 in *; intuition.
  rewrite Pos2Z.inj_mul, 2 Z2Pos.id; auto.
  Qed.
 
