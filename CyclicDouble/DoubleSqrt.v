@@ -681,6 +681,7 @@ intros x; case x; simpl ww_is_even.
           [||WW x y||] = [[s]] ^ 2 + [+[r]] /\
           [+[r]] <= 2 * [[s]].
  Proof.
+ assert (fake_use := ww_zdigits); clear fake_use.
  intros x y H; unfold ww_sqrt2.
  repeat match goal with |- context[split ?x] =>
    generalize (spec_split x); case (split x)
@@ -1160,6 +1161,8 @@ Qed.
 
   Lemma spec_ww_sqrt : forall x,
        [[ww_sqrt x]] ^ 2 <= [[x]] < ([[ww_sqrt x]] + 1) ^ 2.
+  clear spec_w_Bm1.
+  assert (fake_use := (w_1, w_Bm1)); clear fake_use.
   assert (U := wB_pos w_digits).
   intro x; unfold ww_sqrt.
   generalize (spec_ww_is_zero x); case (ww_is_zero x).

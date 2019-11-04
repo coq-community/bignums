@@ -600,6 +600,7 @@ Section DoubleMul.
     let (h,l):= w_mul_add x y r in
     [|h|]*wB+[|l|] = [|x|]*[|y|] + [|r|].
   Proof.
+   assert (fake_use := w_1); clear fake_use.
    intros x y r;unfold w_mul_add;assert (H:=spec_w_mul_c x y);
    destruct (w_mul_c x y) as [ |h l];simpl;rewrite <- H.
    rewrite spec_w_0;trivial.
