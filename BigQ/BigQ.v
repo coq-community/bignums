@@ -95,11 +95,8 @@ Lemma BigQfieldth :
   BigQ.div BigQ.inv BigQ.eq.
 Proof.
 constructor.
-constructor.
-exact BigQ.add_0_l. exact BigQ.add_comm. exact BigQ.add_assoc.
-exact BigQ.mul_1_l. exact BigQ.mul_comm. exact BigQ.mul_assoc.
-exact BigQ.mul_add_distr_r. exact BigQ.sub_add_opp.
-exact BigQ.add_opp_diag_r. exact BigQ.neq_1_0.
+exact BigQringth.
+exact BigQ.neq_1_0.
 exact BigQ.div_mul_inv. exact BigQ.mul_inv_diag_l.
 Qed.
 
