@@ -277,11 +277,11 @@ Section Z_2nZ.
 
  Let gcd_gt :=
   Eval lazy beta delta [ww_gcd_gt] in
-  ww_gcd_gt w_0 w_eq0 w_gcd_gt _ww_digits gcd_gt_fix gcd_cont.
+  ww_gcd_gt w_0 w_eq0 w_gcd_gt gcd_gt_fix gcd_cont _ww_digits.
 
  Let gcd :=
   Eval lazy beta delta [ww_gcd] in
-  ww_gcd compare w_0 w_eq0 w_gcd_gt _ww_digits gcd_gt_fix gcd_cont.
+  ww_gcd compare w_0 w_eq0 w_gcd_gt gcd_gt_fix gcd_cont _ww_digits.
 
  Definition lor (x y : zn2z t) :=
   match x, y with
@@ -635,7 +635,7 @@ Section Z_2nZ.
  Proof.
  refine (spec_ww_head00 w_0 w_0W
                 w_compare w_head0 w_add2 w_zdigits _ww_zdigits
-                w_to_Z _ _ _ (eq_refl _ww_digits) _ _ _ _); wwauto.
+                w_to_Z _ _ _ _ _ _ _ _ ); wwauto.
  exact ZnZ.spec_head00.
  exact ZnZ.spec_zdigits.
  Qed.
@@ -653,7 +653,7 @@ Section Z_2nZ.
  Proof.
  refine (spec_ww_tail00 w_0 w_0W
                 w_compare w_tail0 w_add2 w_zdigits _ww_zdigits
-                w_to_Z _ _ _ (eq_refl _ww_digits) _ _ _ _); wwauto.
+                w_to_Z _ _ _ _ _ _ _ _); wwauto.
  exact ZnZ.spec_tail00.
  exact ZnZ.spec_zdigits.
  Qed.
@@ -738,15 +738,15 @@ refine
 
  Let spec_ww_mod :  forall a b, 0 < [|b|] -> [|mod_ a b|] = [|a|] mod [|b|].
  Proof.
-  refine (spec_ww_mod w_digits W0 compare mod_gt w_to_Z _ _ _);wwauto.
+  refine (spec_ww_mod w_digits compare mod_gt w_to_Z _ _ _);wwauto.
  Qed.
 
  Let spec_ww_gcd_gt : forall a b, [|a|] > [|b|] ->
       Zis_gcd [|a|] [|b|] [|gcd_gt a b|].
  Proof.
-  refine (@spec_ww_gcd_gt t w_digits W0 w_to_Z _
-    w_0 w_0 w_eq0 w_gcd_gt _ww_digits
-  _ gcd_gt_fix _ _ _ _ gcd_cont _);wwauto.
+  refine (@spec_ww_gcd_gt t w_digits w_to_Z _
+    w_0 w_eq0 w_gcd_gt
+  gcd_gt_fix _ _ _ _ gcd_cont _ _ww_digits _);wwauto.
   refine (@spec_ww_gcd_gt_aux t w_digits w_0 w_WW w_0W w_compare w_opp_c w_opp
    w_opp_carry w_sub_c w_sub w_sub_carry w_gcd_gt w_add_mul_div w_head0
    w_div21 div32 _ww_zdigits ww_1 add_mul_div w_zdigits w_to_Z
@@ -754,14 +754,14 @@ refine
   exact ZnZ.spec_div21.
   exact ZnZ.spec_zdigits.
   exact spec_ww_add_mul_div.
-  refine (@spec_gcd_cont t w_digits ww_1 w_to_Z _ _ w_0 w_1 w_compare
+  refine (@spec_gcd_cont t w_digits ww_1 w_to_Z _ _ w_1 w_compare
    _ _);wwauto.
  Qed.
 
  Let spec_ww_gcd : forall a b, Zis_gcd [|a|] [|b|] [|gcd a b|].
  Proof.
-  refine (@spec_ww_gcd t w_digits W0 compare w_to_Z _ _ w_0 w_0 w_eq0 w_gcd_gt
-  _ww_digits _ gcd_gt_fix _ _ _ _ gcd_cont _);wwauto.
+  refine (@spec_ww_gcd t w_digits compare w_to_Z _ _ w_0 w_eq0 w_gcd_gt
+  gcd_gt_fix _ _ _ _ gcd_cont _ _ww_digits _);wwauto.
   refine (@spec_ww_gcd_gt_aux t w_digits w_0 w_WW w_0W w_compare w_opp_c w_opp
    w_opp_carry w_sub_c w_sub w_sub_carry w_gcd_gt w_add_mul_div w_head0
    w_div21 div32 _ww_zdigits ww_1 add_mul_div w_zdigits w_to_Z
@@ -769,7 +769,7 @@ refine
   exact ZnZ.spec_div21.
   exact ZnZ.spec_zdigits.
   exact spec_ww_add_mul_div.
-  refine (@spec_gcd_cont t w_digits ww_1 w_to_Z _ _ w_0 w_1 w_compare
+  refine (@spec_gcd_cont t w_digits ww_1 w_to_Z _ _ w_1 w_compare
    _ _);wwauto.
  Qed.
 

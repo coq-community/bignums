@@ -789,12 +789,12 @@ Module Make (W0:CyclicType) <: NType.
  Proof.
  intros x n; generalize x; elim n; clear n x; simpl pow_pos.
  intros; rewrite spec_mul; rewrite spec_square; rewrite H.
- rewrite Pos2Z.inj_xI; rewrite Zpower_exp; auto with zarith.
- rewrite (Z.mul_comm 2); rewrite Z.pow_mul_r; auto with zarith.
+ rewrite Pos2Z.inj_xI; rewrite Zpower_exp by auto with zarith.
+ rewrite (Z.mul_comm 2); rewrite Z.pow_mul_r by auto with zarith.
  rewrite Z.pow_2_r; rewrite Z.pow_1_r; auto.
  intros; rewrite spec_square; rewrite H.
  rewrite Pos2Z.inj_xO; auto with zarith.
- rewrite (Z.mul_comm 2); rewrite Z.pow_mul_r; auto with zarith.
+ rewrite (Z.mul_comm 2); rewrite Z.pow_mul_r by auto with zarith.
  rewrite Z.pow_2_r; auto.
  intros; rewrite Z.pow_1_r; auto.
  Qed.
@@ -1281,9 +1281,9 @@ Module Make (W0:CyclicType) <: NType.
  Proof.
    intros x y z HH HH1 HH2.
    split; auto with zarith.
-   apply Z.le_lt_trans with (2 := HH2); auto with zarith.
-   apply Zdiv_le_upper_bound; auto with zarith.
-   pattern x at 1; replace x with (x * 2 ^ 0); auto with zarith.
+   apply Z.le_lt_trans with (2 := HH2).
+   apply Zdiv_le_upper_bound. auto with zarith.
+   pattern x at 1; replace x with (x * 2 ^ 0).
    apply Z.mul_le_mono_nonneg_l; auto.
    apply Z.pow_le_mono_r; auto with zarith.
    rewrite Z.pow_0_r; ring.
@@ -1373,7 +1373,7 @@ Module Make (W0:CyclicType) <: NType.
  intros.
  destruct (Z.eq_dec [x] 0) as [EQ|NEQ].
  (* [x] = 0 *)
- apply spec_unsafe_shiftl_aux with 0; auto with zarith.
+ apply spec_unsafe_shiftl_aux with 0. auto with zarith.
  now rewrite EQ.
  rewrite spec_head00 in *; auto with zarith.
  (* [x] <> 0 *)
@@ -1408,7 +1408,7 @@ Module Make (W0:CyclicType) <: NType.
  Proof.
  intros x. rewrite ! digits_level, double_size_level.
  rewrite 2 digits_dom_op, 2 Pshiftl_nat_Zpower,
-         Nat2Z.inj_succ, Z.pow_succ_r; auto with zarith.
+         Nat2Z.inj_succ, Z.pow_succ_r by auto with zarith.
  ring.
  Qed.
 
@@ -1443,7 +1443,7 @@ Module Make (W0:CyclicType) <: NType.
      rewrite <- (fun x y z => Z.pow_add_r x (y - z)); auto with zarith.
      rewrite Z.sub_add.
      apply Z.le_trans with (2 := Z.lt_le_incl _ _ HH2).
-     apply Z.mul_le_mono_nonneg_l; auto with zarith.
+     apply Z.mul_le_mono_nonneg_l. auto with zarith.
      rewrite Z.pow_1_r; auto with zarith.
    - apply Z.pow_le_mono_r; auto with zarith.
      case (Z.le_gt_cases (Zpos (digits x)) [head0 x]); auto with zarith; intros HH6.
@@ -1484,7 +1484,7 @@ Module Make (W0:CyclicType) <: NType.
  generalize F3; rewrite <- (spec_double_size x); intros F4.
  absurd (2 ^ (Zpos (xO (digits x)) - 1) < 2 ^ (Zpos (digits x))).
  { apply Z.le_ngt.
-   apply Z.pow_le_mono_r; auto with zarith.
+   apply Z.pow_le_mono_r. auto with zarith.
    rewrite Pos2Z.inj_xO; auto with zarith. }
  case (spec_head0 x F3).
  rewrite <- F1; rewrite Z.pow_0_r; rewrite Z.mul_1_l; intros _ HH.

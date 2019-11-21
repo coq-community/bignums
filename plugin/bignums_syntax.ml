@@ -14,7 +14,6 @@ let () = Mltop.add_known_module __coq_plugin_name
 
 open Bigint
 open Names
-open Globnames
 open Glob_term
 
 (*** Constants for locating bigN / bigZ / bigQ constructors ***)
@@ -44,7 +43,7 @@ let bigN_scope = "bigN_scope"
 let n_inlined = 7
 
 let bigN_constructor i =
-  ConstructRef ((bigN_t,0),(min i n_inlined)+1)
+  GlobRef.ConstructRef ((bigN_t,0),(min i n_inlined)+1)
 
 (*bigZ stuff*)
 let bigZ_module = ["Bignums"; "BigZ"; "BigZ" ]
@@ -52,8 +51,8 @@ let bigZ_path = make_path (bigZ_module@["BigZ"]) "t"
 let bigZ_t = make_mind_mpdot bigZ_module "BigZ" "t_"
 let bigZ_scope = "bigZ_scope"
 
-let bigZ_pos = ConstructRef ((bigZ_t,0),1)
-let bigZ_neg = ConstructRef ((bigZ_t,0),2)
+let bigZ_pos = GlobRef.ConstructRef ((bigZ_t,0),1)
+let bigZ_neg = GlobRef.ConstructRef ((bigZ_t,0),2)
 
 
 (*bigQ stuff*)
@@ -62,7 +61,7 @@ let bigQ_path = make_path (bigQ_module@["BigQ"]) "t"
 let bigQ_t = make_mind_mpdot bigQ_module "BigQ" "t_"
 let bigQ_scope = "bigQ_scope"
 
-let bigQ_z =  ConstructRef ((bigQ_t,0),1)
+let bigQ_z =  GlobRef.ConstructRef ((bigQ_t,0),1)
 
 
 let is_gr c r = match DAst.get c with
