@@ -1356,7 +1356,7 @@ Module Make (W0:CyclicType) <: NType.
  intros n x p K HK Hx Hp. simpl. rewrite spec_reduce.
  destruct (ZnZ.spec_to_Z x).
  destruct (ZnZ.spec_to_Z p).
- rewrite ZnZ.spec_add_mul_div by (omega with *).
+ rewrite ZnZ.spec_add_mul_div by (zify; omega).
  rewrite ZnZ.spec_0, Zdiv_0_l, Z.add_0_r.
  apply Zmod_small. unfold base.
  split; auto with zarith.
