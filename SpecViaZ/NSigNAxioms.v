@@ -6,7 +6,7 @@
 (*         *       GNU Lesser General Public License Version 2.1        *)
 (************************************************************************)
 
-Require Import ZArith OrdersFacts Nnat NAxioms NSig.
+Require Import ZArith OrdersFacts Nnat NAxioms NSig Lia.
 
 (** * The interface [NSig.NType] implies the interface [NAxiomsSig] *)
 
@@ -22,7 +22,7 @@ Hint Rewrite
 Ltac nsimpl := autorewrite with nsimpl.
 Ltac ncongruence := unfold eq, to_N; repeat red; intros; nsimpl; congruence.
 Ltac zify := unfold eq, lt, le, to_N in *; nsimpl.
-Ltac omega_pos n := generalize (spec_pos n); omega with *.
+Ltac omega_pos n := generalize (spec_pos n); lia.
 
 Local Obligation Tactic := ncongruence.
 
@@ -112,7 +112,7 @@ Qed.
 
 Theorem sub_succ_r : forall n m, n - (succ m) == pred (n - m).
 Proof.
-intros. zify. omega with *.
+intros. zify. lia.
 Qed.
 
 Theorem mul_0_l : forall n, 0 * n == 0.
@@ -196,22 +196,22 @@ Qed.
 
 Theorem min_l : forall n m, n <= m -> min n m == n.
 Proof.
-intros n m. zify. omega with *.
+now intros n m; zify; lia.
 Qed.
 
 Theorem min_r : forall n m, m <= n -> min n m == m.
 Proof.
-intros n m. zify. omega with *.
+now intros n m; zify; lia.
 Qed.
 
 Theorem max_l : forall n m, m <= n -> max n m == n.
 Proof.
-intros n m. zify. omega with *.
+now intros n m; zify; lia.
 Qed.
 
 Theorem max_r : forall n m, n <= m -> max n m == m.
 Proof.
-intros n m. zify. omega with *.
+now intros n m; zify; lia.
 Qed.
 
 (** Properties specific to natural numbers, not integers. *)

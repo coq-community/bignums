@@ -6,7 +6,7 @@
 (*         *       GNU Lesser General Public License Version 2.1        *)
 (************************************************************************)
 
-Require Import Bool ZArith OrdersFacts Nnat ZAxioms ZSig.
+Require Import Bool ZArith OrdersFacts Nnat ZAxioms ZSig Lia.
 
 (** * The interface [ZSig.ZType] implies the interface [ZAxiomsSig] *)
 
@@ -207,22 +207,22 @@ Qed.
 
 Theorem min_l : forall n m, n <= m -> min n m == n.
 Proof.
-intros n m. zify. omega with *.
+now intros n m; zify; lia.
 Qed.
 
 Theorem min_r : forall n m, m <= n -> min n m == m.
 Proof.
-intros n m. zify. omega with *.
+now intros n m; zify; lia.
 Qed.
 
 Theorem max_l : forall n m, m <= n -> max n m == n.
 Proof.
-intros n m. zify. omega with *.
+now intros n m; zify; lia.
 Qed.
 
 Theorem max_r : forall n m, n <= m -> max n m == m.
 Proof.
-intros n m. zify. omega with *.
+now intros n m; zify; lia.
 Qed.
 
 (** Part specific to integers, not natural numbers *)
@@ -250,27 +250,27 @@ Qed.
 
 Theorem abs_eq : forall n, 0 <= n -> abs n == n.
 Proof.
-intros n. zify. omega with *.
+now intros n; zify; lia.
 Qed.
 
 Theorem abs_neq : forall n, n <= 0 -> abs n == -n.
 Proof.
-intros n. zify. omega with *.
+now intros n; zify; lia.
 Qed.
 
 Theorem sgn_null : forall n, n==0 -> sgn n == 0.
 Proof.
-intros n. zify. omega with *.
+now intros n; zify; lia.
 Qed.
 
 Theorem sgn_pos : forall n, 0<n -> sgn n == 1.
 Proof.
-intros n. zify. omega with *.
+now intros n; zify; lia.
 Qed.
 
 Theorem sgn_neg : forall n, n<0 -> sgn n == opp 1.
 Proof.
-intros n. zify. omega with *.
+now intros n; zify; lia.
 Qed.
 
 (** Power *)
