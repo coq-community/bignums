@@ -232,7 +232,7 @@ Module Make (NN:NType) <: ZType.
  unfold add, to_Z; intros [x | x] [y | y];
    try (rewrite NN.spec_add; auto with zarith);
  rewrite NN.spec_compare; case Z.compare_spec;
-  unfold zero; rewrite ?NN.spec_0, ?NN.spec_sub; omega with *.
+  unfold zero; rewrite ?NN.spec_0, ?NN.spec_sub; zify; omega.
  Qed.
 
  Definition pred x :=
@@ -251,7 +251,7 @@ Module Make (NN:NType) <: ZType.
    try (rewrite NN.spec_succ; ring).
  rewrite NN.spec_compare; case Z.compare_spec;
   rewrite ?NN.spec_0, ?NN.spec_1, ?NN.spec_pred;
-  generalize (NN.spec_pos x); omega with *.
+  generalize (NN.spec_pos x); zify; omega.
  Qed.
 
  Definition sub x y :=
@@ -277,7 +277,7 @@ Module Make (NN:NType) <: ZType.
  unfold sub, to_Z; intros [x | x] [y | y];
   try (rewrite NN.spec_add; auto with zarith);
  rewrite NN.spec_compare; case Z.compare_spec;
-  unfold zero; rewrite ?NN.spec_0, ?NN.spec_sub; omega with *.
+  unfold zero; rewrite ?NN.spec_0, ?NN.spec_sub; zify; omega.
  Qed.
 
  Definition mul x y :=
@@ -438,7 +438,7 @@ Module Make (NN:NType) <: ZType.
  break_nonneg r pr EQr.
  subst; simpl. rewrite NN.spec_0; auto.
  subst. lazy iota beta delta [Z.eqb].
- rewrite NN.spec_sub, NN.spec_succ, EQy, EQr. f_equal. omega with *.
+ rewrite NN.spec_sub, NN.spec_succ, EQy, EQr. f_equal. zify; omega.
  (* Neg Pos *)
  generalize (NN.spec_div_eucl x y); destruct (NN.div_eucl x y) as (q,r).
  break_nonneg x px EQx; break_nonneg y py EQy;
@@ -453,7 +453,7 @@ Module Make (NN:NType) <: ZType.
  break_nonneg r pr EQr.
  subst; simpl. rewrite NN.spec_0; auto.
  subst. lazy iota beta delta [Z.eqb].
- rewrite NN.spec_sub, NN.spec_succ, EQy, EQr. f_equal. omega with *.
+ rewrite NN.spec_sub, NN.spec_succ, EQy, EQr. f_equal. zify; omega.
  (* Neg Neg *)
  generalize (NN.spec_div_eucl x y); destruct (NN.div_eucl x y) as (q,r).
  break_nonneg x px EQx; break_nonneg y py EQy;

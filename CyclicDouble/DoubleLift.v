@@ -31,7 +31,6 @@ Section DoubleLift.
  Variable w_add_mul_div : w -> w -> w -> w.
  Variable ww_sub: zn2z w -> zn2z w -> zn2z w.
  Variable w_digits : positive.
- Variable ww_Digits : positive.
  Variable w_zdigits : w.
  Variable ww_zdigits : zn2z w.
  Variable low: zn2z w -> w.
@@ -107,7 +106,6 @@ Section DoubleLift.
    w_compare x y = Z.compare [|x|] [|y|].
   Variable spec_ww_compare : forall x y,
    ww_compare x y = Z.compare [[x]] [[y]].
-  Variable spec_ww_digits : ww_Digits = xO w_digits.
   Variable spec_w_head00  : forall x, [|x|] = 0 -> [|w_head0 x|] = Zpos w_digits.
   Variable spec_w_head0  : forall x,  0 < [|x|] ->
 	 wB/ 2 <= 2 ^ ([|w_head0 x|]) * [|x|] < wB.
@@ -127,42 +125,13 @@ Section DoubleLift.
  Variable spec_zdigits : [| w_zdigits |] = Zpos w_digits.
  Variable spec_low: forall x, [| low x|] = [[x]] mod wB.
 
- Variable spec_ww_zdigits : [[ww_zdigits]] = Zpos ww_Digits.
 
   Hint Resolve div_le_0 div_lt w_to_Z_wwB: lift.
   Ltac zarith := auto with zarith lift.
 
-  Lemma spec_ww_head00  : forall x, [[x]] = 0 -> [[ww_head0 x]] = Zpos ww_Digits.
-  Proof.
-  intros x; case x; unfold ww_head0.
-    intros HH; rewrite spec_ww_zdigits; auto.
-  intros xh xl; simpl; intros Hx.
-  case (spec_to_Z xh); intros Hx1 Hx2.
-  case (spec_to_Z xl); intros Hy1 Hy2.
-  assert (F1: [|xh|] = 0).
-  { Z.le_elim Hy1; auto.
-    - absurd (0 < [|xh|] * wB + [|xl|]); auto with zarith.
-      apply Z.lt_le_trans with (1 := Hy1); auto with zarith.
-      pattern [|xl|] at 1; rewrite <- (Z.add_0_l [|xl|]).
-      apply Z.add_le_mono_r; auto with zarith.
-    - Z.le_elim Hx1; auto.
-      absurd (0 < [|xh|] * wB + [|xl|]); auto with zarith.
-      rewrite <- Hy1; rewrite Z.add_0_r; auto with zarith.
-      apply Z.mul_pos_pos; auto with zarith. }
-  rewrite spec_compare. case Z.compare_spec.
-    intros H; simpl.
-    rewrite spec_w_add; rewrite spec_w_head00.
-    rewrite spec_zdigits; rewrite spec_ww_digits.
-    rewrite Pos2Z.inj_xO; auto with zarith.
-  rewrite F1 in Hx; auto with zarith.
-  rewrite spec_w_0; auto with zarith.
-  rewrite spec_w_0; auto with zarith.
-  Qed.
-
   Lemma spec_ww_head0  : forall x,  0 < [[x]] ->
 	 wwB/ 2 <= 2 ^ [[ww_head0 x]] * [[x]] < wwB.
   Proof.
-   clear spec_ww_zdigits.
    rewrite wwB_div_2;rewrite Z.mul_comm;rewrite wwB_wBwB.
    assert (U:= lt_0_wB w_digits); destruct x as [ |xh xl];simpl ww_to_Z;intros H.
    unfold Z.lt in H;discriminate H.
@@ -203,38 +172,9 @@ Section DoubleLift.
    assert (H1 := spec_to_Z xh);zarith.
   Qed.
 
-  Lemma spec_ww_tail00  : forall x, [[x]] = 0 -> [[ww_tail0 x]] = Zpos ww_Digits.
-  Proof.
-  intros x; case x; unfold ww_tail0.
-    intros HH; rewrite spec_ww_zdigits; auto.
-  intros xh xl; simpl; intros Hx.
-  case (spec_to_Z xh); intros Hx1 Hx2.
-  case (spec_to_Z xl); intros Hy1 Hy2.
-  assert (F1: [|xh|] = 0).
-  { Z.le_elim Hy1; auto.
-    - absurd (0 < [|xh|] * wB + [|xl|]); auto with zarith.
-      apply Z.lt_le_trans with (1 := Hy1); auto with zarith.
-      pattern [|xl|] at 1; rewrite <- (Z.add_0_l [|xl|]).
-      apply Z.add_le_mono_r; auto with zarith.
-    - Z.le_elim Hx1; auto.
-      absurd (0 < [|xh|] * wB + [|xl|]); auto with zarith.
-      rewrite <- Hy1; rewrite Z.add_0_r; auto with zarith.
-      apply Z.mul_pos_pos; auto with zarith. }
-  assert (F2: [|xl|] = 0).
-    rewrite F1 in Hx; auto with zarith.
-  rewrite spec_compare; case Z.compare_spec.
-    intros H; simpl.
-    rewrite spec_w_add; rewrite spec_w_tail00; auto.
-    rewrite spec_zdigits; rewrite spec_ww_digits.
-    rewrite Pos2Z.inj_xO; auto with zarith.
-  rewrite spec_w_0; auto with zarith.
-  rewrite spec_w_0; auto with zarith.
-  Qed.
-
   Lemma spec_ww_tail0  : forall x,  0 < [[x]] ->
 	 exists y, 0 <= y /\ [[x]] = (2 * y + 1) * 2 ^ [[ww_tail0 x]].
   Proof.
-   clear spec_ww_zdigits.
    destruct x as [ |xh xl];simpl ww_to_Z;intros H.
    unfold Z.lt in H;discriminate H.
    rewrite spec_compare, spec_w_0. case Z.compare_spec; intros H0.
@@ -246,7 +186,7 @@ Section DoubleLift.
      unfold base; auto with zarith.
    intros z (Hz1, Hz2); exists z; split; auto.
    rewrite spec_w_add; rewrite (fun x => Z.add_comm [|x|]).
-   rewrite spec_zdigits; rewrite Zpower_exp; auto with zarith.
+   rewrite spec_zdigits; rewrite Zpower_exp by auto with zarith.
    rewrite Z.mul_assoc; rewrite <- Hz2; auto.
 
    case (spec_to_Z (w_tail0 xh)); intros HH1 HH2.
@@ -300,7 +240,6 @@ Section DoubleLift.
       ([[WW xh xl]] * (2^[[p]]) +
        [[WW yh yl]] / (2^(Zpos (xO w_digits) - [[p]]))) mod wwB.
   Proof.
-   clear spec_ww_zdigits.
    intros xh xl yh yl p zdigits;assert (HwwB := wwB_pos w_digits).
    case (spec_to_w_Z p); intros Hv1 Hv2.
    replace (Zpos (xO w_digits)) with (Zpos w_digits + Zpos w_digits).
@@ -424,7 +363,6 @@ Section DoubleLift.
          ([[x]] * (2^[[p]]) +
           [[y]] / (2^(Zpos (xO w_digits) - [[p]]))) mod wwB.
   Proof.
-   clear spec_ww_zdigits.
    intros x y p H.
    destruct x as [ |xh xl];
    [assert (H1 := @spec_ww_add_mul_div_aux w_0 w_0)
@@ -467,6 +405,65 @@ Section DoubleLift.
      rewrite <- Zpower_exp; auto with zarith.
      apply f_equal with (f := fun x => 2 ^ x); auto with zarith.
   case (spec_to_Z xh); auto with zarith.
+  Qed.
+
+ Variable ww_Digits : positive.
+ Variable spec_ww_digits : ww_Digits = xO w_digits.
+ Variable spec_ww_zdigits : [[ww_zdigits]] = Zpos ww_Digits.
+
+  Lemma spec_ww_head00  : forall x, [[x]] = 0 -> [[ww_head0 x]] = Zpos ww_Digits.
+  Proof.
+  intros x; case x; unfold ww_head0.
+    intros HH; rewrite spec_ww_zdigits; auto.
+  intros xh xl; simpl; intros Hx.
+  case (spec_to_Z xh); intros Hx1 Hx2.
+  case (spec_to_Z xl); intros Hy1 Hy2.
+  assert (F1: [|xh|] = 0).
+  { Z.le_elim Hy1; auto.
+    - absurd (0 < [|xh|] * wB + [|xl|]); auto with zarith.
+      apply Z.lt_le_trans with (1 := Hy1); auto with zarith.
+      pattern [|xl|] at 1; rewrite <- (Z.add_0_l [|xl|]).
+      apply Z.add_le_mono_r; auto with zarith.
+    - Z.le_elim Hx1; auto.
+      absurd (0 < [|xh|] * wB + [|xl|]); auto with zarith.
+      rewrite <- Hy1; rewrite Z.add_0_r; auto with zarith.
+      apply Z.mul_pos_pos; auto with zarith. }
+  rewrite spec_compare. case Z.compare_spec.
+    intros H; simpl.
+    rewrite spec_w_add; rewrite spec_w_head00.
+    rewrite spec_zdigits; rewrite spec_ww_digits.
+    rewrite Pos2Z.inj_xO; auto with zarith.
+  rewrite F1 in Hx; auto with zarith.
+  rewrite spec_w_0; auto with zarith.
+  rewrite spec_w_0; auto with zarith.
+  Qed.
+
+  Lemma spec_ww_tail00  : forall x, [[x]] = 0 -> [[ww_tail0 x]] = Zpos ww_Digits.
+  Proof.
+  intros x; case x; unfold ww_tail0.
+    intros HH; rewrite spec_ww_zdigits; auto.
+  intros xh xl; simpl; intros Hx.
+  case (spec_to_Z xh); intros Hx1 Hx2.
+  case (spec_to_Z xl); intros Hy1 Hy2.
+  assert (F1: [|xh|] = 0).
+  { Z.le_elim Hy1; auto.
+    - absurd (0 < [|xh|] * wB + [|xl|]); auto with zarith.
+      apply Z.lt_le_trans with (1 := Hy1); auto with zarith.
+      pattern [|xl|] at 1; rewrite <- (Z.add_0_l [|xl|]).
+      apply Z.add_le_mono_r; auto with zarith.
+    - Z.le_elim Hx1; auto.
+      absurd (0 < [|xh|] * wB + [|xl|]); auto with zarith.
+      rewrite <- Hy1; rewrite Z.add_0_r; auto with zarith.
+      apply Z.mul_pos_pos; auto with zarith. }
+  assert (F2: [|xl|] = 0).
+    rewrite F1 in Hx; auto with zarith.
+  rewrite spec_compare; case Z.compare_spec.
+    intros H; simpl.
+    rewrite spec_w_add; rewrite spec_w_tail00; auto.
+    rewrite spec_zdigits; rewrite spec_ww_digits.
+    rewrite Pos2Z.inj_xO; auto with zarith.
+  rewrite spec_w_0; auto with zarith.
+  rewrite spec_w_0; auto with zarith.
   Qed.
 
  End DoubleProof.

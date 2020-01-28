@@ -208,11 +208,10 @@ Section DoubleBase.
    clear spec_w_0 w_0 spec_w_1 w_1 spec_w_Bm1 w_Bm1 spec_w_WW spec_w_0W
     spec_to_Z;unfold base.
    assert (2 ^ Zpos w_digits = 2 * (2 ^ (Zpos w_digits - 1))).
-   pattern 2 at 2; rewrite <- Z.pow_1_r.
-   rewrite <- Zpower_exp; auto with zarith.
-   f_equal; auto with zarith.
-   case w_digits; compute; intros; discriminate.
-   rewrite H; f_equal; auto with zarith.
+   { pattern 2 at 2; rewrite <- Z.pow_1_r.
+     rewrite <- Zpower_exp by Lia.lia.
+     f_equal; auto with zarith. }
+   rewrite H; f_equal.
    rewrite Z.mul_comm; apply Z_div_mult; auto with zarith.
   Qed.
 
