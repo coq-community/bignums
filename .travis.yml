@@ -50,3 +50,8 @@ matrix:
     - NJOBS=2
     <<: *OPAM
 
+  - env:
+    - COQ_IMAGE=coqorg/coq:8.11
+    - CONTRIB_NAME=coq-bignums
+    - NJOBS=2
+    <<: *OPAM

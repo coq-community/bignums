@@ -722,7 +722,7 @@ pr
  set (f' := fun n x y => (n, f n x y)).
  set (P' := fun z z' r => P (fst r) z z' (snd r)).
  assert (FST : forall x y, level x <= fst (same_level f' x y))
-  by (destruct x, y; simpl; omega with * ).
+  by (destruct x, y; simpl; zify; omega).
  assert (SND : forall x y, same_level f x y = snd (same_level f' x y))
   by (destruct x, y; reflexivity).
  intros. eapply Pantimon; [eapply FST|].

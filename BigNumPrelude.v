@@ -19,6 +19,7 @@ Require Export ZArith.
 Require Export Znumtheory.
 Require Export Zpow_facts.
 Require Int63.
+Require Import Lia.
 
 Declare Scope bigN_scope.
 Declare Scope bigZ_scope.
@@ -73,40 +74,21 @@ Hint Resolve Z.lt_gt Z.le_ge Z_div_pos: zarith.
        a * beta + b <= c * beta + d ->
        0 <= b < beta -> 0 <= d < beta ->
        a <= c.
- Proof.
-  intros a b c d beta H1 (H3, H4) (H5, H6).
-  assert (a - c < 1); auto with zarith.
-  apply Z.mul_lt_mono_pos_r with beta; auto with zarith.
-  apply Z.le_lt_trans with (d  - b); auto with zarith.
-  rewrite Z.mul_sub_distr_r; auto with zarith.
- Qed.
+ Proof. nia. Qed.
 
  Theorem beta_lex_inv: forall a b c d beta,
       a < c -> 0 <= b < beta ->
       0 <= d < beta ->
       a * beta + b < c * beta  + d.
- Proof.
-  intros a b c d beta H1 (H3, H4) (H5, H6).
-  case (Z.le_gt_cases (c * beta + d) (a * beta + b)); auto with zarith.
-  intros H7. contradict H1. apply Z.le_ngt. apply beta_lex with (1 := H7); auto.
- Qed.
+ Proof. nia. Qed.
 
  Lemma beta_mult : forall h l beta,
    0 <= h < beta -> 0 <= l < beta -> 0 <= h*beta+l < beta^2.
- Proof.
-  intros h l beta H1 H2;split. auto with zarith.
-  rewrite <- (Z.add_0_r (beta^2)); rewrite Z.pow_2_r;
-   apply beta_lex_inv;auto with zarith.
- Qed.
+ Proof. nia. Qed.
 
  Lemma Zmult_lt_b :
    forall b x y, 0 <= x < b -> 0 <= y < b -> 0 <= x * y <= b^2 - 2*b + 1.
- Proof.
-  intros b x y (Hx1,Hx2) (Hy1,Hy2);split;auto with zarith.
-  apply Z.le_trans with ((b-1)*(b-1)).
-  apply Z.mul_le_mono_nonneg;auto with zarith.
-  apply Z.eq_le_incl; ring.
- Qed.
+ Proof. nia. Qed.
 
  Lemma sum_mul_carry : forall xh xl yh yl wc cc beta,
    1 < beta ->
@@ -118,41 +100,21 @@ Hint Resolve Z.lt_gt Z.le_ge Z_div_pos: zarith.
    0 <= cc < beta^2 ->
    wc*beta^2 + cc = xh*yl + xl*yh ->
    0 <= wc <= 1.
- Proof.
-  intros xh xl yh yl wc cc beta U H1 H2 H3 H4 H5 H6 H7.
-  assert (H8 := Zmult_lt_b beta xh yl H2 H5).
-  assert (H9 := Zmult_lt_b beta xl yh H3 H4).
-  split;auto with zarith.
-  apply beta_lex with (cc) (beta^2 - 2) (beta^2); auto with zarith.
- Qed.
+ Proof. nia. Qed.
 
  Theorem mult_add_ineq: forall x y cross beta,
    0 <= x < beta ->
    0 <= y < beta ->
    0 <= cross < beta ->
    0 <= x * y + cross < beta^2.
- Proof.
-  intros x y cross beta HH HH1 HH2.
-  split; auto with zarith.
-  apply Z.le_lt_trans with  ((beta-1)*(beta-1)+(beta-1)); auto with zarith.
-  apply Z.add_le_mono; auto with zarith.
-  apply Z.mul_le_mono_nonneg; auto with zarith.
-  rewrite ?Z.mul_sub_distr_l, ?Z.mul_sub_distr_r, Z.pow_2_r; auto with zarith.
- Qed.
+ Proof. nia. Qed.
 
  Theorem mult_add_ineq2: forall x y c cross beta,
    0 <= x < beta ->
    0 <= y < beta ->
    0 <= c*beta + cross <= 2*beta - 2 ->
    0 <= x * y + (c*beta + cross) < beta^2.
- Proof.
-  intros x y c cross beta HH HH1 HH2.
-  split; auto with zarith.
-  apply Z.le_lt_trans with ((beta-1)*(beta-1)+(2*beta-2));auto with zarith.
-  apply Z.add_le_mono; auto with zarith.
-  apply Z.mul_le_mono_nonneg; auto with zarith.
-  rewrite ?Z.mul_sub_distr_l, ?Z.mul_sub_distr_r, Z.pow_2_r; auto with zarith.
- Qed.
+ Proof. nia. Qed.
 
 Theorem mult_add_ineq3: forall x y c cross beta,
    0 <= x < beta ->
@@ -160,12 +122,7 @@ Theorem mult_add_ineq3: forall x y c cross beta,
    0 <= cross <= beta - 2 ->
    0 <= c <= 1 ->
    0 <= x * y + (c*beta + cross) < beta^2.
- Proof.
-  intros x y c cross beta HH HH1 HH2 HH3.
-  apply mult_add_ineq2;auto with zarith.
-  split;auto with zarith.
-  apply Z.le_trans with (1*beta+cross);auto with zarith.
- Qed.
+ Proof. nia. Qed.
 
 Hint Rewrite Z.mul_1_r Z.mul_0_r Z.mul_1_l Z.mul_0_l Z.add_0_l Z.add_0_r Z.sub_0_r: rm10.
 

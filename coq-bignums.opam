@@ -13,12 +13,12 @@ Provides BigN, BigZ, BigQ that used to be part of Coq standard library
 
 version: "dev"
 
-build: ["dune" "build" "-p" name "-j" jobs]
+build: [make "-j%{jobs}%"]
+install: [make "install"]
 
 depends: [
   "ocaml"
-  "coq" {= "dev"}
-  "dune" {>= "1.9.0"}
+  "coq" {(>= "8.11" & < "8.12~") | (= "dev")}
 ]
 
 tags: [
