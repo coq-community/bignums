@@ -27,7 +27,7 @@ Ltac omega_pos n := generalize (spec_pos n); lia.
 Local Obligation Tactic := ncongruence.
 
 Instance eq_equiv : Equivalence eq.
-Proof. unfold eq. firstorder. Qed.
+Proof. split; ncongruence. Qed.
 
 Program Instance succ_wd : Proper (eq==>eq) succ.
 Program Instance pred_wd : Proper (eq==>eq) pred.

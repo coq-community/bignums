@@ -26,7 +26,7 @@ Ltac zcongruence := repeat red; intros; zsimpl; congruence.
 Ltac zify := unfold eq, lt, le in *; zsimpl.
 
 Instance eq_equiv : Equivalence eq.
-Proof. unfold eq. firstorder. Qed.
+Proof. split; zcongruence. Qed.
 
 Local Obligation Tactic := zcongruence.
 
