@@ -52,11 +52,9 @@ rewrite Zpower_exp; auto with zarith.
 rewrite Pos2Z.inj_succ; unfold Z.succ; auto with zarith.
 intros p; elim p; simpl plength; auto.
 intros p1 Hp1; rewrite F; repeat rewrite Pos2Z.inj_xI.
-assert (tmp: (forall p, 2 * p = p + p)%Z);
-  try repeat rewrite tmp; auto with zarith.
+rewrite <- !Z.add_diag; auto with zarith.
 intros p1 Hp1; rewrite F; rewrite (Pos2Z.inj_xO p1).
-assert (tmp: (forall p, 2 * p = p + p)%Z);
-  try repeat rewrite tmp; auto with zarith.
+rewrite <- !Z.add_diag; auto with zarith.
 rewrite Z.pow_1_r; auto with zarith.
 Qed.
 
@@ -65,7 +63,7 @@ intros p; case (Pos.succ_pred_or p); intros H1.
 subst; simpl plength.
 rewrite Z.pow_1_r; auto with zarith.
 pattern p at 1; rewrite <- H1.
-rewrite Pos2Z.inj_succ; unfold Z.succ; auto with zarith.
+rewrite Pos2Z.inj_succ; unfold Z.succ.
 generalize (plength_correct (Pos.pred p)); auto with zarith.
 Qed.
 
@@ -82,8 +80,8 @@ Theorem Pdiv_le: forall p q,
   Zpos p <= Zpos q * Zpos (Pdiv p q).
 intros p q.
 unfold Pdiv.
-assert (H1: Zpos q > 0); auto with zarith.
-assert (H1b: Zpos p >= 0); auto with zarith.
+assert (H1: Zpos q > 0) by auto with zarith.
+assert (H1b: Zpos p >= 0) by auto with zarith.
 generalize (Z_div_ge0 (Zpos p) (Zpos q) H1 H1b).
 generalize (Z_div_mod_eq (Zpos p) (Zpos q) H1); case Z.div.
   intros HH _; rewrite HH; rewrite Z.mul_0_r; rewrite Z.mul_1_r; simpl.
@@ -123,7 +121,7 @@ rewrite Z.mul_1_r in H1.
 change (2^(1-1))%Z with 1; rewrite Z.mul_1_r; auto.
 clear H2.
 apply Z.le_trans with (1 := H1).
-apply Z.mul_le_mono_nonneg_l; auto with zarith.
+apply Z.mul_le_mono_nonneg_l. auto with zarith.
 rewrite Pos2Z.inj_succ; unfold Z.succ.
 rewrite Z.add_comm; rewrite Z.add_simpl_l.
 apply plength_pred_correct.
@@ -338,7 +336,7 @@ Section CompareRec.
   symmetry. apply Z.gt_lt, Z.lt_gt. (* ;-) *)
   assert (0 < wB).
    unfold wB, DoubleBase.double_wB, base; auto with zarith.
-  change 0 with (0 + 0); apply Z.add_lt_le_mono. 2: auto with zarith.
+  change 0 with (0 + 0); apply Z.add_lt_le_mono.
   apply Z.mul_pos_pos; auto with zarith.
   case (double_to_Z_pos n xl); auto with zarith.
   case (double_to_Z_pos n xh); intros; exfalso; omega.
@@ -376,7 +374,7 @@ Section CompareRec.
  set (u := base (Pos.shiftl_nat wm_base n)).
  assert (0 < u).
   unfold u, base; auto with zarith.
- replace (u^2) with (u * u); simpl; auto with zarith.
+ replace (u^2) with (u * u); simpl.
  apply Z.le_trans with (1 * u); auto with zarith.
  unfold Z.pow_pos; simpl; ring.
  Qed.
@@ -397,7 +395,7 @@ Section CompareRec.
  apply Z.lt_le_trans with (1:= H0).
  fold double_wB.
  case (double_to_Z_pos n xl); intros H1 H2.
- apply Z.le_trans with (double_to_Z n xh * double_wB n); auto with zarith.
+ apply Z.le_trans with (double_to_Z n xh * double_wB n). 2: auto with zarith.
  apply Z.le_trans with (1 * double_wB n); auto with zarith.
  case (double_to_Z_pos n xh); intros; exfalso; omega.
  Qed.
