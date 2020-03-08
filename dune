@@ -2,5 +2,5 @@
 
 (coq.theory
  (name Bignums)
- (public_name coq-bignums)
+ (package coq-bignums)
  (libraries coq-bignums.plugin))
