@@ -16,3 +16,4 @@ Makefile.coq.conf
 *.install
 *.vos
 *.vok
+*.out.real
