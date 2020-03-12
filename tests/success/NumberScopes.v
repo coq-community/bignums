@@ -4,21 +4,21 @@
 
 Close Scope nat_scope.
 
-Require Import BigN.
+Require Import Bignums.BigN.BigN.
 Check (BigN.add 1 2).
 Check (BigN.add_comm 1 2).
 Check (BigN.min_comm 1 2).
 Definition f_bigN (x:bigN) := x.
 Check (f_bigN 1).
 
-Require Import BigZ.
+Require Import Bignums.BigZ.BigZ.
 Check (BigZ.add 1 2).
 Check (BigZ.add_comm 1 2).
 Check (BigZ.min_comm 1 2).
 Definition f_bigZ (x:bigZ) := x.
 Check (f_bigZ 1).
 
-Require Import BigQ.
+Require Import Bignums.BigQ.BigQ.
 Check (BigQ.add 1 2).
 Check (BigQ.add_comm 1 2).
 Check (BigQ.min_comm 1 2).
