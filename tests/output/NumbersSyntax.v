@@ -1,5 +1,5 @@
-
-Require Import BigQ.
+Require Import ZArith.
+Require Import Bignums.BigQ.BigQ.
 
 Open Scope bigN_scope.
 Check 2.
