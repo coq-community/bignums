@@ -3,6 +3,4 @@
 (coq.theory
  (name Bignums)
  (public_name coq-bignums)
- (flags :standard -native-compiler yes)
  (libraries coq-bignums.plugin))
-
