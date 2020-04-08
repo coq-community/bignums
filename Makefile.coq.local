@@ -1,1 +1,8 @@
-COQEXTRAFLAGS += -native-compiler yes
+ifneq (,$(COQBIN))
+# add an ending /
+COQBIN:=$(COQBIN)/
+endif
+COQC ?= "$(COQBIN)coqc"
+COQ_WITH_NATIVE_COMPILE := $(shell echo "Definition d := 0+1." > conftest.v && $(COQC) -native-compiler yes conftest.v 2> /dev/null && echo "yes" || echo "no")
+
+COQEXTRAFLAGS += -native-compiler $(COQ_WITH_NATIVE_COMPILE)
