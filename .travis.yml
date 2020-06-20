@@ -61,3 +61,8 @@ jobs:
     - NJOBS=2
     <<: *OPAM
 
+  - env:
+    - COQ_IMAGE=coqorg/coq:8.12
+    - CONTRIB_NAME=coq-bignums
+    - NJOBS=2
+    <<: *OPAM
