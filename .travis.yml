@@ -1,6 +1,8 @@
-opam: &OPAM
-  language: minimal
-  sudo: required
+os: linux
+dist: bionic
+language: shell
+
+.opam: &OPAM
   services: docker
   install: |
     # Prepare the COQ container
@@ -38,12 +40,13 @@ opam: &OPAM
   - docker stop COQ  # optional
   - echo -en 'travis_fold:end:script\\r'
 
-nix: &NIX
+.nix: &NIX
   language: nix
+  nix: 2.3.5
   script:
   - nix-build --argstr coq-url "$COQ" --extra-substituters https://coq.cachix.org --trusted-public-keys "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= coq.cachix.org-1:5QW/wwEnD+l2jvN6QRbRRsa4hBHG3QiQQ26cxu1F5tI="
 
-matrix:
+jobs:
   include:
 
   # Test supported versions of Coq via Nix
@@ -58,3 +61,8 @@ matrix:
     - NJOBS=2
     <<: *OPAM
 
+  - env:
+    - COQ_IMAGE=coqorg/coq:8.12
+    - CONTRIB_NAME=coq-bignums
+    - NJOBS=2
+    <<: *OPAM
