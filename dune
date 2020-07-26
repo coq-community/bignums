@@ -1,6 +1,4 @@
-(include_subdirs qualified)
-
 (coq.theory
  (name Bignums)
- (public_name coq-bignums)
- (libraries coq-bignums.plugin))
+ (package coq-bignums)
+ (synopsis "Bignums, the Coq library of arbitrary large numbers"))

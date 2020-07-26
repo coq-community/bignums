@@ -1,8 +1,15 @@
-{ pkgs ? import <nixpkgs> {}
-, coq ? import (fetchTarball "https://github.com/coq/coq/tarball/master") {}
-, shell ? false }:
+{ pkgs ? (import <nixpkgs> {}), coq-version-or-url, shell ? false }:
 
-with coq.coqPackages;
+let
+  coq-version-parts = builtins.match "([0-9]+).([0-9]+)" coq-version-or-url;
+  coqPackages =
+    if coq-version-parts == null then
+      pkgs.mkCoqPackages (import (fetchTarball coq-version-or-url) {})
+    else
+      pkgs."coqPackages_${builtins.concatStringsSep "_" coq-version-parts}";
+in
+
+with coqPackages;
 
 pkgs.stdenv.mkDerivation {
 
@@ -17,5 +24,5 @@ pkgs.stdenv.mkDerivation {
 
   src = if shell then null else ./.;
 
-  installFlags = "COQLIB=$(out)/lib/coq/${coq.coq-version}/";
+  installFlags = "COQMF_COQLIB=$(out)/lib/coq/${coq.coq-version}/";
 }
