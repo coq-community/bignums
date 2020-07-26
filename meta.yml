@@ -3,6 +3,7 @@ fullname: Bignums
 shortname: bignums
 organization: coq
 community: false
+action: true
 
 synopsis: >-
   Bignums, the Coq library of arbitrary large numbers
@@ -20,9 +21,12 @@ opam-file-maintainer: Laurent.Thery@inria.fr
 
 license:
   fullname: GNU Lesser General Public License v2.1
-  identifier: LGPL-2.1
+  identifier: LGPL-2.1-only
 
 plugin: true
+
+supported_ocaml_versions:
+  text: all versions supported by Coq
 
 supported_coq_versions:
   text: master (use the corresponding branch or release for other Coq versions)
