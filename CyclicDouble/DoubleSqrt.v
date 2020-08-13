@@ -20,7 +20,7 @@ Local Open Scope Z_scope.
 Ltac zarith := auto with zarith; fail.
 
 Section DoubleSqrt.
- Variable w              : Type.
+ Variable w              : univ_of_cycles.
  Variable w_is_even      : w -> bool.
  Variable w_compare      : w -> w -> comparison.
  Variable w_0            : w.

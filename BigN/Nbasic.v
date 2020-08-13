@@ -136,8 +136,8 @@ Definition zn2z_word_comm : forall w n, zn2z (word w n) = word (zn2z w) n.
   reflexivity.
 Defined.
 
-Fixpoint extend (n:nat) {struct n} : forall w:Type, zn2z w -> word w (S n) :=
- match n return forall w:Type, zn2z w -> word w (S n) with
+Fixpoint extend (n:nat) {struct n} : forall w:univ_of_cycles, zn2z w -> word w (S n) :=
+ match n return forall w:univ_of_cycles, zn2z w -> word w (S n) with
  | O => fun w x => x
  | S m =>
    let aux := extend m in
@@ -209,7 +209,7 @@ Fixpoint diff_r (m n: nat) {struct m}: snd (diff m n) + m = max m n :=
       end
   end.
 
- Variable w: Type.
+ Variable w: univ_of_cycles.
 
  Definition castm (m n: nat) (H: m = n) (x: word w (S m)):
      (word w (S n)) :=
@@ -254,7 +254,7 @@ End Reduce.
 
 Section ReduceRec.
 
- Variable w : Type.
+ Variable w : univ_of_cycles.
  Variable nT : Type.
  Variable N0 : nT.
  Variable reduce_1n : zn2z w -> nT.
@@ -278,7 +278,7 @@ End ReduceRec.
 
 Section CompareRec.
 
- Variable wm w : Type.
+ Variable wm w : univ_of_cycles.
  Variable w_0 : w.
  Variable compare : w -> w -> comparison.
  Variable compare0_m : wm -> comparison.
@@ -405,7 +405,7 @@ End CompareRec.
 
 Section AddS.
 
- Variable w wm : Type.
+ Variable w wm : univ_of_cycles.
  Variable incr : wm -> carry wm.
  Variable addr : w -> wm -> carry wm.
  Variable injr : w -> zn2z wm.
@@ -456,19 +456,19 @@ End AddS.
 
  Variable w: Type.
 
- Theorem digits_zop: forall t (ops : ZnZ.Ops t),
+ Theorem digits_zop: forall (t:univ_of_cycles) (ops : ZnZ.Ops t),
   ZnZ.digits (mk_zn2z_ops ops) = xO (ZnZ.digits ops).
  Proof.
  intros ww x; auto.
  Qed.
 
- Theorem digits_kzop: forall t (ops : ZnZ.Ops t),
+ Theorem digits_kzop: forall (t:univ_of_cycles) (ops : ZnZ.Ops t),
   ZnZ.digits (mk_zn2z_ops_karatsuba ops) = xO (ZnZ.digits ops).
  Proof.
  intros ww x; auto.
  Qed.
 
- Theorem make_zop: forall t (ops : ZnZ.Ops t),
+ Theorem make_zop: forall (t:univ_of_cycles) (ops : ZnZ.Ops t),
   @ZnZ.to_Z _ (mk_zn2z_ops ops) =
     fun z => match z with
              | W0 => 0
@@ -479,7 +479,7 @@ End AddS.
  intros ww x; auto.
  Qed.
 
- Theorem make_kzop: forall t (ops: ZnZ.Ops t),
+ Theorem make_kzop: forall (t:univ_of_cycles) (ops: ZnZ.Ops t),
   @ZnZ.to_Z _ (mk_zn2z_ops_karatsuba ops) =
     fun z => match z with
              | W0 => 0
@@ -501,7 +501,7 @@ Module Type NAbstract.
 
 (** The domains: a sequence of [Z/nZ] structures *)
 
-Parameter dom_t : nat -> Type.
+Parameter dom_t : nat -> univ_of_cycles.
 Declare Instance dom_op n : ZnZ.Ops (dom_t n).
 Declare Instance dom_spec n : ZnZ.Specs (dom_op n).
 

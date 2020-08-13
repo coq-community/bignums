@@ -8,7 +8,7 @@
 (*            Benjamin Gregoire, Laurent Thery, INRIA, 2007             *)
 (************************************************************************)
 
-Require Import BinInt.
+Require Import BinInt DoubleBase.
 
 Open Scope Z_scope.
 
@@ -20,7 +20,7 @@ Open Scope Z_scope.
 
 Module Type ZType.
 
- Parameter t : Type.
+ Parameter t : univ_of_cycles.
 
  Parameter to_Z : t -> Z.
  Local Notation "[ x ]" := (to_Z x).

@@ -21,7 +21,7 @@ Local Infix "<<" := Pos.shiftl_nat (at level 30).
 
 Section GENDIVN1.
 
- Variable w             : Type.
+ Variable w             : univ_of_cycles.
  Variable w_digits      : positive.
  Variable w_zdigits     : w.
  Variable w_0           : w.
