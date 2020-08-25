@@ -25,7 +25,7 @@ Ltac zarith := auto with zarith; fail.
 
 Section POS_MOD.
 
- Variable w:Type.
+ Variable w:univ_of_cycles.
  Variable w_0 : w.
  Variable w_digits : positive.
  Variable w_zdigits : w.
@@ -194,7 +194,7 @@ End POS_MOD.
 
 Section DoubleDiv32.
 
- Variable w             : Type.
+ Variable w             : univ_of_cycles.
  Variable w_0           : w.
  Variable w_Bm1         : w.
  Variable w_Bm2         : w.
@@ -447,7 +447,7 @@ Section DoubleDiv32.
 End DoubleDiv32.
 
 Section DoubleDiv21.
- Variable w : Type.
+ Variable w : univ_of_cycles.
  Variable w_0 : w.
 
  Variable w_0W : w -> zn2z w.
@@ -603,7 +603,7 @@ Section DoubleDiv21.
 End DoubleDiv21.
 
 Section DoubleDivGt.
- Variable w : Type.
+ Variable w : univ_of_cycles.
  Variable w_digits : positive.
  Variable w_0 : w.
 
@@ -1308,7 +1308,7 @@ End DoubleDivGt.
 
 Section DoubleDiv.
 
- Variable w : Type.
+ Variable w : univ_of_cycles.
  Variable w_digits : positive.
  Variable ww_1 : zn2z w.
  Variable ww_compare : zn2z w -> zn2z w -> comparison.

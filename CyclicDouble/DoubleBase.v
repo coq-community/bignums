@@ -18,8 +18,16 @@ Local Open Scope Z_scope.
 
 Local Infix "<<" := Pos.shiftl_nat (at level 30).
 
+(* For backward compatibility. The intended value is Set,
+   but we use Type when compiling against an old version
+   of the standard library. *)
+Definition univ_of_cycles : Type.
+Proof.
+  first [let _ := constr:(word : Set -> nat -> Set) in exact Set | exact Type].
+Defined.
+
 Section DoubleBase.
- Variable w : Type.
+ Variable w : univ_of_cycles.
  Variable w_0   : w.
  Variable w_1   : w.
  Variable w_Bm1 : w.

@@ -28,7 +28,7 @@ Local Open Scope Z_scope.
 
 Section Z_2nZ.
 
- Context {t : Type}{ops : ZnZ.Ops t}.
+ Context {t : univ_of_cycles}{ops : ZnZ.Ops t}.
 
  Let w_digits      := ZnZ.digits.
  Let w_zdigits      := ZnZ.zdigits.
@@ -926,7 +926,7 @@ End Z_2nZ.
 
 Section MulAdd.
 
-  Context {t : Type}{ops : ZnZ.Ops t}{specs : ZnZ.Specs ops}.
+  Context {t : univ_of_cycles}{ops : ZnZ.Ops t}{specs : ZnZ.Specs ops}.
 
   Definition mul_add:= w_mul_add ZnZ.zero ZnZ.succ ZnZ.add_c ZnZ.mul_c.
 

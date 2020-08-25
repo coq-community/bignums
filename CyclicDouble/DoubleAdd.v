@@ -18,7 +18,7 @@ Require Import DoubleBase.
 Local Open Scope Z_scope.
 
 Section DoubleAdd.
- Variable w : Type.
+ Variable w : univ_of_cycles.
  Variable w_0 : w.
  Variable w_1 : w.
  Variable w_WW : w -> w -> zn2z w.
