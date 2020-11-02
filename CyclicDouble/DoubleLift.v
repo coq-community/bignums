@@ -425,8 +425,8 @@ Section DoubleLift.
       pattern [|xl|] at 1; rewrite <- (Z.add_0_l [|xl|]).
       apply Z.add_le_mono_r; auto with zarith.
     - Z.le_elim Hx1; auto.
-      absurd (0 < [|xh|] * wB + [|xl|]); auto with zarith.
-      rewrite <- Hy1; rewrite Z.add_0_r; auto with zarith.
+      absurd (0 < [|xh|] * wB + [|xl|]). auto with zarith.
+      rewrite <- Hy1; rewrite Z.add_0_r.
       apply Z.mul_pos_pos; auto with zarith. }
   rewrite spec_compare. case Z.compare_spec.
     intros H; simpl.
@@ -452,8 +452,8 @@ Section DoubleLift.
       pattern [|xl|] at 1; rewrite <- (Z.add_0_l [|xl|]).
       apply Z.add_le_mono_r; auto with zarith.
     - Z.le_elim Hx1; auto.
-      absurd (0 < [|xh|] * wB + [|xl|]); auto with zarith.
-      rewrite <- Hy1; rewrite Z.add_0_r; auto with zarith.
+      absurd (0 < [|xh|] * wB + [|xl|]). auto with zarith.
+      rewrite <- Hy1; rewrite Z.add_0_r.
       apply Z.mul_pos_pos; auto with zarith. }
   assert (F2: [|xl|] = 0).
     rewrite F1 in Hx; auto with zarith.
