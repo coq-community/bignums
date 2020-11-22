@@ -40,7 +40,7 @@ jobs:
               opam list
             endGroup
             startGroup Workaround permission issue
-              sudo chown coq:coq .
+              sudo chown -R coq:coq .
             endGroup
             startGroup Run tests
               make -C tests
@@ -50,7 +50,7 @@ jobs:
             endGroup
       - name: Revert permissions
         if: ${{ always() }}
-        run: sudo chown 1001:116 .
+        run: sudo chown -R 1001:116 .
 
 # See also:
 # https://github.com/coq-community/docker-coq-action#readme
