@@ -1,2 +1,10 @@
 CAMLPKGS+=-package zarith
-COQEXTRAFLAGS += -native-compiler yes
+
+# Since Coq 8.13, the configure "-native-compiler" flag is propagated
+# to coqc, so this flag should not be unconditionally set in this
+# file, all the more as it would raise a compilation error if Coq has
+# been compiled with "-native-compiler ondemand" (as in this case, the
+# Coq stdlib is not precompiled). The COQEXTRAFLAGS line below is thus
+# commented-out. For details, see https://github.com/coq/ceps/pull/48
+#
+# COQEXTRAFLAGS += -native-compiler yes
