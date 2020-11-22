@@ -1,15 +1,8 @@
 # Bignums
 
-[![Travis][travis-shield]][travis-link]
-
-[travis-shield]: https://travis-ci.com/coq/bignums.svg?branch=master
-[travis-link]: https://travis-ci.com/coq/bignums/builds
-
-
+[![CI](https://github.com/coq/bignums/workflows/CI/badge.svg?branch=master)](https://github.com/coq/bignums/actions?query=workflow%3ACI)
 
 Provides BigN, BigZ, BigQ that used to be part of Coq standard library
-
-
 
 ## Meta
 
@@ -45,6 +38,3 @@ make install
 
 After installation, the included modules are available under
 the `Bignums` namespace.
-
-
-
