@@ -1,4 +1,4 @@
-COQC=coqc -native-compiler yes
+COQC=coqc
 
 all: success output
 
