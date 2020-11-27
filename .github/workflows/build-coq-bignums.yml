@@ -22,8 +22,7 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
-      # TODO - uses: coq-community/docker-coq-action@v1
-      - uses: coq-community/docker-coq-action@split-script
+      - uses: coq-community/docker-coq-action@v1
         with:
           opam_file: 'coq-bignums.opam'
           custom_image: ${{ matrix.image }}
