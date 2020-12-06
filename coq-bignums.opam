@@ -17,7 +17,7 @@ run-test: [make "-C" "tests" "-j%{jobs}%"]
 install: [make "install"]
 depends: [
   "ocaml"
-  "coq" {= "dev"}
+  "coq" {(>= "8.13" & < "8.14~") | (= "dev")}
 ]
 
 tags: [
