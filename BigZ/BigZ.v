@@ -9,7 +9,7 @@
 (************************************************************************)
 
 Require Export BigN.
-Require Import ZProperties ZDivFloor ZSig ZSigZAxioms ZMake Ring.
+Require Import ZProperties ZDivFloor ZSig ZSigZAxioms ZMake Ring Lia.
 Import Zpow_def Zdiv.
 
 (** * [BigZ] : arbitrary large efficient integers.
@@ -207,5 +207,3 @@ Section TestLia.
 Let test : forall x y : bigZ, x<=y -> y<=x -> x==y.
 Proof. intros x y. BigZ.zify. Lia.lia. Qed.
 End TestLia.
-
-(** Todo: micromega *)

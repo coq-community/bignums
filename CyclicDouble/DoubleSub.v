@@ -11,7 +11,7 @@
 
 Set Implicit Arguments.
 
-Require Import ZArith.
+Require Import ZArith Lia.
 Require Import BigNumPrelude.
 Require Import DoubleType.
 Require Import DoubleBase.
@@ -194,17 +194,17 @@ Section DoubleSub.
 
 
   Lemma spec_ww_opp_c : forall x, [-[ww_opp_c x]] = -[[x]].
-  Proof.
+  Proof using ww_Bm1 w_Bm1 spec_w_0 spec_to_Z spec_opp_carry spec_opp_c.
    destruct x as [ |xh xl];simpl. reflexivity.
    rewrite Z.opp_add_distr;generalize (spec_opp_c xl);destruct (w_opp_c xl)
    as [l|l];intros H;unfold interp_carry in H;rewrite <- H;
    rewrite <- Z.mul_opp_l.
    assert ([|l|] = 0).
-    assert (H1:= spec_to_Z l);assert (H2 := spec_to_Z xl);omega.
+    assert (H1:= spec_to_Z l);assert (H2 := spec_to_Z xl);lia.
    rewrite H0;generalize (spec_opp_c xh);destruct (w_opp_c xh)
    as [h|h];intros H1;unfold interp_carry in *;rewrite <- H1.
    assert ([|h|] = 0).
-    assert (H3:= spec_to_Z h);assert (H2 := spec_to_Z xh);omega.
+    assert (H3:= spec_to_Z h);assert (H2 := spec_to_Z xh);lia.
    rewrite H2;reflexivity.
    simpl ww_to_Z;rewrite wwB_wBwB;rewrite spec_w_0;ring.
    unfold interp_carry;simpl ww_to_Z;rewrite wwB_wBwB;rewrite spec_opp_carry;
@@ -212,14 +212,14 @@ Section DoubleSub.
   Qed.
 
   Lemma spec_ww_opp : forall x, [[ww_opp x]] = (-[[x]]) mod wwB.
-  Proof.
+  Proof using ww_Bm1 w_Bm1 spec_w_0 spec_to_Z spec_opp_carry spec_opp_c spec_opp.
    destruct x as [ |xh xl];simpl. reflexivity.
    rewrite Z.opp_add_distr, <- Z.mul_opp_l.
    generalize (spec_opp_c xl);destruct (w_opp_c xl)
    as [l|l];intros H;unfold interp_carry in H;rewrite <- H;simpl ww_to_Z.
    rewrite spec_w_0;rewrite Z.add_0_r;rewrite wwB_wBwB.
    assert ([|l|] = 0).
-    assert (H1:= spec_to_Z l);assert (H2 := spec_to_Z xl);omega.
+    assert (H1:= spec_to_Z l);assert (H2 := spec_to_Z xl); lia.
    rewrite H0;rewrite Z.add_0_r; rewrite Z.pow_2_r;
     rewrite Zmult_mod_distr_r;try apply lt_0_wB.
    rewrite spec_opp;trivial.
@@ -235,7 +235,7 @@ Section DoubleSub.
   Qed.
 
   Lemma spec_ww_pred_c : forall x, [-[ww_pred_c x]] = [[x]] - 1.
-  Proof.
+  Proof using w_0 spec_ww_Bm1 spec_w_WW spec_w_Bm1 spec_to_Z spec_pred_c.
    destruct x as [ |xh xl];unfold ww_pred_c.
    unfold interp_carry;rewrite spec_ww_Bm1;simpl ww_to_Z;ring.
    simpl ww_to_Z;replace (([|xh|]*wB+[|xl|])-1) with ([|xh|]*wB+([|xl|]-1)).
@@ -243,13 +243,13 @@ Section DoubleSub.
    intros H;unfold interp_carry in H;rewrite <- H. simpl;apply spec_w_WW.
    rewrite Z.add_assoc;rewrite <- Z.mul_add_distr_r.
    assert ([|l|] = wB - 1).
-     assert (H1:= spec_to_Z l);assert (H2 := spec_to_Z xl);omega.
+     assert (H1:= spec_to_Z l);assert (H2 := spec_to_Z xl);lia.
    rewrite H0;change ([|xh|] + -1) with ([|xh|] - 1).
    generalize (spec_pred_c xh);destruct (w_pred_c xh) as [h|h];
    intros H1;unfold interp_carry in H1;rewrite <- H1.
    simpl;rewrite spec_w_Bm1;ring.
    assert ([|h|] = wB - 1).
-     assert (H3:= spec_to_Z h);assert (H2 := spec_to_Z xh);omega.
+     assert (H3:= spec_to_Z h);assert (H2 := spec_to_Z xh); lia.
    rewrite H2;unfold interp_carry;rewrite spec_ww_Bm1;rewrite wwB_wBwB;ring.
   Qed.
 
@@ -295,7 +295,7 @@ Section DoubleSub.
   Qed.
 
   Lemma spec_ww_pred : forall x, [[ww_pred x]] = ([[x]] - 1) mod wwB.
-  Proof.
+  Proof using w_0 spec_ww_Bm1 spec_w_WW spec_w_Bm1 spec_to_Z spec_pred_c spec_pred.
    destruct x as [ |xh xl];simpl.
    apply Zmod_unique with (-1). apply spec_ww_to_Z;trivial.
    rewrite spec_ww_Bm1;ring.
@@ -307,7 +307,7 @@ Section DoubleSub.
    rewrite Z.add_assoc;rewrite <- Z.mul_add_distr_r.
    change ([|xh|] + -1) with ([|xh|] - 1).
    assert ([|l|] = wB - 1).
-    assert (H1:= spec_to_Z l);assert (H2:= spec_to_Z xl);omega.
+    assert (H1:= spec_to_Z l);assert (H2:= spec_to_Z xl); lia.
    rewrite (mod_wwB w_digits w_to_Z);trivial.
    rewrite spec_pred;rewrite spec_w_Bm1;rewrite <- H0;trivial.
   Qed.

@@ -8,7 +8,7 @@
 (*            Benjamin Gregoire, Laurent Thery, INRIA, 2007             *)
 (************************************************************************)
 
-Require Import ZArith Ndigits.
+Require Import ZArith Lia Ndigits.
 Require Import BigNumPrelude.
 Require Import Max.
 Require Import DoubleType.
@@ -339,7 +339,7 @@ Section CompareRec.
   change 0 with (0 + 0); apply Z.add_lt_le_mono.
   apply Z.mul_pos_pos; auto with zarith.
   case (double_to_Z_pos n xl); auto with zarith.
-  case (double_to_Z_pos n xh); intros; exfalso; omega.
+  case (double_to_Z_pos n xh); intros; exfalso; lia.
   Qed.
 
  Fixpoint compare_mn_1 (n:nat) : word wm n -> w -> comparison :=
@@ -397,7 +397,7 @@ Section CompareRec.
  case (double_to_Z_pos n xl); intros H1 H2.
  apply Z.le_trans with (double_to_Z n xh * double_wB n). 2: auto with zarith.
  apply Z.le_trans with (1 * double_wB n); auto with zarith.
- case (double_to_Z_pos n xh); intros; exfalso; omega.
+ case (double_to_Z_pos n xh); intros; exfalso; lia.
  Qed.
 
 End CompareRec.

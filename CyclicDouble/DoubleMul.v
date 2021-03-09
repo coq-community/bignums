@@ -10,7 +10,7 @@
 
 Set Implicit Arguments.
 
-Require Import ZArith.
+Require Import ZArith Lia.
 Require Import BigNumPrelude.
 Require Import DoubleType.
 Require Import DoubleBase.
@@ -333,14 +333,14 @@ Section DoubleMul.
      ring_simplify ((2*wB - 4)*wB + 2).
      assert (H4 := Zmult_lt_b _ _ _ (spec_to_Z xh) (spec_to_Z yl)).
      assert (H5 := Zmult_lt_b _ _ _ (spec_to_Z xl) (spec_to_Z yh)).
-     omega.
+     lia.
    generalize H3;clear H3;rewrite <- H1.
    rewrite Z.add_assoc; rewrite Z.pow_2_r; rewrite Z.mul_assoc;
      rewrite <- Z.mul_add_distr_r.
     assert (((2 * wB - 4) + 2)*wB <= ([|wc|] * wB + [|cch|])*wB).
      apply Z.mul_le_mono_nonneg;zarith.
     rewrite Z.mul_add_distr_r in H3.
-    intros. assert (U2 := spec_to_Z ccl);omega.
+    intros. assert (U2 := spec_to_Z ccl);lia.
    generalize (spec_ww_add_c (w_W0 ccl) ll);destruct (ww_add_c (w_W0 ccl) ll)
    as [l|l];unfold interp_carry;rewrite spec_w_W0;try rewrite Z.mul_1_l;
    simpl zn2z_to_Z;
@@ -514,7 +514,7 @@ Section DoubleMul.
    assert (H3 := wB_pos w_digits).
    assert (2*wB <= wwB).
     rewrite wwB_wBwB; rewrite Z.pow_2_r; apply Z.mul_le_mono_nonneg;zarith.
-   omega.
+   lia.
   Qed.
 
   Ltac Spec_ww_to_Z x :=

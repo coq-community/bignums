@@ -10,7 +10,7 @@
 
 (** Initial Author: Arnaud Spiwack *)
 
-Require Import CyclicAxioms Ring63 NSig NSigNAxioms NMake
+Require Import Lia CyclicAxioms Ring63 NSig NSigNAxioms NMake
   NProperties GenericMinMax.
 Import Cyclic63.
 
@@ -190,11 +190,9 @@ Let test : forall x y : bigN, x<=y -> y<=x -> x==y.
 Proof. bigN_order. Qed.
 End TestOrder.
 
-(** We can use at least a bit of (r)omega by translating to [Z]. *)
+(** We can use at least a bit of lia by translating to [Z]. *)
 
-Section TestOmega.
+Section TestLia.
 Let test : forall x y : bigN, x<=y -> y<=x -> x==y.
-Proof. intros x y. BigN.zify. omega. Qed.
-End TestOmega.
-
-(** Todo: micromega *)
+Proof. intros x y. BigN.zify. lia. Qed.
+End TestLia.
