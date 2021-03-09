@@ -10,7 +10,7 @@
 
 Set Implicit Arguments.
 
-Require Import ZArith.
+Require Import ZArith Lia.
 Require Import BigNumPrelude.
 Require Import DoubleType.
 Require Import DoubleBase.
@@ -582,7 +582,7 @@ Section Z_2nZ.
   unfold w_Bm2, w_to_Z, w_pred, w_Bm1.
   rewrite ZnZ.spec_pred, ZnZ.spec_m1.
   unfold w_digits;rewrite Zmod_small. ring.
-  assert (H:= wB_pos(ZnZ.digits)). omega.
+  assert (H:= wB_pos(ZnZ.digits)). lia.
   exact ZnZ.spec_div21.
  Qed.
 

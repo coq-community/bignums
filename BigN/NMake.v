@@ -16,7 +16,7 @@
     representation. The representation-dependent (and macro-generated) part
     is now in [NMake_gen]. *)
 
-Require Import Bool BigNumPrelude ZArith Nnat Ndigits CyclicAxioms DoubleType
+Require Import Bool BigNumPrelude ZArith Lia Nnat Ndigits CyclicAxioms DoubleType
   Nbasic Wf_nat StreamMemo NSig NMake_gen.
 
 Module Make (W0:CyclicType) <: NType.
@@ -1356,7 +1356,7 @@ Module Make (W0:CyclicType) <: NType.
  intros n x p K HK Hx Hp. simpl. rewrite spec_reduce.
  destruct (ZnZ.spec_to_Z x).
  destruct (ZnZ.spec_to_Z p).
- rewrite ZnZ.spec_add_mul_div by (zify; omega).
+ rewrite ZnZ.spec_add_mul_div by lia.
  rewrite ZnZ.spec_0, Zdiv_0_l, Z.add_0_r.
  apply Zmod_small. unfold base.
  split; auto with zarith.
@@ -1692,7 +1692,7 @@ Module Make (W0:CyclicType) <: NType.
     Z.le_elim Hy.
     + now apply Z.log2_lt_pow2.
     + now subst.
-  - simpl in *; omega.
+  - simpl in *; lia.
  Qed.
 
  Theorem spec_ldiff x y : [ldiff x y] = Z.ldiff [x] [y].

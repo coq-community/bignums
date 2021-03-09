@@ -10,7 +10,7 @@
 
 Set Implicit Arguments.
 
-Require Import ZArith.
+Require Import ZArith Lia.
 Require Import BigNumPrelude.
 Require Import DoubleType.
 Require Import DoubleBase.
@@ -338,14 +338,14 @@ Section DoubleLift.
    rewrite (Z.add_comm ([|xh|] * 2 ^ u * wB)).
    rewrite Z_mod_plus;zarith. rewrite Z_mod_mult;zarith.
    unfold base;rewrite <- Zmod_shift_r;zarith. fold base;apply Z_mod_lt;zarith.
-   try (unfold u; omega).
+   try (unfold u; lia).
    split;zarith. unfold u; apply Zdiv_lt_upper_bound;zarith.
    rewrite <- Zpower_exp;zarith.
    fold u.
    ring_simplify (u + (Zpos w_digits - u)); fold
    wB;zarith. unfold ww_digits;rewrite Pos2Z.inj_xO;zarith.
    unfold base;rewrite <- Zmod_shift_r;zarith. fold base;apply Z_mod_lt;zarith.
-   try (unfold u; omega).
+   try (unfold u; lia).
    unfold u; split;zarith.
    apply Zdiv_lt_upper_bound;zarith.
    rewrite <- Zpower_exp;zarith.

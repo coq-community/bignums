@@ -10,7 +10,7 @@
 
 Set Implicit Arguments.
 
-Require Import ZArith.
+Require Import ZArith Lia.
 Require Import BigNumPrelude.
 Require Import DoubleType.
 Require Import DoubleBase.
@@ -178,17 +178,17 @@ Section DoubleAdd.
 	 forall x y, [|w_add_carry x y|] = ([|x|] + [|y|] + 1) mod wB.
 
   Lemma spec_ww_succ_c : forall x, [+[ww_succ_c x]] = [[x]] + 1.
-  Proof.
+  Proof using w_1 spec_ww_1 spec_w_succ_c spec_w_0 spec_to_Z.
    destruct x as [ |xh xl];simpl. apply spec_ww_1.
    generalize (spec_w_succ_c xl);destruct (w_succ_c xl) as [l|l];
     intro H;unfold interp_carry in H. simpl;rewrite H;ring.
    rewrite <- Z.add_assoc;rewrite <- H;rewrite Z.mul_1_l.
-   assert ([|l|] = 0). generalize (spec_to_Z xl)(spec_to_Z l);omega.
+   assert ([|l|] = 0). generalize (spec_to_Z xl)(spec_to_Z l); lia.
    rewrite H0;generalize (spec_w_succ_c xh);destruct (w_succ_c xh) as [h|h];
     intro H1;unfold interp_carry in H1.
    simpl;rewrite H1;rewrite spec_w_0;ring.
    unfold interp_carry;simpl ww_to_Z;rewrite wwB_wBwB.
-   assert ([|xh|] = wB - 1). generalize (spec_to_Z xh)(spec_to_Z h);omega.
+   assert ([|xh|] = wB - 1). generalize (spec_to_Z xh)(spec_to_Z h); lia.
    rewrite H2;ring.
   Qed.
 
@@ -274,7 +274,7 @@ Section DoubleAdd.
    rewrite Zmod_small;trivial.
    rewrite wwB_wBwB;apply beta_mult;apply spec_to_Z.
    assert ([|l|] = 0). clear spec_ww_1 spec_w_1 spec_w_0.
-    assert (H1:= spec_to_Z l); assert (H2:= spec_to_Z xl); omega.
+    assert (H1:= spec_to_Z l); assert (H2:= spec_to_Z xl); lia.
    rewrite H0;rewrite Z.add_0_r;rewrite <- Z.mul_add_distr_r;rewrite wwB_wBwB.
    rewrite Z.pow_2_r; rewrite Zmult_mod_distr_r;try apply lt_0_wB.
    rewrite spec_w_W0;rewrite spec_w_succ;trivial.

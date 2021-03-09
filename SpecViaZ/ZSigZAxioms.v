@@ -202,7 +202,7 @@ Qed.
 
 Theorem lt_succ_r : forall n m, n < (succ m) <-> n <= m.
 Proof.
-intros. zify. omega.
+intros. zify. lia.
 Qed.
 
 Theorem min_l : forall n m, n <= m -> min n m == n.

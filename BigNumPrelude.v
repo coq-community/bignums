@@ -232,7 +232,7 @@ Theorem Zmod_le_first: forall a b, 0 <= a -> 0 < b -> 0 <= a mod b <= a.
   cut (0 < 2^p); auto with zarith.
   rewrite <- Zpower_exp.
   replace (n-p+p) with n;trivial. ring.
-  omega. omega.
+  lia. lia.
   apply Z.lt_gt. apply Z.pow_pos_nonneg;auto with zarith.
  Qed.
 
@@ -302,7 +302,7 @@ Theorem Zmod_le_first: forall a b, 0 <= a -> 0 < b -> 0 <= a mod b <= a.
    a < 0 -> 0 < b -> a / b < 0.
  Proof.
  intros Ha Hb.
- assert (b > 0) by omega.
+ assert (b > 0) by lia.
  generalize (Z_mult_div_ge a _ H); intros.
  assert (b * (a / b) < 0)%Z.
   apply Z.le_lt_trans with a; auto with zarith.
