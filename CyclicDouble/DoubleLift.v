@@ -197,9 +197,8 @@ Section DoubleLift.
        apply Z.lt_nge.
        case (spec_to_Z xl); intros HH3 HH4.
        apply Z.le_lt_trans with (2 := HH4).
-       apply Z.le_trans with (1 * 2 ^ [|w_tail0 xl|]); auto with zarith.
        rewrite Hz2.
-       apply Z.mul_le_mono_nonneg_r; auto with zarith.
+       apply Z.le_trans with (1 * 2 ^ [|w_tail0 xl|]); auto with zarith.
      apply Zpower_le_monotone; auto with zarith.
    exists ([|xh|] * (2 ^ ((Zpos w_digits - [|w_tail0 xl|]) - 1)) + z); split.
      apply Z.add_nonneg_nonneg; auto.

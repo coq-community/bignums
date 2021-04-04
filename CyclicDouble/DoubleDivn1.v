@@ -391,12 +391,12 @@ Section GENDIVN1.
     rewrite spec_add_mul_div;auto with zarith.
     rewrite spec_0;rewrite Z.mul_0_l;rewrite Z.add_0_l.
     assert (([|high n a|]/2^(Zpos w_digits - [|w_head0 b|])) < wB).
-     apply Zdiv_lt_upper_bound;auto with zarith.
-     apply Z.lt_le_trans with wB;auto with zarith.
-     pattern wB at 1;replace wB with (wB*1);try ring.
-     apply Z.mul_le_mono_nonneg;auto with zarith.
-     assert (H6 := Z.pow_pos_nonneg 2 (Zpos w_digits - [|w_head0 b|]));
-       auto with zarith.
+    assert (H6 := Z.pow_pos_nonneg 2 (Zpos w_digits - [|w_head0 b|]));
+      auto with zarith.
+    apply Zdiv_lt_upper_bound;auto with zarith.
+    apply Z.lt_le_trans with wB;auto with zarith.
+    pattern wB at 1;replace wB with (wB*1);try ring.
+    apply Z.mul_le_mono_nonneg;auto with zarith.
     rewrite Zmod_small;auto with zarith.
     apply Zdiv_lt_upper_bound;auto with zarith.
     apply Z.lt_le_trans with wB;auto with zarith.
