@@ -1451,19 +1451,19 @@ Module Make (W0:CyclicType) <: NType.
      rewrite <- HH; rewrite Z.mul_1_r.
      apply Z.pow_le_mono_r; auto with zarith. }
  rewrite (Z.mul_comm 2).
- rewrite Z.pow_mul_r; auto with zarith.
+ rewrite Z.pow_mul_r by auto with zarith.
  rewrite Z.pow_2_r.
  apply Z.lt_le_trans with (2 := HH3).
  rewrite <- Z.mul_assoc.
  replace (2 * Zpos (digits x) - 1) with
    ((Zpos (digits x) - 1) + (Zpos (digits x))).
- rewrite Zpower_exp; auto with zarith.
- apply Zmult_lt_compat2; auto with zarith.
- split; auto with zarith.
- apply Z.mul_pos_pos; auto with zarith.
- rewrite Pos2Z.inj_xO; ring.
- apply Z.lt_le_incl; auto.
- repeat rewrite spec_head00; auto.
+ rewrite Zpower_exp by auto with zarith.
+ apply Zmult_lt_compat2; [auto with zarith|].
+ -  split;[|auto with zarith].
+    apply Z.mul_pos_pos; auto with zarith.
+ -  rewrite Pos2Z.inj_xO; ring.
+ - apply Z.lt_le_incl; auto.
+ - repeat rewrite spec_head00; auto.
  rewrite spec_double_size_digits.
  rewrite Pos2Z.inj_xO; auto with zarith.
  rewrite spec_double_size; auto.
