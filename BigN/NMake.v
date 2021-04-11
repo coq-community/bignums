@@ -586,7 +586,7 @@ Module Make (W0:CyclicType) <: NType.
  (** * General Division *)
 
  Definition div_eucl (x y : t) : t * t :=
-  if eqb y zero then (zero,zero) else
+  if eqb y zero then (zero, ltac:(match eval hnf in (1 mod 0) with | 0 => exact zero | _ => exact x end)) else
   match compare x y with
   | Eq => (one, zero)
   | Lt => (zero, x)
@@ -600,7 +600,7 @@ Module Make (W0:CyclicType) <: NType.
  intros x y. unfold div_eucl.
  rewrite spec_eqb, spec_compare, spec_0.
  case Z.eqb_spec.
- intros ->. rewrite spec_0. destruct [x]; auto.
+ intros ->. rewrite spec_0. cbn. rewrite ?ZnZ.spec_0. destruct [x]; auto.
  intros H'.
  assert (H : 0 < [y]) by (generalize (spec_pos y); auto with zarith).
  clear H'.
@@ -711,7 +711,7 @@ Module Make (W0:CyclicType) <: NType.
  (** * General Modulo *)
 
  Definition modulo (x y : t) : t :=
-  if eqb y zero then zero else
+  if eqb y zero then ltac:(match eval hnf in (1 mod 0) with | 0 => exact zero | _ => exact x end) else
   match compare x y with
   | Eq => zero
   | Lt => x
@@ -724,7 +724,7 @@ Module Make (W0:CyclicType) <: NType.
  intros x y. unfold modulo.
  rewrite spec_eqb, spec_compare, spec_0.
  case Z.eqb_spec.
- intros ->; rewrite spec_0. destruct [x]; auto.
+ intros ->; rewrite ?spec_0. destruct [x]; auto.
  intro H'.
  assert (H : 0 < [y]) by (generalize (spec_pos y); auto with zarith).
  clear H'.
