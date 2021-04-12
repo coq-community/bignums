@@ -263,8 +263,8 @@ Theorem Zmod_le_first: forall a b, 0 <= a -> 0 < b -> 0 <= a mod b <= a.
  apply Zdiv_lt_upper_bound; auto with zarith.
  apply Z.lt_le_trans with (2^n); auto with zarith.
  rewrite <- (Z.mul_1_r (2^n)) at 1.
+ assert (0 < 2^ (n-p)) by auto with zarith.
  apply Z.mul_le_mono_nonneg; auto with zarith.
- cut (0 < 2 ^ (n-p)); auto with zarith.
  Qed.
 
  Lemma div_le_0 : forall p x, 0 <= x -> 0 <= x / 2 ^ p.
@@ -281,8 +281,8 @@ Theorem Zmod_le_first: forall a b, 0 <= a -> 0 < b -> 0 <= a mod b <= a.
   intros p x y H;destruct (Z_le_gt_dec 0 p).
   apply Zdiv_lt_upper_bound;auto with zarith.
   apply Z.lt_le_trans with y;auto with zarith.
+  assert (0 < 2^p) by auto with zarith.
   rewrite <- (Z.mul_1_r y);apply Z.mul_le_mono_nonneg;auto with zarith.
-  assert (0 < 2^p);auto with zarith.
   replace (2^p) with 0.
   destruct x;change (0<y);auto with zarith.
   destruct p;trivial;discriminate.
