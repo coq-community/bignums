@@ -400,12 +400,18 @@ Module Make (NN:NType) <: ZType.
     let (q, r) := NN.div_eucl nx ny in
     if NN.eqb NN.zero r
     then (Neg q, zero)
-    else (Neg (NN.succ q), Neg (NN.sub ny r))
+    else 
+      if NN.eqb NN.zero ny
+      then (zero, x)
+      else (Neg (NN.succ q), Neg (NN.sub ny r))
   | Neg nx, Pos ny =>
     let (q, r) := NN.div_eucl nx ny in
     if NN.eqb NN.zero r
     then (Neg q, zero)
-    else (Neg (NN.succ q), Pos (NN.sub ny r))
+    else
+      if NN.eqb NN.zero ny
+      then (zero, x)
+      else (Neg (NN.succ q), Pos (NN.sub ny r))
   | Neg nx, Neg ny =>
     let (q, r) := NN.div_eucl nx ny in
     (Pos q, Neg r)
@@ -426,34 +432,40 @@ Module Make (NN:NType) <: ZType.
  generalize (NN.spec_div_eucl x y); destruct (NN.div_eucl x y); auto.
  (* Pos Neg *)
  generalize (NN.spec_div_eucl x y); destruct (NN.div_eucl x y) as (q,r).
- break_nonneg x px EQx; break_nonneg y py EQy;
- try (injection 1 as Hq Hr; rewrite NN.spec_eqb, NN.spec_0, Hr;
-      simpl; rewrite Hq, NN.spec_0; auto).
- change (- Zpos py) with (Zneg py).
- assert (GT : Zpos py > 0) by (compute; auto).
- generalize (Z_div_mod (Zpos px) (Zpos py) GT).
- unfold Z.div_eucl. destruct (Z.pos_div_eucl px (Zpos py)) as (q',r').
- intros (EQ,MOD). injection 1 as Hq' Hr'.
- rewrite NN.spec_eqb, NN.spec_0, Hr'.
- break_nonneg r pr EQr.
- subst; simpl. rewrite NN.spec_0; auto.
- subst. lazy iota beta delta [Z.eqb].
- rewrite NN.spec_sub, NN.spec_succ, EQy, EQr. f_equal. lia.
+ {
+  break_nonneg x px EQx; break_nonneg y py EQy;
+    rewrite NN.spec_eqb, NN.spec_0; cbn.
+  - intros [= EQq EQr]. rewrite EQr, EQq. cbn. now rewrite NN.spec_0.
+  - intros [= EQq EQr]. rewrite EQr, EQq. cbn. now rewrite NN.spec_0.
+  - intros [= EQq EQr]. rewrite EQr, ?NN.spec_eqb, ?EQy, ?NN.spec_0, <- ?EQx. cbn.
+    now rewrite ?EQq, NN.spec_0.
+  - pose proof (B := Z.pos_div_eucl_bound px (Zpos py)).
+    destruct (Z.pos_div_eucl px (Zpos py)) as (q',r').
+    cbn in B.
+    intros [= EQq EQr]. break_nonneg r pr' EQr'.
+    + subst. cbn. now rewrite NN.spec_0.
+    + subst. rewrite NN.spec_eqb, EQy, NN.spec_0. cbn.
+      rewrite NN.spec_succ, NN.spec_sub, EQy, EQr', <- Z.pos_sub_opp. cbn.
+      f_equal. rewrite Z.pos_sub_gt; lia.
+ }
  (* Neg Pos *)
  generalize (NN.spec_div_eucl x y); destruct (NN.div_eucl x y) as (q,r).
- break_nonneg x px EQx; break_nonneg y py EQy;
- try (injection 1 as Hq Hr; rewrite NN.spec_eqb, NN.spec_0, Hr;
-      simpl; rewrite Hq, NN.spec_0; auto).
- change (- Zpos px) with (Zneg px).
- assert (GT : Zpos py > 0) by (compute; auto).
- generalize (Z_div_mod (Zpos px) (Zpos py) GT).
- unfold Z.div_eucl. destruct (Z.pos_div_eucl px (Zpos py)) as (q',r').
- intros (EQ,MOD). injection 1 as Hq' Hr'.
- rewrite NN.spec_eqb, NN.spec_0, Hr'.
- break_nonneg r pr EQr.
- subst; simpl. rewrite NN.spec_0; auto.
- subst. lazy iota beta delta [Z.eqb].
- rewrite NN.spec_sub, NN.spec_succ, EQy, EQr. f_equal. lia.
+ {
+  break_nonneg x px EQx; break_nonneg y py EQy;
+    rewrite NN.spec_eqb, NN.spec_0; cbn.
+  - intros [= EQq EQr]. rewrite EQr, EQq. cbn. now rewrite NN.spec_0.
+  - intros [= EQq EQr]. rewrite EQr, EQq. cbn. now rewrite NN.spec_0.
+  - intros [= EQq EQr]. rewrite EQr, ?NN.spec_eqb, ?EQy, ?NN.spec_0. cbn.
+    now rewrite NN.spec_0, <- ?Pos2Z.opp_pos, ?EQx, ?EQq.
+  - pose proof (B := Z.pos_div_eucl_bound px (Zpos py)).
+    destruct (Z.pos_div_eucl px (Zpos py)) as (q',r').
+    cbn in B.
+    intros [= EQq EQr]. break_nonneg r pr' EQr'.
+    + subst. cbn. now rewrite NN.spec_0.
+    + subst. rewrite NN.spec_eqb, EQy, NN.spec_0. cbn.
+      rewrite NN.spec_succ, NN.spec_sub, EQy, EQr'. cbn.
+      f_equal. rewrite Z.pos_sub_gt; lia.
+ }
  (* Neg Neg *)
  generalize (NN.spec_div_eucl x y); destruct (NN.div_eucl x y) as (q,r).
  break_nonneg x px EQx; break_nonneg y py EQy;
