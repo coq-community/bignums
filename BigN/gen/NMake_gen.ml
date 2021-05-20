@@ -53,6 +53,8 @@ Require Import BigNumPrelude ZArith Lia Ndigits CyclicAxioms
  DoubleType DoubleMul DoubleDivn1 DoubleBase DoubleCyclic Nbasic
  Wf_nat StreamMemo.
 
+Local Close Scope Z.
+
 Module Make (W0:CyclicType) <: NAbstract.
 
  (** * The word types *)
