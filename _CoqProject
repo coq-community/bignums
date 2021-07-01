@@ -27,5 +27,3 @@ BigZ/BigZ.v
 
 plugin/bignums_syntax.ml
 plugin/bignums_syntax_plugin.mlpack
-
--extra "BigN/NMake_gen.v" "BigN/gen/NMake_gen.ml" "ocaml $< > $@ || (RV=$$?; rm -f $@; exit $${RV})"

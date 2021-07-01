@@ -1,1 +1,7 @@
 CAMLPKGS+=-package zarith
+
+clean::
+	rm -f BigN/NMake_gen.v
+
+BigN/NMake_gen.v: BigN/gen/NMake_gen.ml
+	ocaml $< > $@ || (RV=$$?; rm -f $@; exit $${RV})
