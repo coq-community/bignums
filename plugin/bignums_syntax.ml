@@ -128,7 +128,7 @@ let bigN_of_pos_bigint ?loc n =
   DAst.make ?loc @@ GApp (ref_constructor, args)
 
 let bigN_error_negative ?loc =
-  CErrors.user_err ?loc ~hdr:"interp_bigN" (Pp.str "bigN are only non-negative numbers.")
+  CErrors.user_err ?loc Pp.(str "bigN are only non-negative numbers.")
 
 let interp_bigN ?loc n =
   if Z.(leq zero n) then
