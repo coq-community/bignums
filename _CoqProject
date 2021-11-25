@@ -1,3 +1,4 @@
+META.coq-bignums.in
 -I plugin
 -R . Bignums
 
