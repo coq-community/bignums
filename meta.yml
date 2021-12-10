@@ -1,14 +1,17 @@
 ---
 fullname: Bignums
 shortname: bignums
-organization: coq
-community: false
+organization: coq-community
+community: true
 action: true
+branch: master
 
 synopsis: >-
   Bignums, the Coq library of arbitrary large numbers
-description: |
-  Provides BigN, BigZ, BigQ that used to be part of Coq standard library
+
+description: |-
+  This Coq library provides BigN, BigZ, and BigQ that used to
+  be part of the standard library.
 
 authors:
 - name: Laurent Théry
@@ -17,7 +20,15 @@ authors:
 - name: Evgeny Makarov
 - name: Pierre Letouzey
 
-opam-file-maintainer: Laurent.Thery@inria.fr
+maintainers:
+- name: Pierre Roux
+  nickname: proux01
+- name: Érik Martin-Dorel
+  nickname: erikmd
+
+opam-file-maintainer: palmskog@gmail.com
+
+opam-file-version: dev
 
 license:
   fullname: GNU Lesser General Public License v2.1
@@ -34,6 +45,8 @@ supported_coq_versions:
 
 tested_coq_opam_versions:
 - version: dev
+
+ci_cron_schedule: '0 4 * * *'
 
 namespace: Bignums
 
