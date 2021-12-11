@@ -1,8 +1,5 @@
-# This file was generated from `meta.yml`, please do not edit manually.
-# Follow the instructions on https://github.com/coq-community/templates to regenerate.
-
 opam-version: "2.0"
-maintainer: "Laurent.Thery@inria.fr"
+maintainer: "palmskog@gmail.com"
 version: "8.14.dev"
 
 homepage: "https://github.com/coq-community/bignums"
@@ -13,10 +10,10 @@ license: "LGPL-2.1-only"
 synopsis: "Bignums, the Coq library of arbitrary large numbers"
 description: """
 This Coq library provides BigN, BigZ, and BigQ that used to
-be part of the standard library.
-"""
+be part of the standard library."""
 
 build: [make "-j%{jobs}%"]
+run-test: [make "-C" "tests" "-j%{jobs}%"]
 install: [make "install"]
 depends: [
   "ocaml" 

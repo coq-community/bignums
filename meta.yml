@@ -8,7 +8,7 @@ branch: 'v8.14'
 
 synopsis: >-
   Bignums, the Coq library of arbitrary large numbers
-description: |
+description: |-
   This Coq library provides BigN, BigZ, and BigQ that used to
   be part of the standard library.
 
@@ -19,7 +19,13 @@ authors:
 - name: Evgeny Makarov
 - name: Pierre Letouzey
 
-opam-file-maintainer: Laurent.Thery@inria.fr
+maintainers:
+- name: Pierre Roux
+  nickname: proux01
+- name: Érik Martin-Dorel
+  nickname: erikmd
+
+opam-file-maintainer: palmskog@gmail.com
 
 opam-file-version: '8.14.dev'
 
