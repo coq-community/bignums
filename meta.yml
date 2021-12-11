@@ -1,14 +1,16 @@
 ---
 fullname: Bignums
 shortname: bignums
-organization: coq
-community: false
+organization: coq-community
+community: true
 action: true
+branch: 'v8.14'
 
 synopsis: >-
   Bignums, the Coq library of arbitrary large numbers
 description: |
-  Provides BigN, BigZ, BigQ that used to be part of Coq standard library
+  This Coq library provides BigN, BigZ, and BigQ that used to
+  be part of the standard library.
 
 authors:
 - name: Laurent Théry
@@ -18,6 +20,8 @@ authors:
 - name: Pierre Letouzey
 
 opam-file-maintainer: Laurent.Thery@inria.fr
+
+opam-file-version: '8.14.dev'
 
 license:
   fullname: GNU Lesser General Public License v2.1
@@ -29,11 +33,13 @@ supported_ocaml_versions:
   text: all versions supported by Coq
 
 supported_coq_versions:
-  text: master (use the corresponding branch or release for other Coq versions)
-  opam: '{= "dev"}'
+  text: >-
+    The v8.14 branch tracks version 8.14 of Coq, see
+    releases for compatibility with released versions of Coq
+  opam: '{>= "8.14" & < "8.15~"}'
 
 tested_coq_opam_versions:
-- version: dev
+- version: '8.14'
 
 namespace: Bignums
 
