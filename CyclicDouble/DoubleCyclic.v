@@ -822,7 +822,7 @@ refine
  unfold wB, base; apply Z.pow_pos_nonneg; auto with zarith.
  Qed.
  
- Hint Transparent ww_to_Z.
+ Hint Transparent ww_to_Z : core.
 
  Let ww_testbit_high n x y : Z.pos w_digits <= n ->
   Z.testbit [|WW x y|] n =

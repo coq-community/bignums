@@ -673,7 +673,7 @@ intros x; case x; simpl ww_is_even.
   generalize (spec_to_Z y); intros U1.
   nia.
  Qed.
- Hint Resolve mult_wwB.
+ Hint Resolve mult_wwB : core.
 
  Lemma spec_ww_sqrt2 : forall x y,
        wwB/ 4 <= [[x]] ->

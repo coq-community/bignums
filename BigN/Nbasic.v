@@ -10,7 +10,6 @@
 
 Require Import ZArith Lia Ndigits.
 Require Import BigNumPrelude.
-Require Import Max.
 Require Import DoubleType.
 Require Import DoubleBase.
 Require Import CyclicAxioms.
@@ -171,15 +170,15 @@ Fixpoint plusn0 n : n + 0 = n :=
    | S m1, S n1 => diff m1 n1
    end.
 
-Fixpoint diff_l (m n : nat) {struct m} : fst (diff m n) + n = max m n :=
-  match m return fst (diff m n) + n = max m n with
+Fixpoint diff_l (m n : nat) {struct m} : fst (diff m n) + n = Nat.max m n :=
+  match m return fst (diff m n) + n = Nat.max m n with
   | 0 =>
-      match n return (n = max 0 n) with
+      match n return (n = Nat.max 0 n) with
       | 0 => eq_refl _
       | S n0 => eq_refl _
       end
   | S m1 =>
-      match n return (fst (diff (S m1) n) + n = max (S m1) n)
+      match n return (fst (diff (S m1) n) + n = Nat.max (S m1) n)
       with
       | 0 => plusn0 _
       | S n1 =>
@@ -191,18 +190,18 @@ Fixpoint diff_l (m n : nat) {struct m} : fst (diff m n) + n = max m n :=
       end
   end.
 
-Fixpoint diff_r (m n: nat) {struct m}: snd (diff m n) + m = max m n :=
-  match m return (snd (diff m n) + m = max m n) with
+Fixpoint diff_r (m n: nat) {struct m}: snd (diff m n) + m = Nat.max m n :=
+  match m return (snd (diff m n) + m = Nat.max m n) with
   | 0 =>
-      match n return (snd (diff 0 n) + 0 = max 0 n) with
+      match n return (snd (diff 0 n) + 0 = Nat.max 0 n) with
       | 0 => eq_refl _
       | S _ => plusn0 _
       end
   | S m =>
-      match n return (snd (diff (S m) n) + S m = max (S m) n) with
+      match n return (snd (diff (S m) n) + S m = Nat.max (S m) n) with
       | 0 => eq_refl (snd (diff (S m) 0) + S m)
       | S n1 =>
-          let v := S (max m n1) in
+          let v := S (Nat.max m n1) in
           eq_ind_r (fun n => n = v)
             (eq_ind_r (fun n => S n = v)
                (eq_refl v) (diff_r _ _)) (plusnS _ _)
@@ -293,7 +292,7 @@ Section CompareRec.
     | WW xh xl =>
       match compare0_mn m xh with
       | Eq => compare0_mn m xl
-      | r  => Lt
+      | _  => Lt
       end
     end
   end.
@@ -351,7 +350,7 @@ Section CompareRec.
     | WW xh xl =>
       match compare0_mn m xh with
       | Eq => compare_mn_1 m xl y
-      | r  => Gt
+      | _  => Gt
       end
     end
   end.
@@ -442,7 +441,7 @@ End AddS.
    try (rewrite (Pos2Z.inj_xI x1) || rewrite (Pos2Z.inj_xO x1));
    try (rewrite (Pos2Z.inj_xI y1) || rewrite (Pos2Z.inj_xO y1));
    try (inversion H; fail);
-   try (assert (Zpos x1 < Zpos y1); [apply Hrec; apply lt_S_n | idtac]; auto with zarith);
+   try (assert (Zpos x1 < Zpos y1); [apply Hrec; apply Nat.succ_lt_mono | idtac]; auto with zarith);
    assert (0 < Zpos y1); auto with zarith; red; auto.
  Qed.
 

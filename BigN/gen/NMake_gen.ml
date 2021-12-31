@@ -351,7 +351,7 @@ pr "
   ZnZ.digits (make_op n) = Pos.shiftl_nat (ZnZ.digits w0_op) (SizePlus (S n)).
  Proof.
  intros. rewrite digits_make_op_0.
- replace (SizePlus (S n)) with (S n + Size) by (rewrite <- plus_comm; auto).
+ replace (SizePlus (S n)) with (S n + Size) by (rewrite <- Nat.add_comm; auto).
  rewrite Pshiftl_nat_plus. auto.
  Qed.
 
@@ -522,7 +522,7 @@ pr "
  f_equal; auto.
  f_equal; auto.
  f_equal.
- rewrite <- digits_dom_op_nmake. rewrite plus_comm; auto.
+ rewrite <- digits_dom_op_nmake. rewrite Nat.add_comm; auto.
  Qed.
 
  (** An optimized [mk_t_w].
@@ -621,7 +621,7 @@ pr
 
  Let spec_cast_l: forall n m x1,
  [Nn n x1] =
- [Nn (Max.max n m) (castm (diff_r n m) (extend_tr x1 (snd (diff n m))))].
+ [Nn (Nat.max n m) (castm (diff_r n m) (extend_tr x1 (snd (diff n m))))].
  Proof.
  intros n m x1; case (diff_r n m); simpl castm.
  rewrite spec_extend_tr; auto.
@@ -629,7 +629,7 @@ pr
 
  Let spec_cast_r: forall n m x1,
  [Nn m x1] =
- [Nn (Max.max n m) (castm (diff_l n m) (extend_tr x1 (fst (diff n m))))].
+ [Nn (Nat.max n m) (castm (diff_l n m) (extend_tr x1 (fst (diff n m))))].
  Proof.
  intros n m x1; case (diff_l n m); simpl castm.
  rewrite spec_extend_tr; auto.
@@ -684,7 +684,7 @@ for i = 0 to size do
 done;
 pr
 "  | Nn n wx, Nn m wy =>
-    let mn := Max.max n m in
+    let mn := Nat.max n m in
     let d := diff n m in
      fn mn
        (castm (diff_r n m) (extend_tr wx (snd d)))
@@ -978,7 +978,7 @@ pr "
  end;
  intros n G x; destruct (le_lt_eq_dec _ _ G) as [LT|EQ];
  solve [
-  apply (H _ (lt_n_Sm_le _ _ LT)) |
+  apply (H _ (proj1 (Nat.lt_succ_r _ _) LT)) |
   inversion LT |
   subst; change (reduce 0 x = red_t 0 x); reflexivity |
   specialize (H (pred n)); subst; destruct x;
