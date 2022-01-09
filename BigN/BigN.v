@@ -127,7 +127,7 @@ Ltac isStaticWordCst t :=
    | false => constr:(false)
    | true => isStaticWordCst t2
    end
- | _ => isInt63cst t
+ | _ => isUint63cst t
  end.
 
 Ltac isBigNcst t :=

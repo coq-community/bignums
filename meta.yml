@@ -7,7 +7,7 @@ action: true
 branch: master
 
 synopsis: >-
-  Bignums, the Coq library of arbitrary large numbers
+  Bignums, the Coq library of arbitrarily large numbers
 
 description: |-
   This Coq library provides BigN, BigZ, and BigQ that used to
@@ -54,7 +54,7 @@ keywords:
 - name: integer numbers
 - name: rational numbers
 - name: arithmetic
-- name: arbitrary-precision
+- name: arbitrary precision
 
 categories:
 - name: Miscellaneous/Coq Extensions

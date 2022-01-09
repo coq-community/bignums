@@ -1,4 +1,4 @@
 (coq.theory
  (name Bignums)
  (package coq-bignums)
- (synopsis "Bignums, the Coq library of arbitrary large numbers"))
+ (synopsis "Bignums, the Coq library of arbitrarily large numbers"))

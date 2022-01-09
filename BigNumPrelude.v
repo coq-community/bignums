@@ -49,20 +49,19 @@ Definition Z_div_plus_l a b c H := Zdiv.Z_div_plus_full_l a b c (Zlt0_not_eq _ H
 
 (* Automation *)
 
-Hint  Extern 2 (Z.le _ _) =>
+Hint Extern 2 (Z.le _ _) =>
  (match goal with
    |- Zpos _ <= Zpos _ => exact (eq_refl _)
 |   H: _ <=  ?p |- _ <= ?p => apply Z.le_trans with (2 := H)
 |   H: _ <  ?p |- _ <= ?p => apply Z.lt_le_incl; apply Z.le_lt_trans with (2 := H)
-  end).
+  end) : core.
 
-Hint  Extern 2 (Z.lt _ _) =>
+Hint Extern 2 (Z.lt _ _) =>
  (match goal with
    |- Zpos _ < Zpos _ => exact (eq_refl _)
 |      H: _ <=  ?p |- _ <= ?p => apply Z.lt_le_trans with (2 := H)
 |   H: _ <  ?p |- _ <= ?p => apply Z.le_lt_trans with (2 := H)
-  end).
-
+  end) : core.
 
 Hint Resolve Z.lt_gt Z.le_ge Z_div_pos: zarith.
 

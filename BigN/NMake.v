@@ -264,7 +264,7 @@ Module Make (W0:CyclicType) <: NType.
  Qed.
 
  Definition comparenm n m wx wy :=
-    let mn := Max.max n m in
+    let mn := Nat.max n m in
     let d := diff n m in
     let op := make_op mn in
     ZnZ.compare
@@ -373,7 +373,7 @@ Module Make (W0:CyclicType) <: NType.
    else mk_t_w' n (S m) (WW (extend n m w) r).
 
  Definition mulnm n m x y :=
-    let mn := Max.max n m in
+    let mn := Nat.max n m in
     let d := diff n m in
     let op := make_op mn in
      reduce_n (S mn) (ZnZ.mul_c
@@ -476,7 +476,7 @@ Module Make (W0:CyclicType) <: NType.
   fun m x y => let (u,v) := ddivn1 (S m) x y in (mk_t_w' n m u, mk_t n v).
 
  Definition div_gtnm n m wx wy :=
-    let mn := Max.max n m in
+    let mn := Nat.max n m in
     let d := diff n m in
     let op := make_op mn in
     let (q, r):= ZnZ.div_gt
@@ -644,7 +644,7 @@ Module Make (W0:CyclicType) <: NType.
   fun m x y => reduce n (dmodn1 (S m) x y).
 
  Definition mod_gtnm n m wx wy :=
-    let mn := Max.max n m in
+    let mn := Nat.max n m in
     let d := diff n m in
     let op := make_op mn in
     reduce_n mn (ZnZ.modulo_gt
