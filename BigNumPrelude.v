@@ -25,7 +25,7 @@ Declare Scope bigN_scope.
 Declare Scope bigZ_scope.
 Declare Scope bigQ_scope.
 
-Declare ML Module "coq-bignums.plugin".
+Declare ML Module "bignums_syntax_plugin:coq-bignums.plugin".
 
 (* *** Nota Bene ***
    All results that were general enough have been moved in ZArith.
