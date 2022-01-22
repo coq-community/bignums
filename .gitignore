@@ -9,6 +9,8 @@ BigN/NMake_gen.v
 *.vo
 *.glob
 *.aux
+*.a
+*.cmxa
 *~
 Makefile.coq
 Makefile.coq.conf
@@ -17,3 +19,5 @@ Makefile.coq.conf
 *.vos
 *.vok
 *.out.real
+.lia.cache
+.nia.cache

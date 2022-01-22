@@ -36,6 +36,8 @@ be part of the standard library.
   - Evgeny Makarov
   - Pierre Letouzey
 - Coq-community maintainer(s):
+  - Pierre Roux ([**@proux01**](https://github.com/proux01))
+  - Érik Martin-Dorel ([**@erikmd**](https://github.com/erikmd))
 - License: [GNU Lesser General Public License v2.1](LICENSE)
 - Compatible Coq versions: The v8.15 branch tracks version 8.15 of Coq, see releases for compatibility with released versions of Coq
 - Compatible OCaml versions: all versions supported by Coq

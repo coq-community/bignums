@@ -2,7 +2,7 @@
 # Follow the instructions on https://github.com/coq-community/templates to regenerate.
 
 opam-version: "2.0"
-maintainer: "Laurent.Thery@inria.fr"
+maintainer: "palmskog@gmail.com"
 version: "8.15.dev"
 
 homepage: "https://github.com/coq-community/bignums"
@@ -10,7 +10,7 @@ dev-repo: "git+https://github.com/coq-community/bignums.git"
 bug-reports: "https://github.com/coq-community/bignums/issues"
 license: "LGPL-2.1-only"
 
-synopsis: "Bignums, the Coq library of arbitrary large numbers"
+synopsis: "Bignums, the Coq library of arbitrarily large numbers"
 description: """
 This Coq library provides BigN, BigZ, and BigQ that used to
 be part of the standard library.
@@ -30,7 +30,7 @@ tags: [
   "keyword:integer numbers"
   "keyword:rational numbers"
   "keyword:arithmetic"
-  "keyword:arbitrary-precision"
+  "keyword:arbitrary precision"
   "logpath:Bignums"
 ]
 authors: [

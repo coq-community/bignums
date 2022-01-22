@@ -7,7 +7,8 @@ action: true
 branch: 'v8.15'
 
 synopsis: >-
-  Bignums, the Coq library of arbitrary large numbers
+  Bignums, the Coq library of arbitrarily large numbers
+
 description: |
   This Coq library provides BigN, BigZ, and BigQ that used to
   be part of the standard library.
@@ -19,7 +20,13 @@ authors:
 - name: Evgeny Makarov
 - name: Pierre Letouzey
 
-opam-file-maintainer: Laurent.Thery@inria.fr
+maintainers:
+- name: Pierre Roux
+  nickname: proux01
+- name: Érik Martin-Dorel
+  nickname: erikmd
+
+opam-file-maintainer: palmskog@gmail.com
 
 opam-file-version: '8.15.dev'
 
@@ -47,7 +54,7 @@ keywords:
 - name: integer numbers
 - name: rational numbers
 - name: arithmetic
-- name: arbitrary-precision
+- name: arbitrary precision
 
 categories:
 - name: Miscellaneous/Coq Extensions

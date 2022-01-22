@@ -1,15 +1,12 @@
-name: CI
+name: Docker CI
 
 on:
   push:
     branches:
-      - master
+      - v8.15
   pull_request:
     branches:
       - '**'
-  schedule:
-    # test master every day at 04:00 UTC
-      - cron: '0 4 * * *'
 
 jobs:
   build:
@@ -18,7 +15,7 @@ jobs:
     strategy:
       matrix:
         image:
-          - 'coqorg/coq:dev'
+          - 'coqorg/coq:8.15'
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
