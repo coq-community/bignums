@@ -14,6 +14,7 @@ BigN/NMake_gen.v
 *~
 Makefile.coq
 Makefile.coq.conf
+META.coq-bignums
 .merlin
 *.install
 *.vos
