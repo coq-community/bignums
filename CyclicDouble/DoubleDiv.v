@@ -150,7 +150,7 @@ Section POS_MOD.
    simpl ww_to_Z; autorewrite with w_rewrite.
    rewrite spec_pos_mod; rewrite HH0.
    pattern [|xh|] at 2;
-     rewrite Z_div_mod_eq with (b := 2 ^ ([[p]] - Zpos w_digits)) by
+     rewrite Z_div_mod_eq_full with (b := 2 ^ ([[p]] - Zpos w_digits)) by
      zarith.
    rewrite (fun x => (Z.mul_comm (2 ^ x))); rewrite Z.mul_add_distr_r.
    unfold base; rewrite <- Z.mul_assoc; rewrite <- Zpower_exp by
@@ -1141,8 +1141,8 @@ Section DoubleDivGt.
    0 < b -> Zis_gcd b (a mod b) d -> Zis_gcd a b d.
   Proof.
    intros a b d H H1; apply Zis_gcd_for_euclid with (a/b).
-   pattern a at 1;rewrite (Z_div_mod_eq a b).
-   ring_simplify (b * (a / b) + a mod b - a / b * b);trivial. zarith.
+   pattern a at 1;rewrite (Z_div_mod_eq_full a b).
+   ring_simplify (b * (a / b) + a mod b - a / b * b);trivial.
   Qed.
 
   Lemma spec_ww_gcd_gt_aux_body :
@@ -1245,7 +1245,7 @@ Section DoubleDivGt.
    apply Z.le_trans with (2^n/2).
    apply Zdiv_le_lower_bound. zarith.
    apply Z.le_trans with ([|bh|] * wB + [|bl|]). 2: zarith.
-   assert (H3' := Z_div_mod_eq [[WW bh bl]] [[WW mh ml]] (Z.lt_gt _ _ H3)).
+   assert (H3' := Z_div_mod_eq_full [[WW bh bl]] [[WW mh ml]]).
    assert (H4 : 0 <= [[WW bh bl]]/[[WW mh ml]]).
    apply Z.ge_le;apply Z_div_ge0;zarith. simpl in *;rewrite H1.
    pattern ([|bh|] * wB + [|bl|]) at 2;rewrite H3'.
@@ -1497,4 +1497,3 @@ Section DoubleDiv.
   Qed.
 
 End DoubleDiv.
-

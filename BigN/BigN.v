@@ -29,7 +29,7 @@ Import Cyclic63.
 Delimit Scope bigN_scope with bigN.
 
 Module BigN <: NType <: OrderedTypeFull <: TotalOrder :=
-  NMake.Make Int63Cyclic
+  NMake.Make Uint63Cyclic
   <+ NTypeIsNAxioms
   <+ NBasicProp [no inline] <+ NExtraProp [no inline]
   <+ HasEqBool2Dec [no inline]

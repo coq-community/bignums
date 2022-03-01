@@ -18,7 +18,7 @@ Require Import ArithRing.
 Require Export ZArith.
 Require Export Znumtheory.
 Require Export Zpow_facts.
-Require Int63.
+Require Uint63.
 Require Import Lia.
 
 Declare Scope bigN_scope.
@@ -204,7 +204,7 @@ Theorem Zmod_le_first: forall a b, 0 <= a -> 0 < b -> 0 <= a mod b <= a.
    assert (Eq: t < 2 ^ b); auto with zarith.
    apply Z.lt_le_trans with (1 := H5); auto with zarith.
    apply Zpower_le_monotone; auto with zarith.
-   pattern (r * 2 ^ a) at 1; rewrite Z_div_mod_eq with (b := 2 ^ b);
+   pattern (r * 2 ^ a) at 1; rewrite Z_div_mod_eq_full with (b := 2 ^ b);
     auto with zarith.
    rewrite <- Z.add_assoc.
    rewrite <- Zmod_shift_r; auto with zarith.
@@ -223,7 +223,7 @@ Theorem Zmod_le_first: forall a b, 0 <= a -> 0 < b -> 0 <= a mod b <= a.
   intros n p a H1 H2.
   pattern (a*2^p) at 1;replace (a*2^p) with
      (a*2^p/2^n * 2^n + a*2^p mod 2^n).
-  2:symmetry;rewrite (Z.mul_comm (a*2^p/2^n));apply Z_div_mod_eq.
+  2:symmetry;rewrite (Z.mul_comm (a*2^p/2^n));apply Z_div_mod_eq_full.
   replace (a * 2 ^ p / 2 ^ n) with (a / 2 ^ (n - p));trivial.
   replace (2^n) with (2^(n-p)*2^p).
   symmetry;apply Zdiv_mult_cancel_r.
@@ -232,7 +232,6 @@ Theorem Zmod_le_first: forall a b, 0 <= a -> 0 < b -> 0 <= a mod b <= a.
   rewrite <- Zpower_exp.
   replace (n-p+p) with n;trivial. ring.
   lia. lia.
-  apply Z.lt_gt. apply Z.pow_pos_nonneg;auto with zarith.
  Qed.
 
 
