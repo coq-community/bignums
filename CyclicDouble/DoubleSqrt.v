@@ -492,7 +492,7 @@ intros x; case x; simpl ww_is_even.
  rewrite add_mult_div_2.
  intros H1; split. 2: zarith.
  rewrite Hw1.
- pattern [|w2|] at 1; rewrite (Z_div_mod_eq [|w2|] 2) by
+ pattern [|w2|] at 1; rewrite (Z_div_mod_eq_full [|w2|] 2) by
   zarith.
  rewrite H1; ring.
  repeat rewrite C0_id.
@@ -500,7 +500,7 @@ intros x; case x; simpl ww_is_even.
  rewrite spec_w_add_c by zarith.
  intros H1; split. 2: zarith.
  rewrite Hw1.
- pattern [|w2|] at 1; rewrite (Z_div_mod_eq [|w2|] 2) by
+ pattern [|w2|] at 1; rewrite (Z_div_mod_eq_full [|w2|] 2) by
   zarith.
  rewrite H1; ring.
  intros w2; rewrite C1_plus_wB.
@@ -512,7 +512,7 @@ intros x; case x; simpl ww_is_even.
  repeat rewrite C0_id.
  intros H1; split. 2: zarith.
  rewrite Hw1.
- pattern [|w2|] at 1; rewrite (Z_div_mod_eq [|w2|] 2) by
+ pattern [|w2|] at 1; rewrite (Z_div_mod_eq_full [|w2|] 2) by
   zarith.
  rewrite H1.
  repeat rewrite C0_id.
@@ -530,7 +530,7 @@ intros x; case x; simpl ww_is_even.
  intros H1; split. 2: zarith.
  rewrite add_mult_div_2_plus_1.
  rewrite Hw1.
- pattern [|w2|] at 1; rewrite (Z_div_mod_eq [|w2|] 2) by
+ pattern [|w2|] at 1; rewrite (Z_div_mod_eq_full [|w2|] 2) by
   zarith.
  rewrite H1.
  unfold base.
@@ -564,7 +564,7 @@ intros x; case x; simpl ww_is_even.
   zarith.
  rewrite Z.mul_add_distr_r; rewrite <- Z.add_assoc.
  rewrite Hw1.
- pattern [|w2|] at 1; rewrite (Z_div_mod_eq [|w2|] 2) by
+ pattern [|w2|] at 1; rewrite (Z_div_mod_eq_full [|w2|] 2) by
   zarith.
  rewrite H1; unfold base.
  match goal with |- context[_ ^ ?X] =>
@@ -583,7 +583,7 @@ intros x; case x; simpl ww_is_even.
   zarith.
  rewrite Z.mul_add_distr_r; rewrite <- Z.add_assoc.
  rewrite Hw1.
- pattern [|w2|] at 1; rewrite (Z_div_mod_eq [|w2|] 2) by
+ pattern [|w2|] at 1; rewrite (Z_div_mod_eq_full [|w2|] 2) by
   zarith.
  rewrite H1; unfold base.
  match goal with |- context[_ ^ ?X] =>
@@ -614,7 +614,7 @@ intros x; case x; simpl ww_is_even.
   zarith.
  rewrite Z.mul_add_distr_r; rewrite <- Z.add_assoc.
  rewrite Hw1.
- pattern [|w2|] at 1; rewrite (Z_div_mod_eq [|w2|] 2) by
+ pattern [|w2|] at 1; rewrite (Z_div_mod_eq_full [|w2|] 2) by
   zarith.
  rewrite H1; ring.
  repeat (rewrite C0_id || rewrite C1_plus_wB).
@@ -625,7 +625,7 @@ intros x; case x; simpl ww_is_even.
   zarith.
  rewrite Z.mul_add_distr_r; rewrite <- Z.add_assoc.
  rewrite Hw1.
- pattern [|w2|] at 1; rewrite (Z_div_mod_eq [|w2|] 2) by
+ pattern [|w2|] at 1; rewrite (Z_div_mod_eq_full [|w2|] 2) by
   zarith.
  rewrite H1; ring.
  split.
@@ -1226,7 +1226,7 @@ Qed.
    clear tmp.
   rewrite Z.mul_comm; apply Z.mul_le_mono_nonneg_r; zarith.
   assert (Hv0: [[ww_head1 x]] = 2 * ([[ww_head1 x]]/2)).
-    pattern [[ww_head1 x]] at 1; rewrite (Z_div_mod_eq [[ww_head1 x]] 2) by
+    pattern [[ww_head1 x]] at 1; rewrite (Z_div_mod_eq_full [[ww_head1 x]] 2) by
       zarith.
     generalize (spec_ww_is_even (ww_head1 x)); rewrite Hp1;
       intros tmp; rewrite tmp; rewrite Z.add_0_r; auto.
@@ -1298,7 +1298,7 @@ Qed.
   apply Zpower_le_monotone3. zarith.
   split. zarith.
   pattern [|w2|] at 2;
-     rewrite (Z_div_mod_eq [|w2|] (2 ^ ([[ww_head1 x]] / 2))) by
+     rewrite (Z_div_mod_eq_full [|w2|] (2 ^ ([[ww_head1 x]] / 2))) by
      zarith.
   match goal with |- ?X <= ?X + ?Y =>
     enough (0 <= Y) by zarith
@@ -1323,7 +1323,7 @@ Qed.
    rewrite tmp; clear tmp.
   apply Zpower_le_monotone3. zarith.
   split. zarith.
-  pattern [|w2|] at 1; rewrite (Z_div_mod_eq [|w2|] (2 ^ ([[ww_head1 x]]/2))) by
+  pattern [|w2|] at 1; rewrite (Z_div_mod_eq_full [|w2|] (2 ^ ([[ww_head1 x]]/2))) by
     zarith.
   rewrite <- Z.add_assoc; rewrite Z.mul_add_distr_l.
   autorewrite with rm10; apply Z.add_le_mono_l.

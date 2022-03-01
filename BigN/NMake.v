@@ -871,7 +871,7 @@ Module Make (W0:CyclicType) <: NType.
  case (spec_digits b); auto with zarith.
  intros H5; case Z.compare_spec.
  intros H6; rewrite <- (Z.mul_1_r [b]).
- rewrite (Z_div_mod_eq [a] [b]); auto with zarith.
+ rewrite (Z_div_mod_eq_full [a] [b]); auto with zarith.
  rewrite <- spec_mod_gt; auto with zarith.
  rewrite H6; rewrite Z.add_0_r.
  apply Zis_gcd_mult; apply Zis_gcd_1.
@@ -897,7 +897,7 @@ Module Make (W0:CyclicType) <: NType.
    change 1 with (Z.succ 0). apply Z.le_succ_l.
    apply Z.div_str_pos; auto with zarith.
  - rewrite Z.mul_comm; rewrite spec_mod_gt; auto with zarith.
-   rewrite <- Z_div_mod_eq; auto with zarith.
+   rewrite <- Z_div_mod_eq_full; auto with zarith.
    rewrite Z.mul_comm, <- Z.pow_succ_r, Z.sub_1_r, Z.succ_pred; auto.
    apply Z.le_0_sub. change 1 with (Z.succ 0). apply Z.le_succ_l.
    destruct p; simpl in H3; auto with zarith.
