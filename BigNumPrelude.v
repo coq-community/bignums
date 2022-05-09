@@ -49,6 +49,7 @@ Definition Z_div_plus_l a b c H := Zdiv.Z_div_plus_full_l a b c (Zlt0_not_eq _ H
 
 (* Automation *)
 
+#[global]
 Hint Extern 2 (Z.le _ _) =>
  (match goal with
    |- Zpos _ <= Zpos _ => exact (eq_refl _)
@@ -56,6 +57,7 @@ Hint Extern 2 (Z.le _ _) =>
 |   H: _ <  ?p |- _ <= ?p => apply Z.lt_le_incl; apply Z.le_lt_trans with (2 := H)
   end) : core.
 
+#[global]
 Hint Extern 2 (Z.lt _ _) =>
  (match goal with
    |- Zpos _ < Zpos _ => exact (eq_refl _)
@@ -63,6 +65,7 @@ Hint Extern 2 (Z.lt _ _) =>
 |   H: _ <  ?p |- _ <= ?p => apply Z.le_lt_trans with (2 := H)
   end) : core.
 
+#[global]
 Hint Resolve Z.lt_gt Z.le_ge Z_div_pos: zarith.
 
 (**************************************
@@ -123,6 +126,7 @@ Theorem mult_add_ineq3: forall x y c cross beta,
    0 <= x * y + (c*beta + cross) < beta^2.
  Proof. nia. Qed.
 
+#[global]
 Hint Rewrite Z.mul_1_r Z.mul_0_r Z.mul_1_l Z.mul_0_l Z.add_0_l Z.add_0_r Z.sub_0_r: rm10.
 
 

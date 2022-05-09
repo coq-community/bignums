@@ -12,6 +12,7 @@ Require Import ZArith OrdersFacts Nnat NAxioms NSig Lia.
 
 Module NTypeIsNAxioms (Import NN : NType').
 
+#[global]
 Hint Rewrite
  spec_0 spec_1 spec_2 spec_succ spec_add spec_mul spec_pred spec_sub
  spec_div spec_modulo spec_gcd spec_compare spec_eqb spec_ltb spec_leb
@@ -26,13 +27,19 @@ Ltac omega_pos n := generalize (spec_pos n); lia.
 
 Local Obligation Tactic := ncongruence.
 
+#[global]
 Instance eq_equiv : Equivalence eq.
 Proof. split; ncongruence. Qed.
 
+#[global]
 Program Instance succ_wd : Proper (eq==>eq) succ.
+#[global]
 Program Instance pred_wd : Proper (eq==>eq) pred.
+#[global]
 Program Instance add_wd : Proper (eq==>eq==>eq) add.
+#[global]
 Program Instance sub_wd : Proper (eq==>eq==>eq) sub.
+#[global]
 Program Instance mul_wd : Proper (eq==>eq==>eq) mul.
 
 Theorem pred_succ : forall n, pred (succ n) == n.
@@ -164,26 +171,31 @@ Qed.
 
 Include BoolOrderFacts NN NN NN [no inline].
 
+#[global]
 Instance compare_wd : Proper (eq ==> eq ==> Logic.eq) compare.
 Proof.
 intros x x' Hx y y' Hy. zify. now rewrite Hx, Hy.
 Qed.
 
+#[global]
 Instance eqb_wd : Proper (eq ==> eq ==> Logic.eq) eqb.
 Proof.
 intros x x' Hx y y' Hy. zify. now rewrite Hx, Hy.
 Qed.
 
+#[global]
 Instance ltb_wd : Proper (eq ==> eq ==> Logic.eq) ltb.
 Proof.
 intros x x' Hx y y' Hy. zify. now rewrite Hx, Hy.
 Qed.
 
+#[global]
 Instance leb_wd : Proper (eq ==> eq ==> Logic.eq) leb.
 Proof.
 intros x x' Hx y y' Hy. zify. now rewrite Hx, Hy.
 Qed.
 
+#[global]
 Instance lt_wd : Proper (eq ==> eq ==> iff) lt.
 Proof.
 intros x x' Hx y y' Hy; unfold lt; rewrite Hx, Hy; intuition.
@@ -223,6 +235,7 @@ Qed.
 
 (** Power *)
 
+#[global]
 Program Instance pow_wd : Proper (eq==>eq==>eq) pow.
 
 Lemma pow_0_r : forall a, a^0 == 1.
@@ -313,7 +326,9 @@ Qed.
 
 (** Div / Mod *)
 
+#[global]
 Program Instance div_wd : Proper (eq==>eq==>eq) div.
+#[global]
 Program Instance mod_wd : Proper (eq==>eq==>eq) modulo.
 
 Theorem div_mod : forall a b, ~b==0 -> a == b*(div a b) + (modulo a b).
@@ -364,6 +379,7 @@ Qed.
 
 (** Bitwise operations *)
 
+#[global]
 Program Instance testbit_wd : Proper (eq==>eq==>Logic.eq) testbit.
 
 Lemma testbit_odd_0 : forall a, testbit (2*a+1) 0 = true.
@@ -447,6 +463,7 @@ Definition recursion (A : Type) (a : A) (f : NN.t -> A -> A) (n : NN.t) :=
   N.peano_rect (fun _ => A) a (fun n a => f (NN.of_N n) a) (NN.to_N n).
 Arguments recursion [A] a f n.
 
+#[global]
 Instance recursion_wd (A : Type) (Aeq : relation A) :
  Proper (Aeq ==> (eq==>Aeq==>Aeq) ==> eq ==> Aeq) (@recursion A).
 Proof.

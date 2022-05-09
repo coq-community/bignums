@@ -84,6 +84,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
    | _ => idtac
   end.
 
+#[global]
  Hint Rewrite
   Z.add_0_r Z.add_0_l Z.mul_0_r Z.mul_0_l Z.mul_1_r Z.mul_1_l
   ZZ.spec_0 NN.spec_0 ZZ.spec_1 NN.spec_1 ZZ.spec_m1 ZZ.spec_opp
@@ -346,6 +347,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  destr_eqb; auto using Qeq_refl, spec_norm.
  Qed.
 
+#[global]
  Instance strong_spec_add_norm x y
    `(Reduced x, Reduced y) : Reduced (add_norm x y).
  Proof.
@@ -379,6 +381,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  intros; rewrite strong_spec_opp; red; auto.
  Qed.
 
+#[global]
  Instance strong_spec_opp_norm q `(Reduced q) : Reduced (opp q).
  Proof.
  unfold Reduced; intros.
@@ -402,6 +405,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  rewrite spec_opp; ring.
  Qed.
 
+#[global]
  Instance strong_spec_sub_norm x y
   `(Reduced x, Reduced y) : Reduced (sub_norm x y).
  Proof.
@@ -559,6 +563,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  rewrite Zgcd_div_swap0; lia.
  Qed.
 
+#[global]
  Instance strong_spec_mul_norm_Qz_Qq z n d :
    forall `(Reduced (Qq n d)), Reduced (mul_norm_Qz_Qq z n d).
  Proof.
@@ -644,6 +649,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  rewrite <- Hg1, <- Hg2, <- Hg1', <- Hg2'; ring.
  Qed.
 
+#[global]
  Instance strong_spec_mul_norm x y :
   forall `(Reduced x, Reduced y), Reduced (mul_norm x y).
  Proof.
@@ -824,6 +830,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  lia.
  Qed.
 
+#[global]
  Instance strong_spec_inv_norm x : Reduced x -> Reduced (inv_norm x).
  Proof.
  unfold Reduced.
@@ -895,6 +902,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  apply spec_inv_norm; auto.
  Qed.
 
+#[global]
  Instance strong_spec_div_norm x y
    `(Reduced x, Reduced y) : Reduced (div_norm x y).
  Proof.
@@ -958,6 +966,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
    now rewrite NN.spec_pow_pos.
  Qed.
 
+#[global]
  Instance strong_spec_power_pos x p `(Reduced x) : Reduced (power_pos x p).
  Proof.
  destruct x as [z | n d]; simpl; intros.
@@ -1011,6 +1020,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  rewrite spec_inv_norm, spec_power_pos; apply Qeq_refl.
  Qed.
 
+#[global]
  Instance strong_spec_power_norm x z :
    Reduced x -> Reduced (power_norm x z).
  Proof.
@@ -1039,6 +1049,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  unfold of_Qc; rewrite strong_spec_of_Q; auto.
  Qed.
 
+#[global]
  Instance strong_spec_of_Qc_bis q : Reduced (of_Qc q).
  Proof.
  intros; red; rewrite strong_spec_red, strong_spec_of_Qc.

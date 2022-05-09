@@ -12,6 +12,7 @@ Require Import Bool ZArith OrdersFacts Nnat ZAxioms ZSig Lia.
 
 Module ZTypeIsZAxioms (Import ZZ : ZType').
 
+#[global]
 Hint Rewrite
  spec_0 spec_1 spec_2 spec_add spec_sub spec_pred spec_succ
  spec_mul spec_opp spec_of_Z spec_div spec_modulo spec_square spec_sqrt
@@ -25,15 +26,21 @@ Ltac zsimpl := autorewrite with zsimpl.
 Ltac zcongruence := repeat red; intros; zsimpl; congruence.
 Ltac zify := unfold eq, lt, le in *; zsimpl.
 
+#[global]
 Instance eq_equiv : Equivalence eq.
 Proof. split; zcongruence. Qed.
 
 Local Obligation Tactic := zcongruence.
 
+#[global]
 Program Instance succ_wd : Proper (eq ==> eq) succ.
+#[global]
 Program Instance pred_wd : Proper (eq ==> eq) pred.
+#[global]
 Program Instance add_wd : Proper (eq ==> eq ==> eq) add.
+#[global]
 Program Instance sub_wd : Proper (eq ==> eq ==> eq) sub.
+#[global]
 Program Instance mul_wd : Proper (eq ==> eq ==> eq) mul.
 
 Theorem pred_succ : forall n, pred (succ n) == n.
@@ -175,26 +182,31 @@ Qed.
 
 Include BoolOrderFacts ZZ ZZ ZZ [no inline].
 
+#[global]
 Instance compare_wd : Proper (eq ==> eq ==> Logic.eq) compare.
 Proof.
 intros x x' Hx y y' Hy. zify. now rewrite Hx, Hy.
 Qed.
 
+#[global]
 Instance eqb_wd : Proper (eq ==> eq ==> Logic.eq) eqb.
 Proof.
 intros x x' Hx y y' Hy. zify. now rewrite Hx, Hy.
 Qed.
 
+#[global]
 Instance ltb_wd : Proper (eq ==> eq ==> Logic.eq) ltb.
 Proof.
 intros x x' Hx y y' Hy. zify. now rewrite Hx, Hy.
 Qed.
 
+#[global]
 Instance leb_wd : Proper (eq ==> eq ==> Logic.eq) leb.
 Proof.
 intros x x' Hx y y' Hy. zify. now rewrite Hx, Hy.
 Qed.
 
+#[global]
 Instance lt_wd : Proper (eq ==> eq ==> iff) lt.
 Proof.
 intros x x' Hx y y' Hy; unfold lt; rewrite Hx, Hy; intuition.
@@ -234,6 +246,7 @@ Qed.
 
 (** Opp *)
 
+#[global]
 Program Instance opp_wd : Proper (eq ==> eq) opp.
 
 Theorem opp_0 : - 0 == 0.
@@ -275,6 +288,7 @@ Qed.
 
 (** Power *)
 
+#[global]
 Program Instance pow_wd : Proper (eq==>eq==>eq) pow.
 
 Lemma pow_0_r : forall a, a^0 == 1.
@@ -359,7 +373,9 @@ Qed.
 
 (** Div / Mod *)
 
+#[global]
 Program Instance div_wd : Proper (eq==>eq==>eq) div.
+#[global]
 Program Instance mod_wd : Proper (eq==>eq==>eq) modulo.
 
 Theorem div_mod : forall a b, ~b==0 -> a == b*(div a b) + (modulo a b).
@@ -385,7 +401,9 @@ Definition mod_bound_pos :
 
 (** Quot / Rem *)
 
+#[global]
 Program Instance quot_wd : Proper (eq==>eq==>eq) quot.
+#[global]
 Program Instance rem_wd : Proper (eq==>eq==>eq) rem.
 
 Theorem quot_rem : forall a b, ~b==0 -> a == b*(quot a b) + rem a b.
@@ -443,6 +461,7 @@ Qed.
 
 (** Bitwise operations *)
 
+#[global]
 Program Instance testbit_wd : Proper (eq==>eq==>Logic.eq) testbit.
 
 Lemma testbit_odd_0 : forall a, testbit (2*a+1) 0 = true.

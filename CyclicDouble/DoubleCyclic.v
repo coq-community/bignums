@@ -955,7 +955,9 @@ End MulAdd.
 
 Module DoubleCyclic (C:CyclicType) <: CyclicType.
  Definition t := zn2z C.t.
+#[global]
  Instance ops : ZnZ.Ops t := mk_zn2z_ops.
+#[global]
  Instance specs : ZnZ.Specs ops := mk_zn2z_specs.
 End DoubleCyclic.
 
