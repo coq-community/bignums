@@ -96,6 +96,7 @@ Module QProperties (Import Q : QType').
 
 (** Conversion to Q *)
 
+#[global]
 Hint Rewrite
  spec_red spec_compare spec_eq_bool spec_min spec_max
  spec_add spec_sub spec_opp spec_mul spec_square spec_inv spec_div
@@ -114,26 +115,43 @@ Ltac solve_wd2 := intros x x' Hx y y' Hy; qify; now rewrite Hx, Hy.
 
 Local Obligation Tactic := solve_wd2 || solve_wd1.
 
+#[global]
 Instance : Measure to_Q := {}.
+#[global]
 Instance eq_equiv : Equivalence eq.
 Proof.
   change eq with (RelCompFun Qeq to_Q); apply _.
 Defined.
 
+#[global]
 Program Instance lt_wd : Proper (eq==>eq==>iff) lt.
+#[global]
 Program Instance le_wd : Proper (eq==>eq==>iff) le.
+#[global]
 Program Instance red_wd : Proper (eq==>eq) red.
+#[global]
 Program Instance compare_wd : Proper (eq==>eq==>Logic.eq) compare.
+#[global]
 Program Instance eq_bool_wd : Proper (eq==>eq==>Logic.eq) eq_bool.
+#[global]
 Program Instance min_wd : Proper (eq==>eq==>eq) min.
+#[global]
 Program Instance max_wd : Proper (eq==>eq==>eq) max.
+#[global]
 Program Instance add_wd : Proper (eq==>eq==>eq) add.
+#[global]
 Program Instance sub_wd : Proper (eq==>eq==>eq) sub.
+#[global]
 Program Instance opp_wd : Proper (eq==>eq) opp.
+#[global]
 Program Instance mul_wd : Proper (eq==>eq==>eq) mul.
+#[global]
 Program Instance square_wd : Proper (eq==>eq) square.
+#[global]
 Program Instance inv_wd : Proper (eq==>eq) inv.
+#[global]
 Program Instance div_wd : Proper (eq==>eq==>eq) div.
+#[global]
 Program Instance power_wd : Proper (eq==>Logic.eq==>eq) power.
 
 (** Let's implement [HasCompare] *)
@@ -144,6 +162,7 @@ Proof. intros. qify. destruct (Qcompare_spec [x] [y]); auto. Qed.
 (** Let's implement [TotalOrder] *)
 
 Definition lt_compat := lt_wd.
+#[global]
 Instance lt_strorder : StrictOrder lt.
 Proof.
   change lt with (RelCompFun Qlt to_Q); apply _.

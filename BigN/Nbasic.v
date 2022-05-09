@@ -501,7 +501,9 @@ Module Type NAbstract.
 (** The domains: a sequence of [Z/nZ] structures *)
 
 Parameter dom_t : nat -> univ_of_cycles.
+#[global]
 Declare Instance dom_op n : ZnZ.Ops (dom_t n).
+#[global]
 Declare Instance dom_spec n : ZnZ.Specs (dom_op n).
 
 Axiom digits_dom_op : forall n,

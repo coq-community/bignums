@@ -71,13 +71,13 @@ pr " (** * The operation type classes for the word types *)
 
 pr " Local Notation w0_op := W0.ops.";
 for i = 1 to min 3 size do
-  pr " Instance w%i_op : ZnZ.Ops w%i := mk_zn2z_ops w%i_op." i i (i-1)
+  pr " #[global] Instance w%i_op : ZnZ.Ops w%i := mk_zn2z_ops w%i_op." i i (i-1)
 done;
 for i = 4 to size do
-  pr " Instance w%i_op : ZnZ.Ops w%i := mk_zn2z_ops_karatsuba w%i_op." i i (i-1)
+  pr " #[global] Instance w%i_op : ZnZ.Ops w%i := mk_zn2z_ops_karatsuba w%i_op." i i (i-1)
 done;
 for i = size+1 to size+3 do
-  pr " Instance w%i_op : ZnZ.Ops (word w%i %i) := mk_zn2z_ops_karatsuba w%i_op." i size (i-size) (i-1)
+  pr " #[global] Instance w%i_op : ZnZ.Ops (word w%i %i) := mk_zn2z_ops_karatsuba w%i_op." i size (i-size) (i-1)
 done;
 pr "";
 
@@ -105,7 +105,7 @@ pr "";
   pr "";
   pr " Definition make_op_list := dmemo_list _ omake_op.";
   pr "";
-  pr " Instance make_op n : ZnZ.Ops (word w%i (S n))" size;
+  pr " #[global] Instance make_op n : ZnZ.Ops (word w%i (S n))" size;
   pr "  := dmemo_get _ omake_op n make_op_list.";
   pr "";
 
@@ -161,7 +161,7 @@ pr
   pr "";
 
 pr
-" Instance dom_op n : ZnZ.Ops (dom_t n) | 10.
+" #[global] Instance dom_op n : ZnZ.Ops (dom_t n) | 10.
  Proof.
   do_size (destruct n; [simpl;auto with *|]).
   unfold dom_t. auto with *.
@@ -279,28 +279,28 @@ pr
 ";
 
   if size <> 0 then
-  pr " Typeclasses Opaque %s." (iter_name 1 size "w" "");
+  pr " #[global] Typeclasses Opaque %s." (iter_name 1 size "w" "");
   pr "";
 
-  pr " Instance w0_spec: ZnZ.Specs w0_op := W0.specs.";
+  pr " #[global] Instance w0_spec: ZnZ.Specs w0_op := W0.specs.";
   for i = 1 to min 3 size do
-    pr " Instance w%i_spec: ZnZ.Specs w%i_op := mk_zn2z_specs w%i_spec." i i (i-1)
+    pr " #[global] Instance w%i_spec: ZnZ.Specs w%i_op := mk_zn2z_specs w%i_spec." i i (i-1)
   done;
   for i = 4 to size do
-    pr " Instance w%i_spec: ZnZ.Specs w%i_op := mk_zn2z_specs_karatsuba w%i_spec." i i (i-1)
+    pr " #[global] Instance w%i_spec: ZnZ.Specs w%i_op := mk_zn2z_specs_karatsuba w%i_spec." i i (i-1)
   done;
-  pr " Instance w%i_spec: ZnZ.Specs w%i_op := mk_zn2z_specs_karatsuba w%i_spec." (size+1) (size+1) size;
+  pr " #[global] Instance w%i_spec: ZnZ.Specs w%i_op := mk_zn2z_specs_karatsuba w%i_spec." (size+1) (size+1) size;
 
 
 pr "
- Instance wn_spec (n:nat) : ZnZ.Specs (make_op n).
+ #[global] Instance wn_spec (n:nat) : ZnZ.Specs (make_op n).
  Proof.
   induction n.
   rewrite make_op_omake; simpl; auto with *.
   rewrite make_op_S. exact (mk_zn2z_specs_karatsuba IHn).
  Qed.
 
- Instance dom_spec n : ZnZ.Specs (dom_op n) | 10.
+ #[global] Instance dom_spec n : ZnZ.Specs (dom_op n) | 10.
  Proof.
   do_size (destruct n; auto with *). apply wn_spec.
  Qed.
