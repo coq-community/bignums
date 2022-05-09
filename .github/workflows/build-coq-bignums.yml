@@ -8,9 +8,9 @@ on:
   pull_request:
     branches:
       - '**'
-  schedule:
-    # test master every day at 04:00 UTC
-      - cron: '0 4 * * *'
+  # schedule:
+  #   # test master every day at 04:00 UTC
+  #     - cron: '0 4 * * *'
 
 jobs:
   build:
