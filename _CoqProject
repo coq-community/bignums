@@ -1,6 +1,7 @@
 -generate-meta-for-package coq-bignums
 -I plugin
 -R . Bignums
+-arg -w -arg +undeclared-scope
 
 BigN/Nbasic.v
 BigN/NMake.v

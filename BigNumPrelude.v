@@ -21,10 +21,6 @@ Require Export Zpow_facts.
 Require Uint63.
 Require Import Lia.
 
-Declare Scope bigN_scope.
-Declare Scope bigZ_scope.
-Declare Scope bigQ_scope.
-
 Declare ML Module "bignums_syntax_plugin:coq-bignums.plugin".
 
 (* *** Nota Bene ***

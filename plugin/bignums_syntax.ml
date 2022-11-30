@@ -196,12 +196,14 @@ let bigN_list_of_constructors =
   build 0
 
 (* Actually declares the interpreter for bigN *)
-let _ = Notation.declare_numeral_interpreter bigN_scope
-  (bigN_path, bigN_module)
-  interp_bigN
-  (bigN_list_of_constructors,
-   uninterp_bigN,
-   true)
+let _ =
+  Notation.declare_scope bigN_scope;
+  Notation.declare_numeral_interpreter bigN_scope
+    (bigN_path, bigN_module)
+    interp_bigN
+    (bigN_list_of_constructors,
+     uninterp_bigN,
+     true)
 
 
 (*** Parsing for bigZ in digital notation ***)
@@ -232,13 +234,15 @@ let uninterp_bigZ (AnyGlobConstr rc) =
     None
 
 (* Actually declares the interpreter for bigZ *)
-let _ = Notation.declare_numeral_interpreter bigZ_scope
-  (bigZ_path, bigZ_module)
-  interp_bigZ
-  ([DAst.make @@ GRef (bigZ_pos, None);
-    DAst.make @@ GRef (bigZ_neg, None)],
-   uninterp_bigZ,
-   true)
+let _ =
+  Notation.declare_scope bigZ_scope;
+  Notation.declare_numeral_interpreter bigZ_scope
+    (bigZ_path, bigZ_module)
+    interp_bigZ
+    ([DAst.make @@ GRef (bigZ_pos, None);
+      DAst.make @@ GRef (bigZ_neg, None)],
+     uninterp_bigZ,
+     true)
 
 (*** Parsing for bigQ in digital notation ***)
 let interp_bigQ ?loc n =
@@ -253,8 +257,10 @@ let uninterp_bigQ (AnyGlobConstr rc) =
   with Non_closed -> None
 
 (* Actually declares the interpreter for bigQ *)
-let _ = Notation.declare_numeral_interpreter bigQ_scope
-  (bigQ_path, bigQ_module)
-  interp_bigQ
-  ([DAst.make @@ GRef (bigQ_z, None)], uninterp_bigQ,
-   true)
+let _ =
+  Notation.declare_scope bigQ_scope;
+  Notation.declare_numeral_interpreter bigQ_scope
+    (bigQ_path, bigQ_module)
+    interp_bigQ
+    ([DAst.make @@ GRef (bigQ_z, None)], uninterp_bigQ,
+     true)
