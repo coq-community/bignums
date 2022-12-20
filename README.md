@@ -9,7 +9,7 @@ Follow the instructions on https://github.com/coq-community/templates to regener
 [![Code of Conduct][conduct-shield]][conduct-link]
 [![Zulip][zulip-shield]][zulip-link]
 
-[docker-action-shield]: https://github.com/coq-community/bignums/workflows/Docker%20CI/badge.svg?branch=master
+[docker-action-shield]: https://github.com/coq-community/bignums/workflows/Docker%20CI/badge.svg?branch=v8.17
 [docker-action-link]: https://github.com/coq-community/bignums/actions?query=workflow:"Docker%20CI"
 
 [contributing-shield]: https://img.shields.io/badge/contributions-welcome-%23f7931e.svg
