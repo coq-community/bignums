@@ -98,10 +98,10 @@ let word_of_pos_bigint ?loc hght n =
     if hgt <= 0 then
       DAst.make ?loc (GInt (Notation.int63_of_pos_bigint n))
     else if Z.equal n Z.zero then
-      DAst.make ?loc @@ GApp (ref_W0, [DAst.make ?loc @@ GHole (Evar_kinds.InternalHole, Namegen.IntroAnonymous, None)])
+      DAst.make ?loc @@ GApp (ref_W0, [DAst.make ?loc @@ GHole (Evar_kinds.InternalHole, Namegen.IntroAnonymous)])
     else
       let (h,l) = split_at hgt n in
-      DAst.make ?loc @@ GApp (ref_WW, [DAst.make ?loc @@ GHole (Evar_kinds.InternalHole, Namegen.IntroAnonymous, None);
+      DAst.make ?loc @@ GApp (ref_WW, [DAst.make ?loc @@ GHole (Evar_kinds.InternalHole, Namegen.IntroAnonymous);
 			   decomp (hgt-1) h;
 			   decomp (hgt-1) l])
   in
