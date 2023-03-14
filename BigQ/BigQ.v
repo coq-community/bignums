@@ -73,7 +73,7 @@ Notation "x < y < z" := (x<y /\ y<z) : bigQ_scope.
 Notation "x < y <= z" := (x<y /\ y<=z) : bigQ_scope.
 Notation "x <= y < z" := (x<=y /\ y<z) : bigQ_scope.
 Notation "x <= y <= z" := (x<=y /\ y<=z) : bigQ_scope.
-Notation "[ q ]" := (BigQ.to_Q q) : bigQ_scope.
+Notation "`[ q ]" := (BigQ.to_Q q) : bigQ_scope.
 
 (** [BigQ] is a ring *)
 
@@ -106,7 +106,7 @@ Lemma BigQpowerth :
  power_theory 1 BigQ.mul BigQ.eq Z.of_N BigQ.power.
 Proof.
 constructor. intros. BigQ.qify.
-replace ([r] ^ Z.of_N n)%Q with (pow_N 1 Qmult [r] n)%Q by (now destruct n).
+replace (`[r] ^ Z.of_N n)%Q with (pow_N 1 Qmult `[r] n)%Q by (now destruct n).
 destruct n. reflexivity.
 induction p; simpl; auto; rewrite ?BigQ.spec_mul, ?IHp; reflexivity.
 Qed.
