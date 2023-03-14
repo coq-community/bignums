@@ -67,7 +67,7 @@ Notation "x < y < z" := (x<y /\ y<z) : bigN_scope.
 Notation "x < y <= z" := (x<y /\ y<=z) : bigN_scope.
 Notation "x <= y < z" := (x<=y /\ y<z) : bigN_scope.
 Notation "x <= y <= z" := (x<=y /\ y<=z) : bigN_scope.
-Notation "[ i ]" := (BigN.to_Z i) : bigN_scope.
+Notation "`[ i ]" := (BigN.to_Z i) : bigN_scope.
 Infix "mod" := BigN.modulo (at level 40, no associativity) : bigN_scope.
 
 (** Example of reasoning about [BigN] *)
@@ -110,7 +110,7 @@ case Z.eqb_spec.
 BigN.zify. auto with zarith.
 intros NEQ.
 generalize (BigN.spec_div_eucl a b).
-generalize (Z_div_mod_full [a] [b] NEQ).
+generalize (Z_div_mod_full `[a] `[b] NEQ).
 destruct BigN.div_eucl as (q,r), Z.div_eucl as (q',r').
 intros (EQ,_). injection 1 as EQr EQq.
 BigN.zify. rewrite EQr, EQq; auto.
