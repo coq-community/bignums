@@ -70,14 +70,13 @@ Notation "x < y < z" := (x<y /\ y<z) : bigZ_scope.
 Notation "x < y <= z" := (x<y /\ y<=z) : bigZ_scope.
 Notation "x <= y < z" := (x<=y /\ y<z) : bigZ_scope.
 Notation "x <= y <= z" := (x<=y /\ y<=z) : bigZ_scope.
-Notation "[ i ]" := (BigZ.to_Z i) : bigZ_scope.
 Infix "mod" := BigZ.modulo (at level 40, no associativity) : bigZ_scope.
 Infix "÷" := BigZ.quot (at level 40, left associativity) : bigZ_scope.
 
 (** Some additional results about [BigZ] *)
 
 Theorem spec_to_Z: forall n : bigZ,
-  BigN.to_Z (BigZ.to_N n) = ((Z.sgn [n]) * [n])%Z.
+  BigN.to_Z (BigZ.to_N n) = (Z.sgn (BigZ.to_Z n) * BigZ.to_Z n)%Z.
 Proof.
 intros n; case n; simpl; intros p;
   generalize (BigN.spec_pos p); case (BigN.to_Z p); auto.
@@ -86,7 +85,7 @@ intros p1 H1; case H1; auto.
 Qed.
 
 Theorem spec_to_N n:
- ([n] = Z.sgn [n] * (BigN.to_Z (BigZ.to_N n)))%Z.
+ (BigZ.to_Z n = Z.sgn (BigZ.to_Z n) * (BigN.to_Z (BigZ.to_N n)))%Z.
 Proof.
 case n; simpl; intros p;
   generalize (BigN.spec_pos p); case (BigN.to_Z p); auto.
@@ -94,8 +93,8 @@ intros p1 H1; case H1; auto.
 intros p1 H1; case H1; auto.
 Qed.
 
-Theorem spec_to_Z_pos: forall n, (0 <= [n])%Z ->
-  BigN.to_Z (BigZ.to_N n) = [n].
+Theorem spec_to_Z_pos: forall n, (0 <= BigZ.to_Z n)%Z ->
+  BigN.to_Z (BigZ.to_N n) = BigZ.to_Z n.
 Proof.
 intros n; case n; simpl; intros p;
   generalize (BigN.spec_pos p); case (BigN.to_Z p); auto.
@@ -139,7 +138,7 @@ case Z.eqb_spec.
 BigZ.zify. auto with zarith.
 intros NEQ.
 generalize (BigZ.spec_div_eucl a b).
-generalize (Z_div_mod_full [a] [b] NEQ).
+generalize (Z_div_mod_full (BigZ.to_Z a) (BigZ.to_Z b) NEQ).
 destruct BigZ.div_eucl as (q,r), Z.div_eucl as (q',r').
 intros (EQ,_). injection 1 as EQr EQq.
 BigZ.zify. rewrite EQr, EQq; auto.
