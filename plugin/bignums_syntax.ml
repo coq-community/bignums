@@ -63,7 +63,7 @@ let bigQ_scope = "bigQ_scope"
 let bigQ_z =  GlobRef.ConstructRef ((bigQ_t,0),1)
 
 let is_gr c r = match DAst.get c with
-| GRef (ref, _) -> GlobRef.equal ref r
+| GRef (ref, _) -> Environ.QGlobRef.equal (Global.env ()) ref r
 | _ -> false
 
 (*** Parsing for bigN in digital notation ***)
