@@ -1,3 +1,3 @@
-(lang dune 3.3)
-(using coq 0.4)
+(lang dune 3.7)
+(using coq 0.7)
 (name bignums)
