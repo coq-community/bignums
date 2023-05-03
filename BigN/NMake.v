@@ -109,7 +109,7 @@ Module Make (W0:CyclicType) <: NType.
  Theorem spec_succ: forall n, [succ n] = [n] + 1.
  Proof.
   intros x. rewrite succ_fold. destr_t x as (n,x).
-  generalize (ZnZ.spec_succ_c x); case ZnZ.succ_c.
+  generalize (ZnZ.spec_succ_c x); destruct ZnZ.succ_c.
   intros. rewrite spec_mk_t. assumption.
   intros. unfold interp_carry in *.
   rewrite spec_mk_t_S. simpl. rewrite ZnZ.spec_1. assumption.
@@ -147,7 +147,7 @@ Module Make (W0:CyclicType) <: NType.
  Proof.
   intros x y. rewrite add_fold. apply spec_same_level; clear x y.
   intros n x y. cbv beta iota zeta.
-  generalize (ZnZ.spec_add_c x y); case ZnZ.add_c; intros z H.
+  generalize (ZnZ.spec_add_c x y); destruct ZnZ.add_c as [z|z]; intros H.
   rewrite spec_mk_t. assumption.
   rewrite spec_mk_t_S. unfold interp_carry in H.
   simpl. rewrite ZnZ.spec_1. assumption.
@@ -170,7 +170,7 @@ Module Make (W0:CyclicType) <: NType.
  Theorem spec_pred_pos : forall x, 0 < [x] -> [pred x] = [x] - 1.
  Proof.
   intros x. rewrite pred_fold. destr_t x as (n,x). intros H.
-  generalize (ZnZ.spec_pred_c x); case ZnZ.pred_c; intros y H'.
+  generalize (ZnZ.spec_pred_c x); destruct ZnZ.pred_c as [y|y]; intros H'.
   rewrite spec_reduce. assumption.
   exfalso. unfold interp_carry in *.
   generalize (ZnZ.spec_to_Z x) (ZnZ.spec_to_Z y); auto with zarith.
@@ -179,7 +179,7 @@ Module Make (W0:CyclicType) <: NType.
  Theorem spec_pred0 : forall x, [x] = 0 -> [pred x] = 0.
  Proof.
   intros x. rewrite pred_fold. destr_t x as (n,x). intros H.
-  generalize (ZnZ.spec_pred_c x); case ZnZ.pred_c; intros y H'.
+  generalize (ZnZ.spec_pred_c x); destruct ZnZ.pred_c as [y|y]; intros H'.
   rewrite spec_reduce.
   unfold interp_carry in H'.
   generalize (ZnZ.spec_to_Z y); auto with zarith.
@@ -212,7 +212,7 @@ Module Make (W0:CyclicType) <: NType.
  Proof.
   intros x y. rewrite sub_fold. apply spec_same_level. clear x y.
   intros n x y. simpl.
-  generalize (ZnZ.spec_sub_c x y); case ZnZ.sub_c; intros z H LE.
+  generalize (ZnZ.spec_sub_c x y); destruct ZnZ.sub_c as [z|z]; intros H LE.
   rewrite spec_reduce. assumption.
   unfold interp_carry in H.
   exfalso.
@@ -223,7 +223,7 @@ Module Make (W0:CyclicType) <: NType.
  Proof.
   intros x y. rewrite sub_fold. apply spec_same_level. clear x y.
   intros n x y. simpl.
-  generalize (ZnZ.spec_sub_c x y); case ZnZ.sub_c; intros z H LE.
+  generalize (ZnZ.spec_sub_c x y); destruct ZnZ.sub_c as [z|z]; intros H LE.
   rewrite spec_reduce.
   unfold interp_carry in H.
   generalize (ZnZ.spec_to_Z z); auto with zarith.
@@ -436,7 +436,7 @@ Module Make (W0:CyclicType) <: NType.
   generalize (spec_mul_add_n1 n m x y ZnZ.zero).
   case DoubleMul.double_mul_add_n1; intros q r Hqr.
   rewrite ZnZ.spec_0, Z.add_0_r in Hqr. rewrite <- Hqr.
-  generalize (ZnZ.spec_eq0 q); case ZnZ.eq0; intros HH.
+  generalize (ZnZ.spec_eq0 q); destruct ZnZ.eq0; intros HH.
   rewrite HH; auto. simpl. apply spec_mk_t_w'.
   clear.
   rewrite spec_mk_t_w'.
@@ -540,13 +540,13 @@ Module Make (W0:CyclicType) <: NType.
  Proof.
   intros x y. rewrite div_gt_fold. apply spec_iter; clear x y.
    intros n x y H1 H2. simpl.
-    generalize (ZnZ.spec_div_gt x y H1 H2); case ZnZ.div_gt.
-    intros u v. rewrite 2 spec_reduce. auto.
+    generalize (ZnZ.spec_div_gt x y H1 H2); destruct ZnZ.div_gt as [u v].
+    rewrite 2 spec_reduce. auto.
    intros n m x y H1 H2. cbv zeta beta.
     generalize (ZnZ.spec_div_gt x
                 (DoubleBase.get_low (zeron n) (S m) y)).
-    case ZnZ.div_gt.
-    intros u v H3; repeat rewrite spec_reduce.
+    destruct ZnZ.div_gt as [u v].
+    intros H3; repeat rewrite spec_reduce.
     generalize (spec_get_endn n (S m) y x). rewrite !spec_mk_t. intros H4.
     rewrite H4 in H3; auto with zarith.
    intros n m x y H1 H2.
@@ -1297,7 +1297,7 @@ Module Make (W0:CyclicType) <: NType.
   assert (Hx := ZnZ.spec_to_Z x).
   assert (Hy := ZnZ.spec_to_Z p).
   generalize (ZnZ.spec_sub_c (ZnZ.zdigits (dom_op n)) p).
-  case ZnZ.sub_c; intros d H; unfold interp_carry in *; simpl.
+  destruct ZnZ.sub_c as [d|d]; intros H; unfold interp_carry in *; simpl.
   (** Subtraction without underflow : [ p <= digits ] *)
   rewrite spec_reduce.
   rewrite ZnZ.spec_zdigits in H.
