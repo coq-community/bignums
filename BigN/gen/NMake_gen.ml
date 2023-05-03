@@ -924,7 +924,7 @@ pr
  remember (pred_t n x) as x'.
  rewrite spec_mk_t, spec_succ_t.
  destruct x' as [ | xh xl]. simpl. apply ZnZ.spec_0.
- generalize (ZnZ.spec_eq0 xh); case ZnZ.eq0; intros H.
+ generalize (ZnZ.spec_eq0 xh); destruct ZnZ.eq0; intros H.
  rewrite IHn, spec_mk_t. simpl. rewrite H; auto.
  apply spec_mk_t_S.
  Qed.
