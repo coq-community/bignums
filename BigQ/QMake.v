@@ -430,7 +430,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  Proof.
  intros [x | nx dx] [y | ny dy]; unfold Qmult; simpl; qsimpl.
  rewrite Pos.mul_1_r, Z2Pos.id; auto.
- rewrite Z.mul_eq_0 in *; intuition.
+ rewrite Z.mul_eq_0 in *; intuition lia.
  nsubst; auto with zarith.
  nsubst; auto with zarith.
  nsubst; nzsimpl; auto with zarith.
