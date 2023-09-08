@@ -226,7 +226,7 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
  rewrite strong_spec_check_int.
  qsimpl.
  generalize (Zgcd_div_pos (ZZ.to_Z p) (NN.to_Z q)). lia.
- rewrite e in *.
+ replace (NN.to_Z q) with 0%Z in * by (symmetry; assumption).
  rewrite Zdiv_0_l in *; auto with zarith.
  apply Zgcd_div_swap0; lia.
  (* Gt *)
