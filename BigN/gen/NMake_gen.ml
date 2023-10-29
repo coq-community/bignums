@@ -305,7 +305,7 @@ pr "
   do_size (destruct n; auto with *). apply wn_spec.
  Qed.
 
- Let make_op_WW : forall n x y,
+ Local Lemma make_op_WW : forall n x y,
    (ZnZ.to_Z (Ops:=make_op (S n)) (WW x y) =
     ZnZ.to_Z (Ops:=make_op n) x * base (ZnZ.digits (make_op n))
      + ZnZ.to_Z (Ops:=make_op n) y)%%Z.
@@ -601,7 +601,7 @@ pr
 
  (** Misc results about extensions *)
 
- Let spec_extend_WW : forall n x,
+ Local Lemma spec_extend_WW : forall n x,
   [Nn (S n) (WW W0 x)] = [Nn n x].
  Proof.
  intros n x.
@@ -611,7 +611,7 @@ pr
  solve_eval.
  Qed.
 
- Let spec_extend_tr: forall m n w,
+ Local Lemma spec_extend_tr: forall m n w,
  [Nn (m + n) (extend_tr w m)] = [Nn n w].
  Proof.
  induction m; auto.
@@ -619,7 +619,7 @@ pr
  simpl plus; rewrite spec_extend_WW; auto.
  Qed.
 
- Let spec_cast_l: forall n m x1,
+ Local Lemma spec_cast_l: forall n m x1,
  [Nn n x1] =
  [Nn (Nat.max n m) (castm (diff_r n m) (extend_tr x1 (snd (diff n m))))].
  Proof.
@@ -627,7 +627,7 @@ pr
  rewrite spec_extend_tr; auto.
  Qed.
 
- Let spec_cast_r: forall n m x1,
+ Local Lemma spec_cast_r: forall n m x1,
  [Nn m x1] =
  [Nn (Nat.max n m) (castm (diff_l n m) (extend_tr x1 (fst (diff n m))))].
  Proof.
@@ -661,11 +661,12 @@ done;
 pr
 "  Let fn n := f (SizePlus (S n)).
 
+  #[clearbody]
   Let Pf' :
    forall n x y u v, u = [mk_t n x] -> v = [mk_t n y] -> P u v (f n x y).
   Proof.
   intros. subst. rewrite 2 spec_mk_t. apply Pf.
-  Qed.
+  Defined.
 ";
 
 let ext i j s =
@@ -753,23 +754,26 @@ pr
   Variable fnm: forall n m, word (dom_t Size) (S n) -> word (dom_t Size) (S m) -> res.
   Variable Pfnm: forall n m x y, P [Nn n x] [Nn m y] (fnm n m x y).
 
+  #[clearbody]
   Let Pf' :
    forall n x y u v, u = [mk_t n x] -> v = [mk_t n y] -> P u v (f n x y).
   Proof.
   intros. subst. rewrite 2 spec_mk_t. apply Pf.
-  Qed.
+  Defined.
 
+  #[clearbody]
   Let Pfd' : forall n m x y u v, u = [mk_t n x] -> v = eval n (S m) y ->
    P u v (fd n m x y).
   Proof.
   intros. subst. rewrite spec_mk_t. apply Pfd.
-  Qed.
+  Defined.
 
+  #[clearbody]
   Let Pfg' : forall n m x y u v, u = eval n (S m) x -> v = [mk_t n y] ->
    P u v (fg n m x y).
   Proof.
   intros. subst. rewrite spec_mk_t. apply Pfg.
-  Qed.
+  Defined.
 ";
 
 for i = 0 to size do

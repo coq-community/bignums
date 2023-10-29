@@ -181,14 +181,16 @@ Add Ring BigZr : BigZring
   div BigZdiv).
 
 Section TestRing.
+#[clearbody]
 Let test : forall x y, 1 + x*y + x^2 + 1 == 1*1 + 1 + (y + 1*x)*x.
 Proof.
 intros. ring_simplify. reflexivity.
-Qed.
+Defined.
+#[clearbody]
 Let test' : forall x y, 1 + x*y + x^2 - 1*1 - y*x + 1*(-x)*x == 0.
 Proof.
 intros. ring_simplify. reflexivity.
-Qed.
+Defined.
 End TestRing.
 
 (** [BigZ] also benefits from an "order" tactic *)
@@ -197,12 +199,12 @@ Ltac bigZ_order := BigZ.order.
 
 Section TestOrder.
 Let test : forall x y : bigZ, x<=y -> y<=x -> x==y.
-Proof. bigZ_order. Qed.
+Proof. bigZ_order. Defined.
 End TestOrder.
 
 (** We can use at least a bit of lia by translating to [Z]. *)
 
 Section TestLia.
 Let test : forall x y : bigZ, x<=y -> y<=x -> x==y.
-Proof. intros x y. BigZ.zify. Lia.lia. Qed.
+Proof. intros x y. BigZ.zify. Lia.lia. Defined.
 End TestLia.

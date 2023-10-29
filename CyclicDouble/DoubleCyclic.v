@@ -415,9 +415,11 @@ Section Z_2nZ.
 
  Notation "[[ x ]]" := (zn2z_to_Z wwB to_Z x)  (at level 0, x at level 99).
 
+ #[clearbody]
  Let spec_ww_to_Z   : forall x, 0 <= [| x |] < wwB.
- Proof. refine (spec_ww_to_Z w_digits w_to_Z _); wwauto. Qed.
+ Proof. refine (spec_ww_to_Z w_digits w_to_Z _); wwauto. Defined.
 
+ #[clearbody]
  Let spec_ww_of_pos : forall p,
      Zpos p = (Z.of_N (fst (ww_of_pos p)))*wwB + [|(snd (ww_of_pos p))|].
  Proof.
@@ -434,140 +436,165 @@ Section Z_2nZ.
   replace wwB with (wB*wB).
   unfold wB,w_to_Z,w_digits;destruct n;ring.
   symmetry. rewrite <- Z.pow_2_r; exact (wwB_wBwB w_digits).
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_0 : [|W0|] = 0.
- Proof. reflexivity. Qed.
+ Proof. reflexivity. Defined.
 
+ #[clearbody]
  Let spec_ww_1 : [|ww_1|] = 1.
- Proof. refine (spec_ww_1 w_0 w_1 w_digits w_to_Z _ _);wwauto. Qed.
+ Proof. refine (spec_ww_1 w_0 w_1 w_digits w_to_Z _ _);wwauto. Defined.
 
+ #[clearbody]
  Let spec_ww_Bm1 : [|ww_Bm1|] = wwB - 1.
- Proof. refine (spec_ww_Bm1 w_Bm1 w_digits w_to_Z _);wwauto. Qed.
+ Proof. refine (spec_ww_Bm1 w_Bm1 w_digits w_to_Z _);wwauto. Defined.
 
+ #[clearbody]
  Let spec_ww_compare :
   forall x y, compare x y = Z.compare [|x|] [|y|].
  Proof.
   refine (spec_ww_compare w_0 w_digits w_to_Z w_compare _ _ _);wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_eq0 : forall x, eq0 x = true -> [|x|] = 0.
- Proof. destruct x;simpl;intros;trivial;discriminate. Qed.
+ Proof. destruct x;simpl;intros;trivial;discriminate. Defined.
 
+ #[clearbody]
  Let spec_ww_opp_c : forall x, [-|opp_c x|] = -[|x|].
  Proof.
   refine(spec_ww_opp_c w_0 w_0 W0 w_opp_c w_opp_carry w_digits w_to_Z _ _ _ _);
    wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_opp : forall x, [|opp x|] = (-[|x|]) mod wwB.
  Proof.
   refine(spec_ww_opp w_0 w_0 W0 w_opp_c w_opp_carry w_opp
    w_digits w_to_Z _ _ _ _ _);
   wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_opp_carry : forall x, [|opp_carry x|] = wwB - [|x|] - 1.
  Proof.
   refine (spec_ww_opp_carry w_WW ww_Bm1 w_opp_carry w_digits w_to_Z _ _ _);
   wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_succ_c : forall x, [+|succ_c x|] = [|x|] + 1.
  Proof.
   refine (spec_ww_succ_c w_0 w_0 ww_1 w_succ_c w_digits w_to_Z _ _ _ _);wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_add_c  : forall x y, [+|add_c x y|] = [|x|] + [|y|].
  Proof.
   refine (spec_ww_add_c w_WW w_add_c w_add_carry_c w_digits w_to_Z _ _ _);wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_add_carry_c : forall x y, [+|add_carry_c x y|] = [|x|]+[|y|]+1.
  Proof.
   refine (spec_ww_add_carry_c w_0 w_0 w_WW ww_1 w_succ_c w_add_c w_add_carry_c
    w_digits w_to_Z _ _ _ _ _ _ _);wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_succ : forall x, [|succ x|] = ([|x|] + 1) mod wwB.
  Proof.
   refine (spec_ww_succ w_W0 ww_1 w_succ_c w_succ w_digits w_to_Z _ _ _ _ _);
   wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_add : forall x y, [|add x y|] = ([|x|] + [|y|]) mod wwB.
  Proof.
   refine (spec_ww_add w_add_c w_add w_add_carry w_digits w_to_Z _ _ _ _);wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_add_carry : forall x y, [|add_carry x y|]=([|x|]+[|y|]+1)mod wwB.
  Proof.
   refine (spec_ww_add_carry w_W0 ww_1 w_succ_c w_add_carry_c w_succ
   w_add w_add_carry w_digits w_to_Z _ _ _ _ _ _ _ _);wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_pred_c : forall x, [-|pred_c x|] = [|x|] - 1.
  Proof.
   refine (spec_ww_pred_c w_0 w_Bm1 w_WW ww_Bm1 w_pred_c w_digits w_to_Z
    _ _ _ _ _);wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_sub_c : forall x y, [-|sub_c x y|] = [|x|] - [|y|].
  Proof.
   refine (spec_ww_sub_c w_0 w_0 w_WW W0 w_opp_c w_opp_carry w_sub_c
    w_sub_carry_c w_digits w_to_Z _ _ _ _ _ _ _);wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_sub_carry_c : forall x y, [-|sub_carry_c x y|] = [|x|]-[|y|]-1.
  Proof.
   refine (spec_ww_sub_carry_c w_0 w_Bm1 w_WW ww_Bm1 w_opp_carry w_pred_c
    w_sub_c w_sub_carry_c w_digits w_to_Z _ _ _ _ _ _ _ _);wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_pred : forall x, [|pred x|] = ([|x|] - 1) mod wwB.
  Proof.
   refine (spec_ww_pred w_0 w_Bm1 w_WW ww_Bm1 w_pred_c w_pred w_digits w_to_Z
    _ _ _ _ _ _);wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_sub : forall x y, [|sub x y|] = ([|x|] - [|y|]) mod wwB.
  Proof.
   refine (spec_ww_sub w_0 w_0 w_WW W0 w_opp_c w_opp_carry w_sub_c w_opp
    w_sub w_sub_carry w_digits w_to_Z _ _ _ _ _ _ _ _ _);wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_sub_carry : forall x y, [|sub_carry x y|]=([|x|]-[|y|]-1) mod wwB.
  Proof.
   refine (spec_ww_sub_carry w_0 w_Bm1 w_WW ww_Bm1 w_opp_carry w_pred_c
    w_sub_carry_c w_pred w_sub w_sub_carry w_digits w_to_Z _ _ _ _ _ _ _ _ _ _);
   wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_mul_c : forall x y, [[mul_c x y ]] = [|x|] * [|y|].
  Proof.
   refine (spec_ww_mul_c w_0 w_1 w_WW w_W0 w_mul_c add_c add add_carry w_digits
    w_to_Z _ _ _ _ _ _ _ _ _);wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_karatsuba_c : forall x y, [[karatsuba_c x y ]] = [|x|] * [|y|].
  Proof.
  refine (spec_ww_karatsuba_c _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
           _ _ _ _ _ _ _ _ _ _ _ _); wwauto.
   unfold w_digits; apply ZnZ.spec_more_than_1_digit; auto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_mul : forall x y, [|mul x y|] = ([|x|] * [|y|]) mod wwB.
  Proof.
   refine (spec_ww_mul w_W0 w_add w_mul_c w_mul add w_digits w_to_Z _ _ _ _ _);
   wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_square_c : forall x, [[square_c x]] = [|x|] * [|x|].
  Proof.
   refine (spec_ww_square_c w_0 w_1 w_WW w_W0 w_mul_c w_square_c add_c add
    add_carry w_digits w_to_Z _ _ _ _ _ _ _ _ _ _);wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_w_div32 : forall a1 a2 a3 b1 b2,
        wB / 2 <= (w_to_Z b1) ->
        [|WW a1 a2|] < [|WW b1 b2|] ->
@@ -584,8 +611,9 @@ Section Z_2nZ.
   unfold w_digits;rewrite Zmod_small. ring.
   assert (H:= wB_pos(ZnZ.digits)). lia.
   exact ZnZ.spec_div21.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_div21 : forall a1 a2 b,
       wwB/2 <= [|b|] ->
       [|a1|] < [|b|] ->
@@ -595,8 +623,9 @@ Section Z_2nZ.
  Proof.
   refine (spec_ww_div21 w_0 w_0W div32 ww_1 compare sub w_digits w_to_Z
    _ _ _ _ _ _ _);wwauto. 
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_add2: forall x y,
   [|w_add2 x y|] = w_to_Z x + w_to_Z y.
   unfold w_add2.
@@ -607,8 +636,9 @@ Section Z_2nZ.
   intros w0; rewrite Z.mul_1_l; simpl.
   unfold w_to_Z, w_1; rewrite ZnZ.spec_1; auto with zarith.
   rewrite Z.mul_1_l; auto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_low: forall x,
   w_to_Z (low x) = [|x|] mod wB. 
   intros x; case x; simpl low.
@@ -618,8 +648,9 @@ Section Z_2nZ.
   rewrite Zmod_small; auto with zarith.
   unfold wB, base; eauto with ZnZ zarith.
   unfold wB, base; eauto with ZnZ zarith.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_digits:
   [|_ww_zdigits|] = Zpos (xO w_digits).
  Proof.
@@ -628,9 +659,10 @@ Section Z_2nZ.
  unfold w_to_Z, w_zdigits, w_digits.
  rewrite ZnZ.spec_zdigits; auto.
  rewrite Pos2Z.inj_xO; auto with zarith.
- Qed.
+ Defined.
 
 
+ #[clearbody]
  Let spec_ww_head00  : forall x,  [|x|] = 0 -> [|head0 x|] = Zpos _ww_digits.
  Proof.
  refine (spec_ww_head00 w_0 w_0W
@@ -638,8 +670,9 @@ Section Z_2nZ.
                 w_to_Z _ _ _ _ _ _ _ _ ); wwauto.
  exact ZnZ.spec_head00.
  exact ZnZ.spec_zdigits.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_head0  : forall x,  0 < [|x|] ->
 	 wwB/ 2 <= 2 ^ [|head0 x|] * [|x|] < wwB.
  Proof.
@@ -647,8 +680,9 @@ Section Z_2nZ.
            w_add2 w_zdigits _ww_zdigits
    w_to_Z _ _ _ _ _ _ _);wwauto.
   exact ZnZ.spec_zdigits.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_tail00  : forall x,  [|x|] = 0 -> [|tail0 x|] = Zpos _ww_digits.
  Proof.
  refine (spec_ww_tail00 w_0 w_0W
@@ -656,16 +690,17 @@ Section Z_2nZ.
                 w_to_Z _ _ _ _ _ _ _ _); wwauto.
  exact ZnZ.spec_tail00.
  exact ZnZ.spec_zdigits.
- Qed.
+ Defined.
 
 
+ #[clearbody]
  Let spec_ww_tail0  : forall x,  0 < [|x|] ->
   exists y, 0 <= y /\ [|x|] = (2 * y + 1) * 2 ^ [|tail0 x|].
  Proof.
   refine (spec_ww_tail0 (w_digits := w_digits) w_0 w_0W w_compare w_tail0
            w_add2 w_zdigits _ww_zdigits w_to_Z _ _ _ _ _ _ _);wwauto.
   exact ZnZ.spec_zdigits.
- Qed.
+ Defined.
 
  Lemma spec_ww_add_mul_div : forall x y p,
        [|p|] <= Zpos _ww_digits ->
@@ -679,6 +714,7 @@ Section Z_2nZ.
   exact ZnZ.spec_zdigits.
  Qed.
 
+ #[clearbody]
  Let spec_ww_div_gt : forall a b,
       [|a|] > [|b|] -> 0 < [|b|] ->
       let (q,r) := div_gt a b in
@@ -711,16 +747,18 @@ refine
   exact spec_ww_digits.
   exact spec_ww_1.
   exact spec_ww_add_mul_div.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_div : forall a b, 0 < [|b|] ->
       let (q,r) := div a b in
       [|a|] = [|q|] * [|b|] + [|r|] /\
       0 <= [|r|] < [|b|].
  Proof.
   refine (spec_ww_div w_digits ww_1 compare div_gt w_to_Z _ _ _ _);wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_mod_gt : forall a b,
       [|a|] > [|b|] -> 0 < [|b|] ->
       [|mod_gt a b|] = [|a|] mod [|b|].
@@ -734,13 +772,15 @@ refine
   exact ZnZ.spec_div21.
   exact ZnZ.spec_zdigits.
   exact spec_ww_add_mul_div.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_mod :  forall a b, 0 < [|b|] -> [|mod_ a b|] = [|a|] mod [|b|].
  Proof.
   refine (spec_ww_mod w_digits compare mod_gt w_to_Z _ _ _);wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_gcd_gt : forall a b, [|a|] > [|b|] ->
       Zis_gcd [|a|] [|b|] [|gcd_gt a b|].
  Proof.
@@ -756,8 +796,9 @@ refine
   exact spec_ww_add_mul_div.
   refine (@spec_gcd_cont t w_digits ww_1 w_to_Z _ _ w_1 w_compare
    _ _);wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_gcd : forall a b, Zis_gcd [|a|] [|b|] [|gcd a b|].
  Proof.
   refine (@spec_ww_gcd t w_digits compare w_to_Z _ _ w_0 w_eq0 w_gcd_gt
@@ -771,8 +812,9 @@ refine
   exact spec_ww_add_mul_div.
   refine (@spec_gcd_cont t w_digits ww_1 w_to_Z _ _ w_1 w_compare
    _ _);wwauto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_is_even : forall x,
       match is_even x with
          true => [|x|] mod 2 = 0
@@ -781,8 +823,9 @@ refine
  Proof.
  refine (@spec_ww_is_even t w_is_even w_digits _ _ ).
  exact ZnZ.spec_is_even.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_sqrt2 : forall x y,
        wwB/ 4 <= [|x|] ->
        let (s,r) := sqrt2 x y in
@@ -801,8 +844,9 @@ refine
  exact ZnZ.spec_div21.
  exact spec_ww_add_mul_div.
  exact ZnZ.spec_sqrt2.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_ww_sqrt : forall x,
        [|sqrt x|] ^ 2 <= [|x|] < ([|sqrt x|] + 1) ^ 2.
  Proof.
@@ -815,15 +859,17 @@ refine
  exact ZnZ.spec_is_even.
  exact spec_ww_add_mul_div.
  exact ZnZ.spec_sqrt2.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let wB_pos : 0 < wB.
  Proof.
  unfold wB, base; apply Z.pow_pos_nonneg; auto with zarith.
- Qed.
+ Defined.
  
  Hint Transparent ww_to_Z : core.
 
+ #[clearbody]
  Let ww_testbit_high n x y : Z.pos w_digits <= n ->
   Z.testbit [|WW x y|] n =
   Z.testbit (ZnZ.to_Z x) (n - Z.pos w_digits).
@@ -838,8 +884,9 @@ refine
   - f_equal; auto with zarith.
   - easy.
   - auto with zarith.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let ww_testbit_low n x y : 0 <= n < Z.pos w_digits ->
   Z.testbit [|WW x y|] n = Z.testbit (ZnZ.to_Z y) n.
  Proof.
@@ -850,8 +897,9 @@ refine
     apply Z.mod_small; eauto with ZnZ zarith. }
   rewrite E.
   unfold wB, base. symmetry. apply Z.mod_pow2_bits_low; auto.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_lor x y : [|lor x y|] = Z.lor [|x|] [|y|].
  Proof.
   destruct x as [ |hx lx]. trivial.
@@ -864,8 +912,9 @@ refine
   - now rewrite !ww_testbit_high, ZnZ.spec_lor, Z.lor_spec.
   - rewrite !ww_testbit_low; auto.
     now rewrite ZnZ.spec_lor, Z.lor_spec.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_land x y : [|land x y|] = Z.land [|x|] [|y|].
  Proof.
   destruct x as [ |hx lx]. trivial.
@@ -878,8 +927,9 @@ refine
   - now rewrite !ww_testbit_high, ZnZ.spec_land, Z.land_spec.
   - rewrite !ww_testbit_low; auto.
     now rewrite ZnZ.spec_land, Z.land_spec.
- Qed.
+ Defined.
 
+ #[clearbody]
  Let spec_lxor x y : [|lxor x y|] = Z.lxor [|x|] [|y|].
  Proof.
   destruct x as [ |hx lx]. trivial.
@@ -892,7 +942,7 @@ refine
   - now rewrite !ww_testbit_high, ZnZ.spec_lxor, Z.lxor_spec.
   - rewrite !ww_testbit_low; auto.
     now rewrite ZnZ.spec_lxor, Z.lxor_spec.
- Qed.
+ Defined.
 
  Global Instance mk_zn2z_specs : ZnZ.Specs mk_zn2z_ops.
  Proof.
