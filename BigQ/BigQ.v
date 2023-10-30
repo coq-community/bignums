@@ -142,21 +142,24 @@ Add Field BigQfield : BigQfieldth
 
 Section TestField.
 
+#[clearbody]
 Let ex1 : forall x y z, (x+y)*z ==  (x*z)+(y*z).
   intros.
   ring.
-Qed.
+Defined.
 
+#[clearbody]
 Let ex8 : forall x, x ^ 2 == x*x.
   intro.
   ring.
-Qed.
+Defined.
 
+#[clearbody]
 Let ex10 : forall x y, y!=0 -> (x/y)*y == x.
 intros.
 field.
 auto.
-Qed.
+Defined.
 
 End TestField.
 
@@ -166,7 +169,7 @@ Ltac bigQ_order := BigQ.order.
 
 Section TestOrder.
 Let test : forall x y : bigQ, x<=y -> y<=x -> x==y.
-Proof. bigQ_order. Qed.
+Proof. bigQ_order. Defined.
 End TestOrder.
 
 (** We can also reason by switching to QArith thanks to tactic
@@ -174,5 +177,5 @@ End TestOrder.
 
 Section TestQify.
 Let test : forall x : bigQ, 0+x == 1*x.
-Proof. intro x. BigQ.qify. ring. Qed.
+Proof. intro x. BigQ.qify. ring. Defined.
 End TestQify.

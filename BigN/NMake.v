@@ -247,7 +247,7 @@ Module Make (W0:CyclicType) <: NType.
   let compare0 := compare zero in
   fun m => compare_mn_1 (dom_t n) (dom_t n) zero compare compare0 compare (S m).
 
- Let spec_comparen_m:
+ Local Lemma spec_comparen_m:
   forall n m (x : word (dom_t n) (S m)) (y : dom_t n),
    comparen_m n m x y = Z.compare (eval n (S m) x) (ZnZ.to_Z y).
  Proof.
