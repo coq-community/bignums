@@ -1,7 +1,6 @@
 (library
  (name bignums_syntax_plugin)
  (public_name coq-bignums.plugin)
- (flags :standard -rectypes)
  (libraries coq-core.vernac))
 
 (include_subdirs no)
