@@ -1,3 +1,5 @@
+# Beware not to destroy this file when regenerating it from meta.yml
+
 name: Docker CI
 
 on:
@@ -25,9 +27,25 @@ jobs:
         with:
           opam_file: 'coq-bignums.opam'
           custom_image: ${{ matrix.image }}
-          export: 'OPAMWITHTEST'
-        env:
-          OPAMWITHTEST: 'true'
+          custom_script: |
+            startGroup Print opam config
+              opam config list; opam repo list; opam list
+              echo NJOBS=${NJOBS}
+            endGroup
+            startGroup Build coq-bignums
+              opam remove -y coq-bignums # remove coq-bignums already in image
+              opam pin add -n -y -k path coq-bignums .
+              opam install -y -v -j ${NJOBS} coq-bignums
+              opam list
+            endGroup
+            startGroup Test coq-bignums
+              git config --global --add safe.directory /github/workspace  # to avoid git clean below complaining
+              git clean -dxf .
+              make -j ${NJOBS} -C tests
+            endGroup
+            startGroup Uninstallation test
+              opam remove -y coq-bignums
+            endGroup
 
 # See also:
 # https://github.com/coq-community/docker-coq-action#readme
