@@ -206,7 +206,7 @@ let declare_numeral_interpreter uid sc dir interp (patl,uninterp,b) =
     pt_in_match = b }
 
 (* Actually declares the interpreter for bigN *)
-let _ =
+let () =
   Notation.declare_scope bigN_scope;
   declare_numeral_interpreter "bignums.bigN" bigN_scope
     (bigN_path, bigN_module)
@@ -244,7 +244,7 @@ let uninterp_bigZ (AnyGlobConstr rc) =
     None
 
 (* Actually declares the interpreter for bigZ *)
-let _ =
+let () =
   Notation.declare_scope bigZ_scope;
   declare_numeral_interpreter "bignums.bigZ" bigZ_scope
     (bigZ_path, bigZ_module)
@@ -266,7 +266,7 @@ let uninterp_bigQ (AnyGlobConstr rc) =
   with Non_closed -> None
 
 (* Actually declares the interpreter for bigQ *)
-let _ =
+let () =
   Notation.declare_scope bigQ_scope;
   declare_numeral_interpreter "bignums.bigQ" bigQ_scope
     (bigQ_path, bigQ_module)
