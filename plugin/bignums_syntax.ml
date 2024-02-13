@@ -198,7 +198,7 @@ let bigN_list_of_constructors =
 let declare_numeral_interpreter uid sc dir interp (patl,uninterp,b) =
   let open Notation in
   register_bignumeral_interpretation uid (interp,uninterp);
-  { pt_local = false;
+  enable_prim_token_interpretation { pt_local = false;
     pt_scope = sc;
     pt_interp_info = Uid uid;
     pt_required = dir;
