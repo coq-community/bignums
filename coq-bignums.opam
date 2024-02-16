@@ -13,10 +13,12 @@ This Coq library provides BigN, BigZ, and BigQ that used to
 be part of the standard library."""
 
 build: [make "-j%{jobs}%"]
-run-test: [make "-C" "tests" "-j%{jobs}%"]
-install: [make "install"]
+install: [
+  [make "install"]
+  [make "-C" "tests" "-j%{jobs}%"] {with-test}
+]
 depends: [
-  "ocaml" 
+  "ocaml"
   "coq" {= "dev"}
 ]
 

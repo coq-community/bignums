@@ -1,3 +1,5 @@
+# Beware not to destroy this file when regenerating it from meta.yml
+
 name: Docker CI
 
 on:
@@ -25,6 +27,14 @@ jobs:
         with:
           opam_file: 'coq-bignums.opam'
           custom_image: ${{ matrix.image }}
+          install: |
+            startGroup "Install dependencies"
+              # sudo apt-get update -y -q
+              opam remove -y coq-bignums # remove coq-bignums already in image
+              opam pin add -n -y -k path $PACKAGE $WORKDIR
+              opam update -y
+              opam install --confirm-level=unsafe-yes -j 2 $PACKAGE --deps-only
+            endGroup
           export: 'OPAMWITHTEST'
         env:
           OPAMWITHTEST: 'true'
