@@ -27,25 +27,17 @@ jobs:
         with:
           opam_file: 'coq-bignums.opam'
           custom_image: ${{ matrix.image }}
-          custom_script: |
-            startGroup Print opam config
-              opam config list; opam repo list; opam list
-              echo NJOBS=${NJOBS}
-            endGroup
-            startGroup Build coq-bignums
+          install: |
+            startGroup "Install dependencies"
+              # sudo apt-get update -y -q
               opam remove -y coq-bignums # remove coq-bignums already in image
-              opam pin add -n -y -k path coq-bignums .
-              opam install -y -v -j ${NJOBS} coq-bignums
-              opam list
+              opam pin add -n -y -k path $PACKAGE $WORKDIR
+              opam update -y
+              opam install --confirm-level=unsafe-yes -j 2 $PACKAGE --deps-only
             endGroup
-            startGroup Test coq-bignums
-              git config --global --add safe.directory /github/workspace  # to avoid git clean below complaining
-              git clean -dxf .
-              make -j ${NJOBS} -C tests
-            endGroup
-            startGroup Uninstallation test
-              opam remove -y coq-bignums
-            endGroup
+          export: 'OPAMWITHTEST'
+          env:
+            OPAMWITHTEST: 'true'
 
 # See also:
 # https://github.com/coq-community/docker-coq-action#readme
