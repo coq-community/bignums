@@ -148,11 +148,11 @@ Theorem Zmod_le_first: forall a b, 0 <= a -> 0 < b -> 0 <= a mod b <= a.
   rewrite Zplus_mod; auto with zarith.
   rewrite Zmod_small with (a := t); auto with zarith.
   apply Zmod_small; auto with zarith.
-  split; auto with zarith.
-  assert (0 <= 2 ^a * r); auto with zarith.
-  apply Z.add_nonneg_nonneg; auto with zarith.
+  split; auto with zarith; try (
+  assert (0 <= 2 ^a * r); auto with zarith;
+  apply Z.add_nonneg_nonneg; auto with zarith;
   match goal with |- context [?X mod ?Y] => case (Z_mod_lt X Y) end;
-   auto with zarith.
+   auto with zarith).
   pattern (2 ^ b) at 2; replace (2 ^ b) with ((2 ^ b - 2 ^a) + 2 ^ a);
     try ring.
   apply Z.add_le_lt_mono; auto with zarith.
@@ -179,10 +179,10 @@ Theorem Zmod_le_first: forall a b, 0 <= a -> 0 < b -> 0 <= a mod b <= a.
   rewrite Zmod_small with (a := t); auto with zarith.
   apply Zmod_small; auto with zarith.
   split; auto with zarith.
-  assert (0 <= 2 ^a * r); auto with zarith.
-  apply Z.add_nonneg_nonneg; auto with zarith.
+  assert (0 <= 2 ^a * r); auto with zarith; try (
+  apply Z.add_nonneg_nonneg; auto with zarith;
   match goal with |- context [?X mod ?Y] => case (Z_mod_lt X Y) end;
-   auto with zarith.
+   auto with zarith).
   pattern (2 ^ b) at 2;replace (2 ^ b) with ((2 ^ b - 2 ^a) + 2 ^ a); try ring.
   apply Z.add_le_lt_mono; auto with zarith.
   replace b with ((b - a) + a); try ring.
