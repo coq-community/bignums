@@ -10,7 +10,7 @@
 
 Set Implicit Arguments.
 
-Require Import ZArith Ndigits.
+Require Import ZArith.
 Require Import BigNumPrelude.
 Require Import DoubleType.
 

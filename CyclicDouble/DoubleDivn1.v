@@ -10,7 +10,7 @@
 
 Set Implicit Arguments.
 
-Require Import ZArith Ndigits Lia.
+Require Import ZArith Lia.
 Require Import BigNumPrelude.
 Require Import DoubleType.
 Require Import DoubleBase.
@@ -309,7 +309,7 @@ Section GENDIVN1.
    [|high n x|] = [!n|x!] / 2^(Zpos (w_digits << n) - Zpos w_digits).
  Proof.
   induction n;intros.
-  unfold high,double_to_Z. rewrite Pshiftl_nat_0.
+  unfold high,double_to_Z. simpl Pos.shiftl_nat.
   replace (Zpos w_digits - Zpos w_digits) with 0;try ring.
   simpl. rewrite <- (Zdiv_unique [|x|] 1 [|x|] 0);auto with zarith.
   assert (U2 := spec_double_digits n).

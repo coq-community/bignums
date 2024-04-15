@@ -16,7 +16,7 @@
     representation. The representation-dependent (and macro-generated) part
     is now in [NMake_gen]. *)
 
-Require Import Bool BigNumPrelude ZArith Lia Nnat Ndigits CyclicAxioms DoubleType
+Require Import Bool BigNumPrelude ZArith Lia Nnat CyclicAxioms DoubleType
   Nbasic Wf_nat StreamMemo NSig NMake_gen.
 
 Module Make (W0:CyclicType) <: NType.
