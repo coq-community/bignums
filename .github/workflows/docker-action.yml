@@ -38,7 +38,7 @@ jobs:
               opam repository add --all-switches --set-default coq-extra-dev https://coq.inria.fr/opam/extra-dev # docker-coq
               opam repository add --all-switches --set-default coq-core-dev https://coq.inria.fr/opam/core-dev # docker-coq
               opam pin add -n -y -k version coq ${{ matrix.coq_version }} # docker-coq
-              opam pin add -n -y -k path $PACKAGE $WORKDIR
+              opam pin add -n -y -k path $PACKAGE.dev $WORKDIR
               opam update -y
               opam install --confirm-level=unsafe-yes -j 2 $PACKAGE --deps-only
             endGroup
