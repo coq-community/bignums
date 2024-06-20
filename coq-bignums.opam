@@ -1,5 +1,5 @@
 opam-version: "2.0"
-maintainer: "palmskog@gmail.com"
+maintainer: "pierre.roux@onera.fr"
 version: "dev"
 
 homepage: "https://github.com/coq-community/bignums"

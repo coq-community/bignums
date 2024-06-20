@@ -18,20 +18,27 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        coq_version:
+          - 'dev'
         image:
-          - 'coqorg/coq:dev'
+          # we can't use coqorg/coq images to test bignums
+          # since these images already include coq-bignums
+          - 'coqorg/base:4.13.1-flambda'
       fail-fast: false
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: coq-community/docker-coq-action@v1
         with:
           opam_file: 'coq-bignums.opam'
           custom_image: ${{ matrix.image }}
           install: |
-            startGroup "Install dependencies"
-              # sudo apt-get update -y -q
-              opam remove -y coq-bignums # remove coq-bignums already in image
-              opam pin add -n -y -k path $PACKAGE $WORKDIR
+            startGroup "Install coq and dependencies"
+              sudo apt-get update -y -q
+              opam remove -y coq-bignums || true # remove coq-bignums if ever in image
+              opam repository add --all-switches --set-default coq-extra-dev https://coq.inria.fr/opam/extra-dev # docker-coq
+              opam repository add --all-switches --set-default coq-core-dev https://coq.inria.fr/opam/core-dev # docker-coq
+              opam pin add -n -y -k version coq ${{ matrix.coq_version }} # docker-coq
+              opam pin add -n -y -k path $PACKAGE.dev $WORKDIR
               opam update -y
               opam install --confirm-level=unsafe-yes -j 2 $PACKAGE --deps-only
             endGroup
