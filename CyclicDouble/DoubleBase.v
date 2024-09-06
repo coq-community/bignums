@@ -367,9 +367,10 @@ Section DoubleBase.
   Lemma spec_double_WW : forall n (h l : word w n),
     [!S n|double_WW n h l!] = [!n|h!] * double_wB n + [!n|l!].
   Proof.
-   induction n;simpl;intros;trivial.
-   destruct h;auto.
-   destruct l;auto.
+   induction n;simpl;intros.
+   - unfold ww_to_Z in spec_w_WW; trivial.
+   - destruct h;auto.
+     destruct l;auto.
   Qed.
 
   Lemma spec_extend_aux : forall n x, [!S n|extend_aux n x!] = [[x]].

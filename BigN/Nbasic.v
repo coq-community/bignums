@@ -322,8 +322,8 @@ Section CompareRec.
  Lemma spec_compare0_mn: forall n x,
    compare0_mn n x = (0 ?= double_to_Z n x).
  Proof.
-  intros n; elim n; clear n; auto.
-  intros x; rewrite spec_compare0_m; rewrite w_to_Z_0; auto.
+  intros n; elim n; clear n.
+  { intros. rewrite w_to_Z_0 in spec_compare0_m. exact (spec_compare0_m x). }
   intros n Hrec x; case x; unfold compare0_mn; fold compare0_mn; auto.
   fold word in *.
   intros xh xl.
