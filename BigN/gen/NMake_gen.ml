@@ -994,7 +994,7 @@ pr "
   inversion LT |
   subst; change (reduce 0 x = red_t 0 x); reflexivity |
   specialize (H (pred n)); subst; destruct x;
-   [|unfold_red; rewrite H; auto]; reflexivity
+   [|unfold_red; simpl in H; rewrite H; auto]; reflexivity
  ].
 
  Lemma reduce_equiv : forall n x, n <= Size -> reduce n x = red_t n x.
@@ -1006,9 +1006,10 @@ pr "
  Lemma spec_reduce_n : forall n x, [reduce_n n x] = [Nn n x].
  Proof.
  assert (H : forall x, reduce_%i x = red_t (SizePlus 1) x).
-  destruct x; [|unfold reduce_%i; rewrite (reduce_equiv Size)]; auto.
+  (* we have to [change] even though we declared equivalent keys... *)
+  destruct x; [|unfold reduce_%i; change reduce_%i with (reduce %i); rewrite (reduce_equiv Size)]; auto.
  induction n.
-   intros. rewrite H. apply spec_red_t.
+   intros. simpl. rewrite H. apply spec_red_t.
  destruct x as [|xh xl].
  simpl. rewrite make_op_S. exact ZnZ.spec_0.
  fold word in *.
@@ -1017,7 +1018,7 @@ pr "
  rewrite IHn.
  rewrite spec_extend_WW; auto.
  Qed.
-" (size+1) (size+1);
+" (size+1) (size+1) size size;
 
 pr
 " Lemma spec_reduce : forall n x, [reduce n x] = ZnZ.to_Z x.
