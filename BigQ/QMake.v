@@ -181,7 +181,9 @@ Module Make (NN:NType)(ZZ:ZType)(Import NZ:NType_ZType NN ZZ) <: QType.
 
  Theorem spec_eq_bool: forall x y, eq_bool x y = Qeq_bool [x] [y].
  Proof.
- intros. unfold eq_bool. rewrite spec_compare. reflexivity.
+   unfold eq_bool; intros.
+   apply eq_true_iff_eq; rewrite Qeq_bool_iff, spec_compare, Qeq_alt.
+   case Qcompare; intuition congruence.
  Qed.
 
  (** [check_int] : is a reduced fraction [n/d] in fact a integer ? *)
