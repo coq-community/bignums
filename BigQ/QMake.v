@@ -10,9 +10,9 @@
 
 (** Initial authors : Benjamin Gregoire, Laurent Thery, INRIA, 2007 *)
 
-Require Import BigNumPrelude Lia.
-Require Import QArith Qcanon Qpower Qminmax.
-Require Import NSig ZSig QSig.
+From Stdlib Require Import Lia.
+From Stdlib Require Import QArith Qcanon Qpower Qminmax.
+Require Import BigNumPrelude NSig ZSig QSig.
 
 (** We will build rationals out of an implementation of integers [ZType]
     for numerators and an implementation of natural numbers [NType] for

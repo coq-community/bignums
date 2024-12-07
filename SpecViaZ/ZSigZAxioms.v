@@ -6,7 +6,8 @@
 (*         *       GNU Lesser General Public License Version 2.1        *)
 (************************************************************************)
 
-Require Import Bool ZArith OrdersFacts Nnat ZAxioms ZSig Lia.
+From Stdlib Require Import Bool ZArith OrdersFacts Nnat ZAxioms Lia.
+Require Import ZSig.
 
 (** * The interface [ZSig.ZType] implies the interface [ZAxiomsSig] *)
 

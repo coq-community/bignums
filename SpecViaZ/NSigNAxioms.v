@@ -6,7 +6,8 @@
 (*         *       GNU Lesser General Public License Version 2.1        *)
 (************************************************************************)
 
-Require Import ZArith OrdersFacts Nnat NAxioms NSig Lia.
+From Stdlib Require Import ZArith OrdersFacts Nnat NAxioms Lia.
+Require Import NSig.
 
 (** * The interface [NSig.NType] implies the interface [NAxiomsSig] *)
 

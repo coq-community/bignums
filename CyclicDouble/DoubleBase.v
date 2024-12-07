@@ -10,9 +10,9 @@
 
 Set Implicit Arguments.
 
-Require Import ZArith.
+From Stdlib Require Import ZArith.
+From Stdlib Require Import DoubleType.
 Require Import BigNumPrelude.
-Require Import DoubleType.
 
 Local Open Scope Z_scope.
 
@@ -441,4 +441,3 @@ Section DoubleBase.
  End DoubleProof.
 
 End DoubleBase.
-

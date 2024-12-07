@@ -8,7 +8,8 @@
 (*            Benjamin Gregoire, Laurent Thery, INRIA, 2007             *)
 (************************************************************************)
 
-Require Import BinInt DoubleBase.
+From Stdlib Require Import BinInt.
+Require Import DoubleBase.
 
 Open Scope Z_scope.
 

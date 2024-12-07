@@ -10,9 +10,10 @@
 
 Set Implicit Arguments.
 
-Require Import ZArith Lia.
+From Stdlib Require Import ZArith Lia.
+From Stdlib Require Import DoubleType.
+From Stdlib Require Import CyclicAxioms.
 Require Import BigNumPrelude.
-Require Import DoubleType.
 Require Import DoubleBase.
 Require Import DoubleAdd.
 Require Import DoubleSub.
@@ -21,7 +22,6 @@ Require Import DoubleSqrt.
 Require Import DoubleLift.
 Require Import DoubleDivn1.
 Require Import DoubleDiv.
-Require Import CyclicAxioms.
 
 Local Open Scope Z_scope.
 

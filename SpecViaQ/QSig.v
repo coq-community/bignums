@@ -6,7 +6,8 @@
 (*         *       GNU Lesser General Public License Version 2.1        *)
 (************************************************************************)
 
-Require Import QArith Qpower Qminmax Orders RelationPairs GenericMinMax.
+From Stdlib Require Import QArith Qpower Qminmax.
+From Stdlib Require Import Orders RelationPairs GenericMinMax.
 
 Open Scope Q_scope.
 

@@ -10,9 +10,9 @@
 
 Set Implicit Arguments.
 
-Require Import ZArith Lia.
+From Stdlib Require Import ZArith Lia.
+From Stdlib Require Import DoubleType.
 Require Import BigNumPrelude.
-Require Import DoubleType.
 Require Import DoubleBase.
 
 Local Open Scope Z_scope.

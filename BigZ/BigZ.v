@@ -8,8 +8,9 @@
 (*            Benjamin Gregoire, Laurent Thery, INRIA, 2007             *)
 (************************************************************************)
 
+From Stdlib Require Import ZProperties ZDivFloor Ring Lia.
 Require Export BigN.
-Require Import ZProperties ZDivFloor ZSig ZSigZAxioms ZMake Ring Lia.
+Require Import ZSig ZSigZAxioms ZMake.
 Import Zpow_def Zdiv.
 
 (** * [BigZ] : arbitrary large efficient integers.
@@ -45,8 +46,8 @@ Notation bigZ := BigZ.t.
 Bind Scope bigZ_scope with bigZ.
 Bind Scope bigZ_scope with BigZ.t.
 Bind Scope bigZ_scope with BigZ.t_.
-Arguments BigZ.Pos _%bigN.
-Arguments BigZ.Neg _%bigN.
+Arguments BigZ.Pos _%_bigN.
+Arguments BigZ.Neg _%_bigN.
 Local Notation "0" := BigZ.zero : bigZ_scope.
 Local Notation "1" := BigZ.one : bigZ_scope.
 Local Notation "2" := BigZ.two : bigZ_scope.

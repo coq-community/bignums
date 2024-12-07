@@ -10,8 +10,9 @@
 
 (** Initial authors: Benjamin Gregoire, Laurent Thery, INRIA, 2007 *)
 
+From Stdlib Require Import Field Qfield Orders GenericMinMax.
 Require Export BigZ.
-Require Import Field Qfield QSig QMake Orders GenericMinMax.
+Require Import QSig QMake.
 
 (** We choose for BigQ an implemention with
     multiple representation of 0: 0, 1/0, 2/0 etc.
