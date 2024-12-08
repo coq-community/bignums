@@ -8,11 +8,11 @@
 (*            Benjamin Gregoire, Laurent Thery, INRIA, 2007             *)
 (************************************************************************)
 
-Require Import ZArith Lia.
+From Stdlib Require Import ZArith Lia.
+From Stdlib Require Import DoubleType.
+From Stdlib Require Import CyclicAxioms.
 Require Import BigNumPrelude.
-Require Import DoubleType.
 Require Import DoubleBase.
-Require Import CyclicAxioms.
 Require Import DoubleCyclic.
 
 Arguments mk_zn2z_ops [t] ops.

@@ -108,8 +108,8 @@ let word_of_pos_bigint ?loc hght n =
   decomp hght n
 
 let nat_of_int ?loc n =
-  let ref_O = DAst.make ?loc (GRef (Coqlib.lib_ref "num.nat.O", None)) in
-  let ref_S = DAst.make ?loc (GRef (Coqlib.lib_ref "num.nat.S", None)) in
+  let ref_O = DAst.make ?loc (GRef (Rocqlib.lib_ref "num.nat.O", None)) in
+  let ref_S = DAst.make ?loc (GRef (Rocqlib.lib_ref "num.nat.S", None)) in
   let rec mk_nat acc n =
     if Int.equal n 0 then acc
     else

@@ -14,14 +14,14 @@
     numbers. *)
 
 
-Require Import ArithRing.
-Require Export ZArith.
-Require Export Znumtheory.
-Require Export Zpow_facts.
-Require Uint63.
-Require Import Lia.
+From Stdlib Require Import ArithRing.
+From Stdlib Require Export ZArith.
+From Stdlib Require Export Znumtheory.
+From Stdlib Require Export Zpow_facts.
+From Stdlib Require Uint63.
+From Stdlib Require Import Lia.
 
-Declare ML Module "bignums_syntax_plugin:coq-bignums.plugin".
+Declare ML Module "coq-bignums.plugin".
 
 (* *** Nota Bene ***
    All results that were general enough have been moved in ZArith.

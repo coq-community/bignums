@@ -10,8 +10,8 @@
 
 (** Initial Author: Arnaud Spiwack *)
 
-Require Import Lia CyclicAxioms Ring63 NSig NSigNAxioms NMake
-  NProperties GenericMinMax.
+From Stdlib Require Import Lia CyclicAxioms Ring63 NProperties GenericMinMax.
+Require Import NSig NSigNAxioms NMake.
 Import Cyclic63.
 
 (** The following [BigN] module regroups both the operations and
@@ -44,7 +44,7 @@ Notation bigN := BigN.t.
 Bind Scope bigN_scope with bigN.
 Bind Scope bigN_scope with BigN.t.
 Bind Scope bigN_scope with BigN.t'.
-Arguments BigN.N0 _%int63.
+Arguments BigN.N0 _%_int63.
 Local Notation "0" := BigN.zero : bigN_scope. (* temporary notation *)
 Local Notation "1" := BigN.one : bigN_scope. (* temporary notation *)
 Local Notation "2" := BigN.two : bigN_scope. (* temporary notation *)
