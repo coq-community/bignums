@@ -8,7 +8,7 @@ clean: Makefile.coq
 _CoqProject:;
 
 Makefile.coq: _CoqProject
-	$(COQBIN)coq_makefile -f _CoqProject -o Makefile.coq
+	$(COQBIN)rocq makefile -f _CoqProject -o Makefile.coq
 
 %: Makefile.coq
 	$(MAKE) -f Makefile.coq $@

@@ -62,6 +62,3 @@ cd bignums
 make   # or make -j <number-of-cores-on-your-machine> 
 make install
 ```
-
-
-
