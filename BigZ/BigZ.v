@@ -11,7 +11,7 @@
 From Stdlib Require Import ZProperties ZDivFloor Ring Lia.
 Require Export BigN.
 Require Import ZSig ZSigZAxioms ZMake.
-Import Zpow_def Zdiv.
+Import BinNat Zpow_def Zdiv.
 
 (** * [BigZ] : arbitrary large efficient integers.
 
