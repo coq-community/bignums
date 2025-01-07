@@ -19,7 +19,8 @@ install: [
 ]
 depends: [
   "ocaml"
-  "coq" {= "dev"}
+  "rocq-core" {= "dev"}
+  "coq-stdlib"
 ]
 
 tags: [
