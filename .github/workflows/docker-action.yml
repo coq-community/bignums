@@ -7,7 +7,7 @@ on:
   #   - cron: '0 4 * * *'
   push:
     branches:
-      - master
+      - v9.0
   pull_request:
     branches:
       - '**'
@@ -19,14 +19,14 @@ jobs:
     strategy:
       matrix:
         coq_version:
-          - 'dev'
+          - '9.0.dev'
         image:
           # we can't use coqorg/coq images to test bignums
           # since these images already include coq-bignums
           - 'coqorg/base:4.13.1-flambda'
       fail-fast: false
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: coq-community/docker-coq-action@v1
         with:
           opam_file: 'coq-bignums.opam'

@@ -1,6 +1,9 @@
+# This file was generated from `meta.yml`, please do not edit manually.
+# Follow the instructions on https://github.com/coq-community/templates to regenerate.
+
 opam-version: "2.0"
-maintainer: "pierre.roux@onera.fr"
-version: "dev"
+maintainer: "palmskog@gmail.com"
+version: "9.0.dev"
 
 homepage: "https://github.com/coq-community/bignums"
 dev-repo: "git+https://github.com/coq-community/bignums.git"
@@ -19,8 +22,8 @@ install: [
 ]
 depends: [
   "ocaml"
-  "rocq-core" {= "dev"}
-  "coq-stdlib"
+  "rocq-core" {>= "9.0" & < "9.1~"}
+  "rocq-stdlib"
 ]
 
 tags: [
