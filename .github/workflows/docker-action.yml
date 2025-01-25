@@ -38,9 +38,11 @@ jobs:
               opam repository add --all-switches --set-default coq-extra-dev https://coq.inria.fr/opam/extra-dev # docker-coq
               opam repository add --all-switches --set-default coq-core-dev https://coq.inria.fr/opam/core-dev # docker-coq
               opam pin add -n -y -k version coq ${{ matrix.coq_version }} # docker-coq
-              opam pin add -n -y -k path $PACKAGE.dev $WORKDIR
+              opam pin add -n -y -k path rocq-bignums.dev $WORKDIR
+              opam pin add -n -y -k path coq-bignums.dev $WORKDIR
               opam update -y
-              opam install --confirm-level=unsafe-yes -j 2 $PACKAGE --ignore-constraints-on=dune
+              opam install --confirm-level=unsafe-yes -j 2 rocq-bignums --ignore-constraints-on=dune
+              opam install --confirm-level=unsafe-yes -j 2 coq-bignums --ignore-constraints-on=dune
             endGroup
           script: |
             startGroup "Post install"
