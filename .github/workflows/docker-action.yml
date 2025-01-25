@@ -32,7 +32,7 @@ jobs:
           opam_file: 'coq-bignums.opam'
           custom_image: ${{ matrix.image }}
           install: |
-            startGroup "Install coq and dependencies"
+            startGroup "Install"
               sudo apt-get update -y -q
               opam remove -y coq-bignums || true # remove coq-bignums if ever in image
               opam repository add --all-switches --set-default coq-extra-dev https://coq.inria.fr/opam/extra-dev # docker-coq
@@ -40,7 +40,11 @@ jobs:
               opam pin add -n -y -k version coq ${{ matrix.coq_version }} # docker-coq
               opam pin add -n -y -k path $PACKAGE.dev $WORKDIR
               opam update -y
-              opam install --confirm-level=unsafe-yes -j 2 $PACKAGE --deps-only
+              opam install --confirm-level=unsafe-yes -j 2 $PACKAGE --ignore-constraints-on=dune
+            endGroup
+          script: |
+            startGroup "Post install"
+              opam list
             endGroup
           export: 'OPAMWITHTEST'
         env:
