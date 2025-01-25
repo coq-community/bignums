@@ -19,7 +19,7 @@ jobs:
     strategy:
       matrix:
         coq_version:
-          - '9.0.dev'
+          - '9.0+rc1'
         image:
           # we can't use coqorg/coq images to test bignums
           # since these images already include coq-bignums

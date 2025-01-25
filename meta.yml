@@ -28,7 +28,7 @@ maintainers:
 
 opam-file-maintainer: palmskog@gmail.com
 
-opam-file-version: 9.0.dev
+opam-file-version: 9.0+rc1
 
 license:
   fullname: GNU Lesser General Public License v2.1
